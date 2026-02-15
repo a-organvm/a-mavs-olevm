@@ -1,328 +1,184 @@
-─────┬────────────────────────────────────────────────────────────────────────── │ STDIN
-─────┼────────────────────────────────────────────────────────────────────────── 1 │ <!doctype html> 2 │
+<!doctype html>
 <html lang="en-US">
-  3 │
   <head>
-    4 │
     <meta charset="utf-8" />
-    5 │
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    6 │
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    7 │ 8 │
     <!-- Chamber meta -->
-    9 │
     <title>AKADEMIA | ET CETER4</title>
-    10 │
     <meta name="description" content="Essays, research, papers, and scholarly work" />
-    11 │
     <meta name="author" content="ET CETER4" />
-    12 │ 13 │
     <!-- Open Graph -->
-    14 │
     <meta property="og:title" content="AKADEMIA | ET CETER4" />
-    15 │
     <meta property="og:description" content="Essays, research, papers, and scholarly work" />
-    16 │
     <meta property="og:type" content="website" />
-    17 │
     <meta property="og:site_name" content="ET CETER4" />
-    18 │ 19 │
     <!-- CSS -->
-    20 │
     <link rel="stylesheet" href="../css/vendor/tachyons/css/tachyons.min.css" />
-    21 │
     <link rel="stylesheet" href="../css/styles.css" />
-    22 │
     <link rel="stylesheet" href="css/akademia.css" />
-    23 │ 24 │
     <!-- Favicon -->
-    25 │
     <link rel="icon" type="image/png" href="../img/favicon.ico" />
-    26 │ 27 │
     <!-- PWA Manifest -->
-    28 │
     <link rel="manifest" href="../manifest.json" />
-    29 │
     <meta name="theme-color" content="#00FFFF" />
-    30 │
   </head>
-  31 │ 32 │
   <body class="min-vh-100 w-100 futura fw1 akademia-chamber">
-    33 │
     <!-- Skip to main content link for accessibility -->
-    34 │ <a href="#chamber-content" class="skip-link" aria-label="Skip to main content">Skip to main content</a> 35 │ 36
-    │
+    <a href="#chamber-content" class="skip-link" aria-label="Skip to main content">Skip to main content</a>
     <!-- Chamber Header -->
-    37 │
     <header class="chamber-header fixed top-0 left-0 w-100 z-5 pa3" style="background: rgba(0, 0, 0, 0.8)">
-      38 │
       <nav class="flex justify-between items-center mw9 center" aria-label="Chamber navigation">
-        39 │
         <a href="../index.html#menu" class="chamber-back-btn white f6 link flex items-center">
-          40 │ <span class="mr2">&larr;</span> 41 │ <span>Back to Naos</span> 42 │
+          <span class="mr2">&larr;</span> <span>Back to Naos</span>
         </a>
-        43 │
         <h1 class="ma0 f4 tracked-mega akademia-text">AKADEMIA</h1>
-        44 │
         <div class="chamber-nav-spacer w4"></div>
-        45 │
       </nav>
-      46 │
     </header>
-    47 │ 48 │
     <!-- Main Content Area -->
-    49 │
     <main id="chamber-content" class="pt5 pb5 min-vh-100" role="main" aria-label="Akademia content">
-      50 │
       <!-- Chamber Hero Section -->
-      51 │
       <section class="chamber-hero akademia-hero vh-50 flex flex-column justify-center items-center tc">
-        52 │
         <h2 class="f-headline-ns f1 tracked-mega ma0 mb3 akademia-text">AKADEMIA</h2>
-        53 │
         <p class="f4 o-90 mw6 ph4 akademia-text-accent">Essays, research, papers, and scholarly work</p>
-        54 │
       </section>
-      55 │ 56 │
       <!-- Content Grid -->
-      57 │
       <section id="chamber-grid" class="mw9 center ph4 pv5">
-        58 │
         <!-- Section Navigation -->
-        59 │
         <div class="chamber-section-nav flex flex-wrap justify-center mb5 gap-3">
-          60 │
           <button class="akademia-section-btn active" data-section="essays" aria-label="Essays section">
-            61 │ <span class="section-icon">📝</span> 62 │ <span class="section-name">Essays</span> 63 │
+            <span class="section-icon">📝</span> <span class="section-name">Essays</span>
           </button>
-          64 │
           <button class="akademia-section-btn" data-section="papers" aria-label="Papers section">
-            65 │ <span class="section-icon">📄</span> 66 │ <span class="section-name">Papers</span> 67 │
+            <span class="section-icon">📄</span> <span class="section-name">Papers</span>
           </button>
-          68 │
           <button class="akademia-section-btn" data-section="tutorials" aria-label="Tutorials section">
-            69 │ <span class="section-icon">🎓</span> 70 │ <span class="section-name">Tutorials</span> 71 │
+            <span class="section-icon">🎓</span> <span class="section-name">Tutorials</span>
           </button>
-          72 │
           <button class="akademia-section-btn" data-section="research" aria-label="Research section">
-            73 │ <span class="section-icon">🔬</span> 74 │ <span class="section-name">Research</span> 75 │
+            <span class="section-icon">🔬</span> <span class="section-name">Research</span>
           </button>
-          76 │
           <button class="akademia-section-btn" data-section="reviews" aria-label="Reviews section">
-            77 │ <span class="section-icon">💭</span> 78 │ <span class="section-name">Reviews</span> 79 │
+            <span class="section-icon">💭</span> <span class="section-name">Reviews</span>
           </button>
-          80 │
         </div>
-        81 │ 82 │
         <!-- Essays Section -->
-        83 │
         <section id="essays-content" class="akademia-content-section mb5">
-          84 │
           <h3>Essays</h3>
-          85 │
           <div id="essays-items" class="flex flex-wrap justify-center">
-            86 │
             <div class="chamber-card akademia pa4 h-100">
-              87 │
               <h4>The Digital Temple</h4>
-              88 │
               <p class="f5">Reflections on Web Architecture as Sacred Space</p>
-              89 │
               <p class="f6">
                 An exploration of how web architecture can embody sacred spatial principles, examining the Pantheon
                 project as a case study in creating digital temples.
               </p>
-              90 │
               <p class="f6">Category: Digital Culture • 15 min read • Status: Draft</p>
-              91 │
             </div>
-            92 │
           </div>
-          93 │
         </section>
-        94 │ 95 │
         <!-- Papers Section (hidden by default) -->
-        96 │
         <section id="papers-content" class="akademia-content-section dn mb5">
-          97 │
           <h3>Academic Papers</h3>
-          98 │
           <div id="papers-items" class="flex flex-wrap justify-center">
-            99 │
             <div class="chamber-card akademia pa4 tc h-100">
-              100 │
               <p class="f5 white-70">Academic papers coming soon. This chamber is under active construction.</p>
-              101 │
             </div>
-            102 │
           </div>
-          103 │
         </section>
-        104 │ 105 │
         <!-- Tutorials Section (hidden by default) -->
-        106 │
         <section id="tutorials-content" class="akademia-content-section dn mb5">
-          107 │
           <h3>Tutorials</h3>
-          108 │
           <div id="tutorials-items" class="flex flex-wrap justify-center">
-            109 │
             <div class="chamber-card akademia pa4 tc h-100">
-              110 │
               <p class="f5 white-70">Educational guides coming soon. This chamber is under active construction.</p>
-              111 │
             </div>
-            112 │
           </div>
-          113 │
         </section>
-        114 │ 115 │
         <!-- Research Section (hidden by default) -->
-        116 │
         <section id="research-content" class="akademia-content-section dn mb5">
-          117 │
           <h3>Research</h3>
-          118 │
           <div id="research-items" class="flex flex-wrap justify-center">
-            119 │
             <div class="chamber-card akademia pa4 tc h-100">
-              120 │
               <p class="f5 white-70">Research projects coming soon. This chamber is under active construction.</p>
-              121 │
             </div>
-            122 │
           </div>
-          123 │
         </section>
-        124 │ 125 │
         <!-- Reviews Section (hidden by default) -->
-        126 │
         <section id="reviews-content" class="akademia-content-section dn mb5">
-          127 │
           <h3>Critical Reviews</h3>
-          128 │
           <div id="reviews-items" class="flex flex-wrap justify-center">
-            129 │
             <div class="chamber-card akademia pa4 tc h-100">
-              130 │
               <p class="f5 white-70">Critical reviews coming soon. This chamber is under active construction.</p>
-              131 │
             </div>
-            132 │
           </div>
-          133 │
         </section>
-        134 │ 135 │
         <!-- Topics of Interest -->
-        136 │
         <section class="mv5 tc">
-          137 │
           <h3 class="akademia-text mb4">Topics of Interest</h3>
-          138 │
           <div class="flex flex-wrap justify-center gap-2">
-            139 │
             <span class="dib pv2 ph3 f6 bg-black-90 br-pill ba b--cyan akademia-text" style="border-color: #00ffff"
               >Music Theory</span
             >
-            140 │
             <span class="dib pv2 ph3 f6 bg-black-90 br-pill ba b--cyan akademia-text" style="border-color: #00ffff"
               >Sound Studies</span
             >
-            141 │
             <span class="dib pv2 ph3 f6 bg-black-90 br-pill ba b--cyan akademia-text" style="border-color: #00ffff"
               >Digital Culture</span
             >
-            142 │
             <span class="dib pv2 ph3 f6 bg-black-90 br-pill ba b--cyan akademia-text" style="border-color: #00ffff"
               >Technology & Art</span
             >
-            143 │
             <span class="dib pv2 ph3 f6 bg-black-90 br-pill ba b--cyan akademia-text" style="border-color: #00ffff"
               >Creative Coding</span
             >
-            144 │
             <span class="dib pv2 ph3 f6 bg-black-90 br-pill ba b--cyan akademia-text" style="border-color: #00ffff"
               >Philosophy</span
             >
-            145 │
             <span class="dib pv2 ph3 f6 bg-black-90 br-pill ba b--cyan akademia-text" style="border-color: #00ffff"
               >Education</span
             >
-            146 │
             <span class="dib pv2 ph3 f6 bg-black-90 br-pill ba b--cyan akademia-text" style="border-color: #00ffff"
               >Cultural Criticism</span
             >
-            147 │
             <span class="dib pv2 ph3 f6 bg-black-90 br-pill ba b--cyan akademia-text" style="border-color: #00ffff"
               >Performance Studies</span
             >
-            148 │
             <span class="dib pv2 ph3 f6 bg-black-90 br-pill ba b--cyan akademia-text" style="border-color: #00ffff"
               >Interdisciplinary Research</span
             >
-            149 │
           </div>
-          150 │
         </section>
-        151 │
       </section>
-      152 │
     </main>
-    153 │ 154 │
     <!-- Chamber Footer -->
-    155 │
     <footer class="chamber-footer fixed bottom-0 w-100 pa3 bg-black-90" role="contentinfo">
-      156 │
       <nav class="flex justify-center items-center" aria-label="Footer navigation">
-        157 │ <a href="../index.html#landing" class="white-70 f7 link mh3">ETCETER4</a> 158 │
-        <span class="white-30">//</span> 159 │ <a href="../index.html#menu" class="white-70 f7 link mh3">NAOS</a> 160 │
-        <span class="white-30">//</span> 161 │ <a href="../sitemap.html" class="white-70 f7 link mh3">SITE MAP</a> 162 │
+        <a href="../index.html#landing" class="white-70 f7 link mh3">ETCETER4</a>
+        <span class="white-30">//</span> <a href="../index.html#menu" class="white-70 f7 link mh3">NAOS</a>
+        <span class="white-30">//</span> <a href="../sitemap.html" class="white-70 f7 link mh3">SITE MAP</a>
       </nav>
-      163 │
     </footer>
-    164 │ 165 │
     <!-- Scripts -->
-    166 │
     <script
       src="https://code.jquery.com/jquery-3.7.1.min.js"
-      167
-      │
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-      168
-      │
       crossorigin="anonymous"
     ></script>
-    169 │
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/velocity/2.0.6/velocity.min.js"
-      170
-      │
       integrity="sha512-+ZPnKPFqf/PjXPKJLBykOgAOnUmCp0ufqCYWsuvMV5FhlYCf/DlTdB3PQJuXzA3otXm1FiooUNrBncLRLbYaxA=="
-      171
-      │
       crossorigin="anonymous"
     ></script>
-    172 │
     <script type="text/javascript" src="../js/config.js"></script>
-    173 │
     <script type="text/javascript" src="../js/living-pantheon/LivingPantheonCore.js"></script>
-    174 │
     <script type="text/javascript" src="config.js"></script>
-    175 │
     <script type="text/javascript" src="essays/config.js"></script>
-    176 │
     <script type="text/javascript" src="papers/config.js"></script>
-    177 │
     <script type="text/javascript" src="tutorials/config.js"></script>
-    178 │
     <script type="text/javascript" src="research/config.js"></script>
-    179 │
     <script type="text/javascript" src="reviews/config.js"></script>
-    180 │ 181 │
     <script type="text/javascript" src="init.js"></script>
-    218 │
   </body>
-  219 │
 </html>
-─────┴──────────────────────────────────────────────────────────────────────────

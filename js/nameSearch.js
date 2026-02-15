@@ -2,26 +2,18 @@
  * @file Dynamic name search and suggestion engine with personalized preferences
  * @author ET CETER4 Development Team
  */
-
-'use strict';
-
-// Import dependencies if in Node.js environment
-/* eslint-disable no-var */
-if (typeof module !== 'undefined' && typeof require !== 'undefined') {
-  var namingModule = require('./namingStrategies.js');
-  var NamingConventions = namingModule.NamingConventions;
-  var NamingContexts = namingModule.NamingContexts;
-  var ETCETERNamingPatterns = namingModule.ETCETERNamingPatterns;
-  var NamingQuality = namingModule.NamingQuality;
-  var NamingStrategy = namingModule.NamingStrategy;
-}
-/* eslint-enable no-var */
+import {
+  NamingConventions,
+  NamingContexts,
+  ETCETERNamingPatterns,
+  NamingQuality,
+  NamingStrategy,
+} from './namingStrategies.js';
 
 /**
  * User preference profiles for personalized naming
  */
-// eslint-disable-next-line no-var
-var UserPreferences = {
+export const UserPreferences = {
   DEFAULT: {
     casePreference: 'camelCase',
     verbosity: 'medium', // "terse", "medium", "verbose"
@@ -66,8 +58,7 @@ var UserPreferences = {
 /**
  * Dynamic context detection based on existing codebase patterns
  */
-// eslint-disable-next-line no-var
-var ContextDetector = {
+export const ContextDetector = {
   /**
    * Analyze existing code to detect naming patterns and contexts
    */
@@ -231,8 +222,7 @@ var ContextDetector = {
 /**
  * Fuzzy string matching for name suggestions
  */
-// eslint-disable-next-line no-var
-var FuzzyMatcher = {
+export const FuzzyMatcher = {
   /**
    * Calculate Levenshtein distance between two strings
    */
@@ -303,8 +293,7 @@ var FuzzyMatcher = {
 /**
  * Main name search engine
  */
-// eslint-disable-next-line no-var
-var NameSearchEngine = {
+export const NameSearchEngine = {
   userPreferences: UserPreferences.DEFAULT,
   codeAnalysis: null,
 
@@ -587,13 +576,3 @@ var NameSearchEngine = {
     return recommendations;
   },
 };
-
-// Export for testing and external use
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    UserPreferences,
-    ContextDetector,
-    FuzzyMatcher,
-    NameSearchEngine,
-  };
-}

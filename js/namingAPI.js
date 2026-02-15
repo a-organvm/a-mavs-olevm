@@ -3,14 +3,18 @@
  * @author ET CETER4 Development Team
  */
 
-'use strict';
+import {
+  NamingConventions,
+  NamingContexts,
+  ETCETERNamingPatterns,
+} from './namingStrategies.js';
+import { UserPreferences, NameSearchEngine } from './nameSearch.js';
 
 /**
  * Main API for the ET CETER4 naming system
  * Provides easy-to-use interface for the existing codebase
  */
-// eslint-disable-next-line no-var
-var ETCETERNaming = {
+export const ETCETERNaming = {
   // Initialize the naming engine
   engine: null,
   isInitialized: false,
@@ -359,34 +363,34 @@ var ETCETERNaming = {
  */
 
 // Quick function name suggestion
-function suggestFunctionName(description) {
+export function suggestFunctionName(description) {
   return ETCETERNaming.suggestBest(description, 'function');
 }
 
 // Quick variable name suggestion
-function suggestVariableName(description) {
+export function suggestVariableName(description) {
   return ETCETERNaming.suggestBest(description, 'variable');
 }
 
 // Quick page ID suggestion
-function suggestPageId(description) {
+export function suggestPageId(description) {
   return ETCETERNaming.suggestBest(description, 'page');
 }
 
 // Quick class name suggestion
-function suggestClassName(description) {
+export function suggestClassName(description) {
   return ETCETERNaming.suggestBest(description, 'class');
 }
 
 // Validate any name quickly
-function validateName(name, description, type) {
+export function validateName(name, description, type) {
   return ETCETERNaming.validate(name, description, type);
 }
 
 /**
  * Enhanced Page constructor that uses naming suggestions
  */
-function createNamedPage(description, config) {
+export function createNamedPage(description, config) {
   config = config || {};
 
   // Auto-generate ID if not provided
@@ -410,7 +414,7 @@ function createNamedPage(description, config) {
 /**
  * Enhanced function naming helper
  */
-function createNamedFunction(description, fn, context) {
+export function createNamedFunction(description, fn, context) {
   const suggestedName = suggestFunctionName(description);
 
   console.log(
@@ -454,18 +458,4 @@ if (typeof document !== 'undefined') {
     }
     console.groupEnd();
   });
-}
-
-// Export for testing and external use
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    ETCETERNaming,
-    suggestFunctionName,
-    suggestVariableName,
-    suggestPageId,
-    suggestClassName,
-    validateName,
-    createNamedPage,
-    createNamedFunction,
-  };
 }

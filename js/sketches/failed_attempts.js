@@ -10,15 +10,15 @@
  *
  */
 // p.loadPixels();
-// var d = p.pixelDensity();
+// const d = p.pixelDensity();
 
 // // we multiply by 4 because the pixel[] array is the size of the display window * 4 (including the pixel density)
-// var widthOfCanvas = Math.pow(4, d) * p.width;
-// var heightOfCanvas = Math.pow(4, d) * p.height;
+// const widthOfCanvas = Math.pow(4, d) * p.width;
+// const heightOfCanvas = Math.pow(4, d) * p.height;
 
-// for (var y = 0; y < heightOfCanvas; y+=4) {
-//     for (var x = 0; x < widthOfCanvas; x+=4) {
-//         var grayScale = Math.floor(p.random(255));
+// for (let y = 0; y < heightOfCanvas; y+=4) {
+//     for (let x = 0; x < widthOfCanvas; x+=4) {
+//         const grayScale = Math.floor(p.random(255));
 //         p.pixels[x] = grayScale;
 //         p.pixels[x+1] = grayScale;
 //         p.pixels[x+2] = grayScale;
@@ -31,9 +31,9 @@
  * This one draws the canvas, the one above it doesn't!
  */
 
-// var fullCanvas = 4 * (p.windowWidth * d) * (p.windowHeight * d);
-// for (var i = 0; i < fullCanvas; i+=4) {
-//     var bright = p.color(Math.floor(p.random(255)), Math.floor(p.random(255)), Math.floor(p.random(255)));
+// const fullCanvas = 4 * (p.windowWidth * d) * (p.windowHeight * d);
+// for (let i = 0; i < fullCanvas; i+=4) {
+//     const bright = p.color(Math.floor(p.random(255)), Math.floor(p.random(255)), Math.floor(p.random(255)));
 //     p.pixels[i] = p.red(bright);
 //     p.pixels[i+1] = p.green(bright);
 //     p.pixels[i+2] = p.blue(bright);
@@ -44,19 +44,19 @@
 /*
  * Successful Line Drawing thingy!
  */
-var lineDraw = function () {
+const lineDraw = function () {
   p.draw = function () {
     p.background(255);
 
     // Two Vectors, one for the mouse location and one for the center of the window
-    var mouse = p.createVector(p.mouseX, p.mouseY);
-    var center = p.createVector(p.windowWidth / 2, p.windowHeight / 2);
+    const mouse = p.createVector(p.mouseX, p.mouseY);
+    const center = p.createVector(p.windowWidth / 2, p.windowHeight / 2);
 
     // Vector subtraction & multiplication!
     mouse.sub(center);
     // mouse.mult(0.5);
 
-    var mag = mouse.mag();
+    const mag = mouse.mag();
     p.fill(0);
     p.rect(0, 0, mag, 10);
 

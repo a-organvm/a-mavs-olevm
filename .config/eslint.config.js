@@ -177,6 +177,13 @@ export default [
     },
   },
   {
+    // Naming system files use ES modules
+    files: ['js/nameSearch.js', 'js/namingAPI.js', 'js/namingStrategies.js'],
+    languageOptions: {
+      sourceType: 'module',
+    },
+  },
+  {
     ignores: [
       'node_modules/**',
       'css/vendor/**',

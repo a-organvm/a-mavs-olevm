@@ -2,14 +2,10 @@
  * @file Comprehensive naming strategies and conventions system
  * @author ET CETER4 Development Team
  */
-
-'use strict';
-
 /**
  * Naming convention types and their rules
  */
-// eslint-disable-next-line no-var
-var NamingConventions = {
+export const NamingConventions = {
   // Case conversion patterns
   CAMEL_CASE: {
     name: 'camelCase',
@@ -84,8 +80,7 @@ var NamingConventions = {
 /**
  * Context-specific naming rules
  */
-// eslint-disable-next-line no-var
-var NamingContexts = {
+export const NamingContexts = {
   FUNCTION: {
     convention: NamingConventions.CAMEL_CASE,
     prefixes: [
@@ -256,8 +251,7 @@ var NamingContexts = {
 /**
  * Domain-specific naming patterns for ET CETER4
  */
-// eslint-disable-next-line no-var
-var ETCETERNamingPatterns = {
+export const ETCETERNamingPatterns = {
   AUDIO_ELEMENTS: {
     prefixes: [
       'sound',
@@ -322,8 +316,7 @@ var ETCETERNamingPatterns = {
 /**
  * Name quality metrics and scoring
  */
-// eslint-disable-next-line no-var
-var NamingQuality = {
+export const NamingQuality = {
   /**
    * Calculate readability score based on various factors
    */
@@ -423,8 +416,7 @@ var NamingQuality = {
 /**
  * Main naming strategy engine
  */
-// eslint-disable-next-line no-var
-var NamingStrategy = {
+export const NamingStrategy = {
   /**
    * Generate name suggestions based on input and context
    */
@@ -539,14 +531,3 @@ var NamingStrategy = {
     });
   },
 };
-
-// Export for testing and external use
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    NamingConventions,
-    NamingContexts,
-    ETCETERNamingPatterns,
-    NamingQuality,
-    NamingStrategy,
-  };
-}
