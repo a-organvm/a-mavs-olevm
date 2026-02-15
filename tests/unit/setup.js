@@ -576,9 +576,11 @@ Object.defineProperty(global.window, 'devicePixelRatio', {
   configurable: true,
 });
 
-// Mock requestAnimationFrame
-global.requestAnimationFrame = vi.fn(cb => setTimeout(cb, 16));
-global.cancelAnimationFrame = vi.fn(id => clearTimeout(id));
+// Mock requestAnimationFrame — return incrementing IDs without scheduling
+// to prevent infinite recursive loops from render() methods during tests
+let rafId = 0;
+global.requestAnimationFrame = vi.fn(() => ++rafId);
+global.cancelAnimationFrame = vi.fn();
 
 // Mock navigator
 global.navigator = {
