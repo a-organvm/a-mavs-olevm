@@ -1,18 +1,22 @@
-[![ORGAN-II: Poiesis](https://img.shields.io/badge/ORGAN--II-Poiesis-6a1b9a?style=flat-square)](https://github.com/organvm-ii-poiesis) [![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript) [![License: ISC](https://img.shields.io/badge/License-ISC-blue?style=flat-square)](LICENSE) [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+<div align="center">
 
-# a-mavs-olevm
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/logo-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="docs/assets/logo-light.svg">
+  <img alt="ET CETER4" src="docs/assets/logo-dark.svg" width="360">
+</picture>
+
+**The Pantheon — A Living Temple of Art, Sound, and Words**
 
 [![CI](https://github.com/organvm-ii-poiesis/a-mavs-olevm/actions/workflows/ci.yml/badge.svg)](https://github.com/organvm-ii-poiesis/a-mavs-olevm/actions/workflows/ci.yml)
-[![Coverage](https://img.shields.io/badge/coverage-pending-lightgrey)](https://github.com/organvm-ii-poiesis/a-mavs-olevm)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/organvm-ii-poiesis/a-mavs-olevm/blob/main/LICENSE)
-[![Organ II](https://img.shields.io/badge/Organ-II%20Poiesis-EC4899)](https://github.com/organvm-ii-poiesis)
-[![Status](https://img.shields.io/badge/status-active-brightgreen)](https://github.com/organvm-ii-poiesis/a-mavs-olevm)
-[![JavaScript](https://img.shields.io/badge/lang-JavaScript-informational)](https://github.com/organvm-ii-poiesis/a-mavs-olevm)
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue?style=flat-square)](LICENSE)
+[![ORGAN-II: Poiesis](https://img.shields.io/badge/ORGAN--II-Poiesis-6a1b9a?style=flat-square)](https://github.com/organvm-ii-poiesis)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Status](https://img.shields.io/badge/status-production-brightgreen?style=flat-square)](https://etceter4.com)
 
+</div>
 
-**The Pantheon --- A Living Temple of Art, Sound, and Words**
-
-> *"The temple breathes."*
+> _"The temple breathes."_
 >
 > An experimental digital sanctuary where generative art, sound composition, labyrinthine narrative, and AI-driven creative tools converge into a single, continuously evolving architectural organism. This is the source code for [etceter4.com](https://etceter4.com) --- the personal creative platform of ET CETER4, structured not as a portfolio website but as a sacred temple complex with chambers, wings, and hidden passageways.
 
@@ -20,9 +24,9 @@
 
 ## Artistic Purpose
 
-a-mavs-olevm exists because the web itself can be an art form. Not a container for art --- the medium *is* the work.
+a-mavs-olevm exists because the web itself can be an art form. Not a container for art --- the medium _is_ the work.
 
-The project began as a personal website and evolved into something far more ambitious: a complete **Pantheon** modeled on ancient Greek temple architecture, where every section functions as a distinct chamber with its own aesthetic logic, navigational rules, and creative purpose. Visitors do not browse pages; they *enter rooms*. They do not click links; they *discover passageways*. The experience is deliberately non-linear, atmospheric, and alive --- drawing direct inspiration from the experimental web design of Radiohead's Kid A and Hail to the Thief era websites (2000--2003), where the internet was treated as a space for genuine artistic experience rather than information retrieval.
+The project began as a personal website and evolved into something far more ambitious: a complete **Pantheon** modeled on ancient Greek temple architecture, where every section functions as a distinct chamber with its own aesthetic logic, navigational rules, and creative purpose. Visitors do not browse pages; they _enter rooms_. They do not click links; they _discover passageways_. The experience is deliberately non-linear, atmospheric, and alive --- drawing direct inspiration from the experimental web design of Radiohead's Kid A and Hail to the Thief era websites (2000--2003), where the internet was treated as a space for genuine artistic experience rather than information retrieval.
 
 The Pantheon houses the complete creative output of ET CETER4 across four professional facets --- **Academic**, **Professor**, **Designer**, and **Artist** --- spanning music albums, generative art, diary entries, academic essays, political commentary, performance documentation, AI experiments, and an ever-growing labyrinth of interconnected content. With 1,900+ files across 31 top-level directories, it is less a website and more a digital organism that continues to grow, shed, and regenerate.
 
@@ -94,12 +98,12 @@ a-mavs-olevm is a **static single-page application** with no build step. JavaScr
 
 **Core navigation system:**
 
-| File | Responsibility |
-|------|---------------|
-| `js/page.js` | `Page` class with state management, tier-based navigation, fade transitions |
+| File             | Responsibility                                                                                        |
+| ---------------- | ----------------------------------------------------------------------------------------------------- |
+| `js/page.js`     | `Page` class with state management, tier-based navigation, fade transitions                           |
 | `js/pageData.js` | Page tree configuration --- all 25+ pages, their parent/child relationships, initialization functions |
-| `js/main.js` | Application entry point, hash-based routing, `handleHashChange()` for browser back/forward |
-| `index.html` | Single HTML document containing all page sections as visibility-toggled elements |
+| `js/main.js`     | Application entry point, hash-based routing, `handleHashChange()` for browser back/forward            |
+| `index.html`     | Single HTML document containing all page sections as visibility-toggled elements                      |
 
 **Navigation tier model:**
 
@@ -119,31 +123,31 @@ Tier 4:  #stills #diary    (Detail Pages)
 
 ### Technology Stack
 
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| **Runtime** | Vanilla JavaScript ES6+ | No framework, no build step, global scope by design |
-| **DOM** | jQuery 3.7+ | DOM manipulation, event handling, AJAX content loading |
-| **Animation** | Velocity.js 2.0+ | Page transitions (fadeIn/fadeOut with configurable easing) |
-| **Generative Art** | p5.js | Sketches, particle systems, Perlin noise flow fields |
-| **3D Rendering** | Three.js 0.160.0 | OGOD 3D visual album, audio-reactive spheres, GLSL shaders |
-| **Audio Synthesis** | Tone.js 14.8.49 | Programmatic sound generation, audio engine |
-| **Audio Playback** | Howler.js | Cross-browser audio playback, ambient layers |
-| **CSS** | Tachyons | Utility-first styling with custom properties for theming |
-| **Linting** | ESLint 9 + Prettier 3 | Code quality enforcement (idiomatic JS style) |
-| **Testing** | Playwright + Vitest | E2E navigation tests, accessibility audits (axe-core), unit tests |
-| **CI/CD** | GitHub Actions | Lint, format check, security audit, deployment |
-| **Deployment** | Vercel / GitHub Pages | Auto-deploy on push, preview URLs per branch |
+| Layer               | Technology              | Purpose                                                           |
+| ------------------- | ----------------------- | ----------------------------------------------------------------- |
+| **Runtime**         | Vanilla JavaScript ES6+ | No framework, no build step, global scope by design               |
+| **DOM**             | jQuery 3.7+             | DOM manipulation, event handling, AJAX content loading            |
+| **Animation**       | Velocity.js 2.0+        | Page transitions (fadeIn/fadeOut with configurable easing)        |
+| **Generative Art**  | p5.js                   | Sketches, particle systems, Perlin noise flow fields              |
+| **3D Rendering**    | Three.js 0.160.0        | OGOD 3D visual album, audio-reactive spheres, GLSL shaders        |
+| **Audio Synthesis** | Tone.js 14.8.49         | Programmatic sound generation, audio engine                       |
+| **Audio Playback**  | Howler.js               | Cross-browser audio playback, ambient layers                      |
+| **CSS**             | Tachyons                | Utility-first styling with custom properties for theming          |
+| **Linting**         | ESLint 9 + Prettier 3   | Code quality enforcement (idiomatic JS style)                     |
+| **Testing**         | Playwright + Vitest     | E2E navigation tests, accessibility audits (axe-core), unit tests |
+| **CI/CD**           | GitHub Actions          | Lint, format check, security audit, deployment                    |
+| **Deployment**      | Vercel / GitHub Pages   | Auto-deploy on push, preview URLs per branch                      |
 
 ### The Absorb-Alchemize Experiments
 
 The `absorb-alchemize/` directory contains four standalone AI-powered creative tools, each built with TypeScript and Vite, representing a new frontier of human-AI collaboration in generative art:
 
-| Experiment | What It Does | Stack |
-|-----------|-------------|-------|
-| **audio-orb** | Real-time voice conversation with AI, rendered as an audio-reactive 3D sphere with GLSL vertex displacement | Lit + Three.js + Gemini Live Audio |
+| Experiment            | What It Does                                                                                                             | Stack                               |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| **audio-orb**         | Real-time voice conversation with AI, rendered as an audio-reactive 3D sphere with GLSL vertex displacement              | Lit + Three.js + Gemini Live Audio  |
 | **gemini-ink-studio** | Voice-controlled digital painting with Lattice Boltzmann fluid dynamics simulation (D2Q9 lattice, CMY pigment transport) | React + Custom LBM Physics + Gemini |
-| **p5js-playground** | Chat-based p5.js code generation with sandboxed execution and AI error-recovery loop | Lit + Gemini 2.5 Pro + p5.js |
-| **synthwave-space** | Complete 3D arcade game generation from text prompts, with remix system for iterative modification | React + Three.js + Gemini 2.5/3 Pro |
+| **p5js-playground**   | Chat-based p5.js code generation with sandboxed execution and AI error-recovery loop                                     | Lit + Gemini 2.5 Pro + p5.js        |
+| **synthwave-space**   | Complete 3D arcade game generation from text prompts, with remix system for iterative modification                       | React + Three.js + Gemini 2.5/3 Pro |
 
 These experiments explore the question: what happens when the artist's tool can listen, respond, generate, and evolve in real time? The audio-orb turns conversation into light. The ink studio turns voice into fluid. The playground turns language into executable visual systems. Each is a prototype for a mode of creative practice that did not exist before 2024.
 
@@ -209,7 +213,7 @@ labyrinth/
 
 ### The OGOD Monument
 
-A 29-page visual album --- a fusion of music, image, and narrative that exists as both a Bandcamp release and a dedicated 3D experience within the Pantheon. The `ogod/` directory contains background imagery, track assets, and the Three.js-powered immersive viewer accessible at `#ogod3d`. The OGOD album (*OGOD by ET CETER4*) is available on Bandcamp alongside three other releases: *ET CETER4 RMXS*, *The Progression of Digression*, and *Etc*.
+A 29-page visual album --- a fusion of music, image, and narrative that exists as both a Bandcamp release and a dedicated 3D experience within the Pantheon. The `ogod/` directory contains background imagery, track assets, and the Three.js-powered immersive viewer accessible at `#ogod3d`. The OGOD album (_OGOD by ET CETER4_) is available on Bandcamp alongside three other releases: _ET CETER4 RMXS_, _The Progression of Digression_, and _Etc_.
 
 ### Generative Experiments (Ergasterion)
 
@@ -236,7 +240,7 @@ a-mavs-olevm draws on theoretical work housed in ORGAN-I (Theoria):
 
 - **Recursive self-reference** --- the temple contains documentation about itself (PANTHEON_ARCHITECTURE.md, LIVING_PANTHEON_GENERATIVE.md) that is both operational specification and artistic statement. The system describes itself as part of its own aesthetic.
 - **Non-linear narrative structures** --- the labyrinth implements a theory of narrative where meaning emerges from the reader's chosen path rather than authorial sequence. This connects to work on procedural narrative and emergent storytelling.
-- **Generative aesthetics** --- the breathing architecture, particle systems, and flow fields implement theories of computational beauty where the artist designs *systems* rather than *objects*, and the work exists as an evolving process rather than a fixed artifact.
+- **Generative aesthetics** --- the breathing architecture, particle systems, and flow fields implement theories of computational beauty where the artist designs _systems_ rather than _objects_, and the work exists as an evolving process rather than a fixed artifact.
 - **AI as creative collaborator** --- the absorb-alchemize experiments operationalize a theory of human-AI creative partnership where the AI is neither tool nor author but a responsive medium --- more like an instrument than an assistant.
 
 The relationship between ORGAN-I and ORGAN-II is directional: theory informs practice. a-mavs-olevm is where ideas about recursive systems, generative processes, and non-linear experience become tangible, testable, and inhabitable.
@@ -248,10 +252,11 @@ The relationship between ORGAN-I and ORGAN-II is directional: theory informs pra
 **Live deployment:** [etceter4.com](https://etceter4.com)
 
 **Music releases:**
-- *OGOD* --- visual album (Bandcamp)
-- *ET CETER4 RMXS* --- remix collection (Bandcamp)
-- *The Progression of Digression* --- experimental compositions (Bandcamp)
-- *Etc* --- collected works (Bandcamp)
+
+- _OGOD_ --- visual album (Bandcamp)
+- _ET CETER4 RMXS_ --- remix collection (Bandcamp)
+- _The Progression of Digression_ --- experimental compositions (Bandcamp)
+- _Etc_ --- collected works (Bandcamp)
 
 **Venue:** The Pantheon itself is the exhibition --- a permanent, evolving installation on the open web. Unlike gallery shows with opening and closing dates, this work is always accessible, always changing, always accumulating new material. The generative elements ensure that no two visits produce identical experiences. The labyrinth grows. The temple breathes.
 
@@ -309,9 +314,11 @@ a-mavs-olevm/
 ## Related Work
 
 **Within ORGAN-II (Poiesis):**
+
 - [metasystem-master](https://github.com/organvm-ii-poiesis/metasystem-master) --- the meta-creative system that coordinates generative processes across the organ
 
 **Within the broader system:**
+
 - [ORGAN-I: Theoria](https://github.com/organvm-i-theoria) --- theoretical foundations (recursive systems, ontology, epistemology) that inform the Pantheon's design philosophy
 - [ORGAN-III: Ergon](https://github.com/organvm-iii-ergon) --- commercial applications where artistic techniques are productized
 - [ORGAN-V: Logos](https://github.com/organvm-v-logos) --- public process essays documenting the creative and technical decisions behind projects like this one
@@ -348,4 +355,4 @@ The Pantheon is a permanent, evolving installation --- a temple that breathes, g
 
 ---
 
-*Part of the [ORGAN-II: Poiesis](https://github.com/organvm-ii-poiesis) system --- the Art organ of the eight-organ creative-institutional architecture.*
+_Part of the [ORGAN-II: Poiesis](https://github.com/organvm-ii-poiesis) system --- the Art organ of the eight-organ creative-institutional architecture._

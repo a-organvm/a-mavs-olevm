@@ -75,14 +75,30 @@ describe('OGODSceneManager', () => {
     };
 
     // Mock global classes
-    global.SceneManager = vi.fn().mockReturnValue(mockSceneManager);
-    global.GradientFogEnvironment = vi.fn().mockReturnValue(mockEnvironment);
-    global.StripeBarEnvironment = vi.fn().mockReturnValue(mockEnvironment);
-    global.BokehGridEnvironment = vi.fn().mockReturnValue(mockEnvironment);
-    global.HighContrastEnvironment = vi.fn().mockReturnValue(mockEnvironment);
-    global.LayeredColorsEnvironment = vi.fn().mockReturnValue(mockEnvironment);
-    global.GlitchDigitalEnvironment = vi.fn().mockReturnValue(mockEnvironment);
-    global.FirstPersonController = vi.fn().mockReturnValue(mockController);
+    global.SceneManager = vi.fn().mockImplementation(function () {
+      return mockSceneManager;
+    });
+    global.GradientFogEnvironment = vi.fn().mockImplementation(function () {
+      return mockEnvironment;
+    });
+    global.StripeBarEnvironment = vi.fn().mockImplementation(function () {
+      return mockEnvironment;
+    });
+    global.BokehGridEnvironment = vi.fn().mockImplementation(function () {
+      return mockEnvironment;
+    });
+    global.HighContrastEnvironment = vi.fn().mockImplementation(function () {
+      return mockEnvironment;
+    });
+    global.LayeredColorsEnvironment = vi.fn().mockImplementation(function () {
+      return mockEnvironment;
+    });
+    global.GlitchDigitalEnvironment = vi.fn().mockImplementation(function () {
+      return mockEnvironment;
+    });
+    global.FirstPersonController = vi.fn().mockImplementation(function () {
+      return mockController;
+    });
 
     // Define OGODSceneManager for testing
     OGODSceneManager = class {

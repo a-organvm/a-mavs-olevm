@@ -220,7 +220,9 @@ describe('PinakothekeGenerator', () => {
 
       // Mock p5 constructor
       const mockInstance = { remove: vi.fn(), loop: vi.fn(), noLoop: vi.fn() };
-      globalThis.p5 = vi.fn(() => mockInstance);
+      globalThis.p5 = vi.fn(function () {
+        return mockInstance;
+      });
 
       gen.initialize('#pinakotheke-gallery');
 
@@ -245,7 +247,9 @@ describe('PinakothekeGenerator', () => {
       document.body.appendChild(container);
 
       const mockInstance = { remove: vi.fn() };
-      globalThis.p5 = vi.fn(() => mockInstance);
+      globalThis.p5 = vi.fn(function () {
+        return mockInstance;
+      });
 
       gen.initialize('#pinakotheke-gallery');
 
@@ -267,7 +271,7 @@ describe('PinakothekeGenerator', () => {
       container.appendChild(wrapper);
       document.body.appendChild(container);
 
-      globalThis.p5 = vi.fn(() => {
+      globalThis.p5 = vi.fn(function () {
         throw new Error('p5 init failed');
       });
 

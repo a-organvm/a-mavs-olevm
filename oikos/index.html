@@ -192,26 +192,7 @@
     107 │
     <script type="text/javascript" src="oikos.js"></script>
     108 │
-    <script>
-      109 │       // Chamber initialization
-      110 │       document.addEventListener('DOMContentLoaded', function() {
-      111 │         // Initialize Oikos chamber
-      112 │         if (typeof OikosModule !== 'undefined') {
-      113 │           OikosModule.init();
-      114 │         }
-      115 │
-      116 │         // Initialize Living Pantheon if available
-      117 │         if (typeof LivingPantheonCore !== 'undefined' && ETCETER4_CONFIG.livingPantheon?.enabled) {
-      118 │           LivingPantheonCore.getInstance()
-            .initialize({
-      119 │             chamberId: 'oikos',
-      120 │             chamberColor: '#FF8C00',
-      121 │            })
-            .start();
-      122 │         }
-      123 │       });
-      124 │
-    </script>
+    <script type="text/javascript" src="init.js"></script>
     125 │
   </body>
   126 │

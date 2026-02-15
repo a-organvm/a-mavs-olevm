@@ -15,14 +15,16 @@ describe('OGODAudioEngine', () => {
     vi.clearAllMocks();
 
     // Reset Tone mocks for each test
-    global.Tone.Player.mockImplementation(() => ({
-      start: vi.fn(),
-      stop: vi.fn(),
-      dispose: vi.fn(),
-      connect: vi.fn().mockReturnThis(),
-      toSeconds: vi.fn().mockReturnValue(0),
-      loaded: Promise.resolve(),
-    }));
+    global.Tone.Player.mockImplementation(function () {
+      return {
+        start: vi.fn(),
+        stop: vi.fn(),
+        dispose: vi.fn(),
+        connect: vi.fn().mockReturnThis(),
+        toSeconds: vi.fn().mockReturnValue(0),
+        loaded: Promise.resolve(),
+      };
+    });
 
     // Define OGODAudioEngine for testing
     OGODAudioEngine = class {

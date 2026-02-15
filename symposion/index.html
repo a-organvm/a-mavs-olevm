@@ -139,24 +139,6 @@
     <script type="text/javascript" src="../js/living-pantheon/LivingPantheonCore.js"></script>
     <script type="text/javascript" src="config.js"></script>
     <script type="text/javascript" src="js/symposion.js"></script>
-    <script>
-      // Chamber initialization
-      document.addEventListener('DOMContentLoaded', function () {
-        // Initialize Living Pantheon if available
-        if (typeof LivingPantheonCore !== 'undefined' && ETCETER4_CONFIG.livingPantheon?.enabled) {
-          LivingPantheonCore.getInstance()
-            .initialize({
-              chamberId: 'symposion',
-              chamberColor: '#722F37',
-            })
-            .start();
-        }
-
-        // Initialize Symposion chamber
-        if (typeof SymposionChamber !== 'undefined') {
-          SymposionChamber.initialize();
-        }
-      });
-    </script>
+    <script type="text/javascript" src="init.js"></script>
   </body>
 </html>

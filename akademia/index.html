@@ -320,47 +320,7 @@
     179 │
     <script type="text/javascript" src="reviews/config.js"></script>
     180 │ 181 │
-    <script>
-      182 │       // Chamber initialization and section navigation
-      183 │       document.addEventListener('DOMContentLoaded', function() {
-      184 │         // Initialize Living Pantheon if available
-      185 │         if (typeof LivingPantheonCore !== 'undefined' && typeof akademiaConfig !== 'undefined') {
-      186 │           if (akademiaConfig.livingPantheon && akademiaConfig.livingPantheon.enabled) {
-      187 │             LivingPantheonCore.getInstance()
-              .initialize({
-      188 │               chamberId: 'akademia',
-      189 │               chamberColor: '#00FFFF',
-      190 │              })
-              .start();
-      191 │           }
-      192 │         }
-      193 │
-      194 │         // Section navigation
-      195 │         const sectionBtns = document.querySelectorAll('.akademia-section-btn');
-      196 │         sectionBtns.forEach(btn => {
-      197 │           btn.addEventListener('click', function() {
-      198 │             const sectionId = this.getAttribute('data-section');
-      199 │
-      200 │             // Update active button
-      201 │             sectionBtns.forEach(b => b.classList.remove('active'));
-      202 │             this.classList.add('active');
-      203 │
-      204 │             // Update content visibility
-      205 │             const sections = document.querySelectorAll('.akademia-content-section');
-      206 │             sections.forEach(section => {
-      207 │               section.classList.add('dn');
-      208 │              })
-              .start();
-      209 │
-      210 │             const targetSection = document.getElementById(sectionId + '-content');
-      211 │             if (targetSection) {
-      212 │               targetSection.classList.remove('dn');
-      213 │             }
-      214 │           });
-      215 │         });
-      216 │       });
-      217 │
-    </script>
+    <script type="text/javascript" src="init.js"></script>
     218 │
   </body>
   219 │

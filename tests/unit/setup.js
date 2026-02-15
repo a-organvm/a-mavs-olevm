@@ -54,11 +54,11 @@ const createMockVector3 = (x = 0, y = 0, z = 0) => {
   });
   return vec;
 };
-const mockVector3 = vi
-  .fn()
-  .mockImplementation((x, y, z) => createMockVector3(x, y, z));
+const mockVector3 = vi.fn().mockImplementation(function (x, y, z) {
+  return createMockVector3(x, y, z);
+});
 
-const mockVector2 = vi.fn().mockImplementation((x = 0, y = 0) => {
+const mockVector2 = vi.fn().mockImplementation(function (x = 0, y = 0) {
   const vec = { x, y };
   vec.set = vi.fn().mockImplementation((newX, newY) => {
     vec.x = newX;
@@ -105,51 +105,64 @@ const mockColor = vi.fn().mockImplementation(function (colorInput) {
   return color;
 });
 
-const mockEuler = vi
-  .fn()
-  .mockImplementation((x = 0, y = 0, z = 0, order = 'XYZ') => ({
+const mockEuler = vi.fn().mockImplementation(function (
+  x = 0,
+  y = 0,
+  z = 0,
+  order = 'XYZ'
+) {
+  return {
     x,
     y,
     z,
     order,
     setFromQuaternion: vi.fn().mockReturnThis(),
-  }));
+  };
+});
 
-const mockQuaternion = vi.fn().mockImplementation(() => ({
-  setFromEuler: vi.fn().mockReturnThis(),
-}));
+const mockQuaternion = vi.fn().mockImplementation(function () {
+  return {
+    setFromEuler: vi.fn().mockReturnThis(),
+  };
+});
 
-const mockClock = vi.fn().mockImplementation(() => ({
-  start: vi.fn(),
-  stop: vi.fn(),
-  getDelta: vi.fn().mockReturnValue(0.016),
-  getElapsedTime: vi.fn().mockReturnValue(0),
-}));
+const mockClock = vi.fn().mockImplementation(function () {
+  return {
+    start: vi.fn(),
+    stop: vi.fn(),
+    getDelta: vi.fn().mockReturnValue(0.016),
+    getElapsedTime: vi.fn().mockReturnValue(0),
+  };
+});
 
-const mockWebGLRenderer = vi.fn().mockImplementation(() => ({
-  setSize: vi.fn(),
-  setPixelRatio: vi.fn(),
-  render: vi.fn(),
-  dispose: vi.fn(),
-  getSize: vi.fn().mockReturnValue({ x: 800, y: 600 }),
-  setRenderTarget: vi.fn(),
-  domElement: document.createElement('canvas'),
-  outputColorSpace: '',
-  toneMapping: 0,
-  toneMappingExposure: 1,
-}));
+const mockWebGLRenderer = vi.fn().mockImplementation(function () {
+  return {
+    setSize: vi.fn(),
+    setPixelRatio: vi.fn(),
+    render: vi.fn(),
+    dispose: vi.fn(),
+    getSize: vi.fn().mockReturnValue({ x: 800, y: 600 }),
+    setRenderTarget: vi.fn(),
+    domElement: document.createElement('canvas'),
+    outputColorSpace: '',
+    toneMapping: 0,
+    toneMappingExposure: 1,
+  };
+});
 
-const mockScene = vi.fn().mockImplementation(() => ({
-  add: vi.fn(),
-  remove: vi.fn(),
-  traverse: vi.fn(),
-  background: null,
-  fog: null,
-}));
+const mockScene = vi.fn().mockImplementation(function () {
+  return {
+    add: vi.fn(),
+    remove: vi.fn(),
+    traverse: vi.fn(),
+    background: null,
+    fog: null,
+  };
+});
 
 const mockPerspectiveCamera = vi
   .fn()
-  .mockImplementation((fov, aspect, near, far) => {
+  .mockImplementation(function (fov, aspect, near, far) {
     const position = createMockVector3(0, 0, 5);
     return {
       fov,
@@ -171,82 +184,104 @@ const mockPerspectiveCamera = vi
     };
   });
 
-const mockBufferGeometry = vi.fn().mockImplementation(() => ({
-  setAttribute: vi.fn(),
-  dispose: vi.fn(),
-}));
+const mockBufferGeometry = vi.fn().mockImplementation(function () {
+  return {
+    setAttribute: vi.fn(),
+    dispose: vi.fn(),
+  };
+});
 
-const mockBufferAttribute = vi.fn().mockImplementation((array, itemSize) => ({
-  array,
-  itemSize,
-}));
+const mockBufferAttribute = vi
+  .fn()
+  .mockImplementation(function (array, itemSize) {
+    return {
+      array,
+      itemSize,
+    };
+  });
 
-const mockMesh = vi.fn().mockImplementation((geometry, material) => ({
-  geometry,
-  material,
-  position: { x: 0, y: 0, z: 0, set: vi.fn() },
-  rotation: { x: 0, y: 0, z: 0 },
-  visible: true,
-  name: '',
-  userData: {},
-  add: vi.fn(),
-}));
+const mockMesh = vi.fn().mockImplementation(function (geometry, material) {
+  return {
+    geometry,
+    material,
+    position: { x: 0, y: 0, z: 0, set: vi.fn() },
+    rotation: { x: 0, y: 0, z: 0 },
+    visible: true,
+    name: '',
+    userData: {},
+    add: vi.fn(),
+  };
+});
 
-const mockGroup = vi.fn().mockImplementation(() => ({
-  add: vi.fn(),
-  remove: vi.fn(),
-  position: { x: 0, y: 0, z: 0, set: vi.fn(), copy: vi.fn() },
-  rotation: { x: 0, y: 0, z: 0 },
-  scale: { x: 1, y: 1, z: 1, set: vi.fn() },
-  visible: true,
-  name: '',
-  userData: {},
-  getWorldPosition: vi.fn().mockImplementation(target => target),
-}));
+const mockGroup = vi.fn().mockImplementation(function () {
+  return {
+    add: vi.fn(),
+    remove: vi.fn(),
+    position: { x: 0, y: 0, z: 0, set: vi.fn(), copy: vi.fn() },
+    rotation: { x: 0, y: 0, z: 0 },
+    scale: { x: 1, y: 1, z: 1, set: vi.fn() },
+    visible: true,
+    name: '',
+    userData: {},
+    getWorldPosition: vi.fn().mockImplementation(target => target),
+  };
+});
 
-const mockLine = vi.fn().mockImplementation((geometry, material) => ({
-  geometry,
-  material,
-  position: { x: 0, y: 0, z: 0, set: vi.fn() },
-  scale: { x: 1, y: 1, z: 1, z: 1 },
-  visible: true,
-  userData: {},
-}));
+const mockLine = vi.fn().mockImplementation(function (geometry, material) {
+  return {
+    geometry,
+    material,
+    position: { x: 0, y: 0, z: 0, set: vi.fn() },
+    scale: { x: 1, y: 1, z: 1, z: 1 },
+    visible: true,
+    userData: {},
+  };
+});
 
-const mockRingGeometry = vi.fn().mockImplementation(() => ({
-  dispose: vi.fn(),
-  rotateX: vi.fn().mockReturnThis(),
-}));
+const mockRingGeometry = vi.fn().mockImplementation(function () {
+  return {
+    dispose: vi.fn(),
+    rotateX: vi.fn().mockReturnThis(),
+  };
+});
 
-const mockCircleGeometry = vi.fn().mockImplementation(() => ({
-  dispose: vi.fn(),
-  rotateX: vi.fn().mockReturnThis(),
-}));
+const mockCircleGeometry = vi.fn().mockImplementation(function () {
+  return {
+    dispose: vi.fn(),
+    rotateX: vi.fn().mockReturnThis(),
+  };
+});
 
-const mockCylinderGeometry = vi.fn().mockImplementation(() => ({
-  dispose: vi.fn(),
-}));
+const mockCylinderGeometry = vi.fn().mockImplementation(function () {
+  return {
+    dispose: vi.fn(),
+  };
+});
 
-const mockPoints = vi.fn().mockImplementation((geometry, material) => ({
-  geometry: geometry || { dispose: vi.fn(), setAttribute: vi.fn() },
-  material: material || { dispose: vi.fn(), uniforms: {} },
-  position: { x: 0, y: 0, z: 0, set: vi.fn() },
-  visible: true,
-  name: '',
-}));
+const mockPoints = vi.fn().mockImplementation(function (geometry, material) {
+  return {
+    geometry: geometry || { dispose: vi.fn(), setAttribute: vi.fn() },
+    material: material || { dispose: vi.fn(), uniforms: {} },
+    position: { x: 0, y: 0, z: 0, set: vi.fn() },
+    visible: true,
+    name: '',
+  };
+});
 
 const mockMaterial = {
   dispose: vi.fn(),
   color: { r: 1, g: 1, b: 1 },
 };
 
-const mockMatrix4 = vi.fn().mockImplementation(() => ({
-  copy: vi.fn().mockReturnThis(),
-  multiply: vi.fn().mockReturnThis(),
-  makeRotationFromQuaternion: vi.fn().mockReturnThis(),
-  makeTranslation: vi.fn().mockReturnThis(),
-  elements: new Float32Array(16),
-}));
+const mockMatrix4 = vi.fn().mockImplementation(function () {
+  return {
+    copy: vi.fn().mockReturnThis(),
+    multiply: vi.fn().mockReturnThis(),
+    makeRotationFromQuaternion: vi.fn().mockReturnThis(),
+    makeTranslation: vi.fn().mockReturnThis(),
+    elements: new Float32Array(16),
+  };
+});
 
 // Create THREE mock namespace and stub it globally
 const THREEMock = {
@@ -260,41 +295,65 @@ const THREEMock = {
   WebGLRenderer: mockWebGLRenderer,
   Scene: mockScene,
   PerspectiveCamera: mockPerspectiveCamera,
-  OrthographicCamera: vi.fn().mockImplementation(() => ({})),
+  OrthographicCamera: vi.fn().mockImplementation(function () {
+    return {};
+  }),
   BufferGeometry: mockBufferGeometry,
   BufferAttribute: mockBufferAttribute,
   Mesh: mockMesh,
   Group: mockGroup,
   Line: mockLine,
   Points: mockPoints,
-  SphereGeometry: vi.fn().mockImplementation(() => ({ dispose: vi.fn() })),
-  PlaneGeometry: vi.fn().mockImplementation(() => ({ dispose: vi.fn() })),
-  BoxGeometry: vi.fn().mockImplementation(() => ({ dispose: vi.fn() })),
+  SphereGeometry: vi.fn().mockImplementation(function () {
+    return { dispose: vi.fn() };
+  }),
+  PlaneGeometry: vi.fn().mockImplementation(function () {
+    return { dispose: vi.fn() };
+  }),
+  BoxGeometry: vi.fn().mockImplementation(function () {
+    return { dispose: vi.fn() };
+  }),
   RingGeometry: mockRingGeometry,
   CircleGeometry: mockCircleGeometry,
   CylinderGeometry: mockCylinderGeometry,
-  IcosahedronGeometry: vi.fn().mockImplementation(() => ({ dispose: vi.fn() })),
-  Float32BufferAttribute: vi.fn().mockImplementation((array, itemSize) => ({
-    array,
-    itemSize,
-    setXYZ: vi.fn(),
-    needsUpdate: false,
-  })),
-  LineBasicMaterial: vi.fn().mockImplementation(() => ({
-    ...mockMaterial,
-    vertexColors: true,
-  })),
-  Raycaster: vi.fn().mockImplementation(() => ({
-    ray: {
-      origin: { setFromMatrixPosition: vi.fn() },
-      direction: { set: vi.fn().mockReturnThis(), applyMatrix4: vi.fn() },
-    },
-    intersectObjects: vi.fn().mockReturnValue([]),
-  })),
-  MeshBasicMaterial: vi.fn().mockImplementation(() => ({ ...mockMaterial })),
-  MeshStandardMaterial: vi.fn().mockImplementation(() => ({ ...mockMaterial })),
-  PointsMaterial: vi.fn().mockImplementation(() => ({ ...mockMaterial })),
-  ShaderMaterial: vi.fn().mockImplementation(options => {
+  IcosahedronGeometry: vi.fn().mockImplementation(function () {
+    return { dispose: vi.fn() };
+  }),
+  Float32BufferAttribute: vi
+    .fn()
+    .mockImplementation(function (array, itemSize) {
+      return {
+        array,
+        itemSize,
+        setXYZ: vi.fn(),
+        needsUpdate: false,
+      };
+    }),
+  LineBasicMaterial: vi.fn().mockImplementation(function () {
+    return {
+      ...mockMaterial,
+      vertexColors: true,
+    };
+  }),
+  Raycaster: vi.fn().mockImplementation(function () {
+    return {
+      ray: {
+        origin: { setFromMatrixPosition: vi.fn() },
+        direction: { set: vi.fn().mockReturnThis(), applyMatrix4: vi.fn() },
+      },
+      intersectObjects: vi.fn().mockReturnValue([]),
+    };
+  }),
+  MeshBasicMaterial: vi.fn().mockImplementation(function () {
+    return { ...mockMaterial };
+  }),
+  MeshStandardMaterial: vi.fn().mockImplementation(function () {
+    return { ...mockMaterial };
+  }),
+  PointsMaterial: vi.fn().mockImplementation(function () {
+    return { ...mockMaterial };
+  }),
+  ShaderMaterial: vi.fn().mockImplementation(function (options) {
     // Deep copy uniforms with proper value structure
     const uniforms = {};
     if (options?.uniforms) {
@@ -309,20 +368,28 @@ const THREEMock = {
       fragmentShader: options?.fragmentShader || '',
     };
   }),
-  AmbientLight: vi.fn().mockImplementation(() => ({})),
-  DirectionalLight: vi
-    .fn()
-    .mockImplementation(() => ({ position: { set: vi.fn() } })),
-  PointLight: vi
-    .fn()
-    .mockImplementation(() => ({ position: { set: vi.fn() } })),
-  Fog: vi.fn().mockImplementation((color, near, far) => ({ color, near, far })),
-  FogExp2: vi.fn().mockImplementation((color, density) => ({ color, density })),
-  WebGLRenderTarget: vi.fn().mockImplementation(() => ({
-    texture: {},
-    setSize: vi.fn(),
-    dispose: vi.fn(),
-  })),
+  AmbientLight: vi.fn().mockImplementation(function () {
+    return {};
+  }),
+  DirectionalLight: vi.fn().mockImplementation(function () {
+    return { position: { set: vi.fn() } };
+  }),
+  PointLight: vi.fn().mockImplementation(function () {
+    return { position: { set: vi.fn() } };
+  }),
+  Fog: vi.fn().mockImplementation(function (color, near, far) {
+    return { color, near, far };
+  }),
+  FogExp2: vi.fn().mockImplementation(function (color, density) {
+    return { color, density };
+  }),
+  WebGLRenderTarget: vi.fn().mockImplementation(function () {
+    return {
+      texture: {},
+      setSize: vi.fn(),
+      dispose: vi.fn(),
+    };
+  }),
   LinearFilter: 1,
   RGBAFormat: 1,
   FloatType: 1015,
@@ -337,24 +404,30 @@ const THREEMock = {
     clamp: (val, min, max) => Math.max(min, Math.min(max, val)),
   },
   // Post-processing classes (simple mocks)
-  EffectComposer: vi.fn().mockImplementation(() => ({
-    addPass: vi.fn(),
-    render: vi.fn(),
-    setSize: vi.fn(),
-    dispose: vi.fn(),
-  })),
-  RenderPass: vi.fn().mockImplementation(() => ({
-    enabled: true,
-    render: vi.fn(),
-  })),
-  UnrealBloomPass: vi.fn().mockImplementation(() => ({
-    enabled: true,
-    strength: 0.5,
-    threshold: 0.8,
-    radius: 0.5,
-    render: vi.fn(),
-    dispose: vi.fn(),
-  })),
+  EffectComposer: vi.fn().mockImplementation(function () {
+    return {
+      addPass: vi.fn(),
+      render: vi.fn(),
+      setSize: vi.fn(),
+      dispose: vi.fn(),
+    };
+  }),
+  RenderPass: vi.fn().mockImplementation(function () {
+    return {
+      enabled: true,
+      render: vi.fn(),
+    };
+  }),
+  UnrealBloomPass: vi.fn().mockImplementation(function () {
+    return {
+      enabled: true,
+      strength: 0.5,
+      threshold: 0.8,
+      radius: 0.5,
+      render: vi.fn(),
+      dispose: vi.fn(),
+    };
+  }),
 };
 
 // Expose THREE globally for all environments (jsdom + node)
@@ -365,40 +438,50 @@ if (typeof window !== 'undefined') {
 }
 
 // Mock Tone.js namespace
-const mockTonePlayer = vi.fn().mockImplementation(() => ({
-  start: vi.fn(),
-  stop: vi.fn(),
-  dispose: vi.fn(),
-  connect: vi.fn().mockReturnThis(),
-  toSeconds: vi.fn().mockReturnValue(0),
-  loaded: Promise.resolve(),
-}));
+const mockTonePlayer = vi.fn().mockImplementation(function () {
+  return {
+    start: vi.fn(),
+    stop: vi.fn(),
+    dispose: vi.fn(),
+    connect: vi.fn().mockReturnThis(),
+    toSeconds: vi.fn().mockReturnValue(0),
+    loaded: Promise.resolve(),
+  };
+});
 
-const mockToneGain = vi.fn().mockImplementation((value = 1) => ({
-  gain: { value, setValueAtTime: vi.fn() },
-  connect: vi.fn().mockReturnThis(),
-  toDestination: vi.fn().mockReturnThis(),
-  dispose: vi.fn(),
-}));
+const mockToneGain = vi.fn().mockImplementation(function (value = 1) {
+  return {
+    gain: { value, setValueAtTime: vi.fn() },
+    connect: vi.fn().mockReturnThis(),
+    toDestination: vi.fn().mockReturnThis(),
+    dispose: vi.fn(),
+  };
+});
 
-const mockToneReverb = vi.fn().mockImplementation(() => ({
-  wet: { value: 0.3, setValueAtTime: vi.fn() },
-  connect: vi.fn().mockReturnThis(),
-  dispose: vi.fn(),
-}));
+const mockToneReverb = vi.fn().mockImplementation(function () {
+  return {
+    wet: { value: 0.3, setValueAtTime: vi.fn() },
+    connect: vi.fn().mockReturnThis(),
+    dispose: vi.fn(),
+  };
+});
 
-const mockToneFeedbackDelay = vi.fn().mockImplementation(() => ({
-  connect: vi.fn().mockReturnThis(),
-  dispose: vi.fn(),
-}));
+const mockToneFeedbackDelay = vi.fn().mockImplementation(function () {
+  return {
+    connect: vi.fn().mockReturnThis(),
+    dispose: vi.fn(),
+  };
+});
 
-const mockToneAnalyser = vi.fn().mockImplementation(() => ({
-  getValue: vi.fn().mockReturnValue(new Float32Array(1024)),
-  dispose: vi.fn(),
-  disconnect: vi.fn(),
-  connect: vi.fn().mockReturnThis(),
-  smoothing: 0.8,
-}));
+const mockToneAnalyser = vi.fn().mockImplementation(function () {
+  return {
+    getValue: vi.fn().mockReturnValue(new Float32Array(1024)),
+    dispose: vi.fn(),
+    disconnect: vi.fn(),
+    connect: vi.fn().mockReturnThis(),
+    smoothing: 0.8,
+  };
+});
 
 const ToneMock = {
   Player: mockTonePlayer,
@@ -527,7 +610,7 @@ global.fetch = vi.fn().mockResolvedValue({
 });
 
 // Mock Howler.js
-const createMockHowl = vi.fn().mockImplementation((options = {}) => {
+const createMockHowl = vi.fn().mockImplementation(function (options = {}) {
   let isPlaying = false;
   let currentVolume = options.volume ?? 1;
   let currentSeek = 0;
@@ -617,7 +700,7 @@ global.Howler = {
 };
 
 // Mock HLS.js for video player
-const createMockHls = vi.fn().mockImplementation(() => {
+const createMockHls = vi.fn().mockImplementation(function () {
   const callbacks = {};
   return {
     loadSource: vi.fn(),
@@ -658,16 +741,18 @@ createMockHls.ErrorTypes = {
 global.Hls = createMockHls;
 
 // Mock matchMedia
-global.matchMedia = vi.fn().mockImplementation(query => ({
-  matches: false,
-  media: query,
-  onchange: null,
-  addListener: vi.fn(),
-  removeListener: vi.fn(),
-  addEventListener: vi.fn(),
-  removeEventListener: vi.fn(),
-  dispatchEvent: vi.fn(),
-}));
+global.matchMedia = vi.fn().mockImplementation(function (query) {
+  return {
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  };
+});
 
 // Mock DeviceOrientationEvent
 global.DeviceOrientationEvent = class DeviceOrientationEvent extends Event {
