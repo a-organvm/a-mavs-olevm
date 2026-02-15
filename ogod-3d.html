@@ -1320,12 +1320,12 @@
     <!-- Screen Reader Announcer (ARIA Live Region) -->
     <div id="ogod-sr-announcer" role="status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
 
-    <div id="container" role="main" aria-label="OGOD 3D immersive audio-visual experience">
+    <main id="container" aria-label="OGOD 3D immersive audio-visual experience">
       <!-- Loading Screen -->
       <div id="loading-screen" role="alert" aria-busy="true" aria-label="Loading experience">
-        <img id="loading-artwork" src="" alt="" aria-hidden="true" />
+        <img id="loading-artwork" src="data:," alt="" aria-hidden="true" />
         <div id="loading-overlay">
-          <h1 class="loading-title" aria-label="O G O D">OGOD</h1>
+          <h1 class="loading-title">OGOD</h1>
           <div
             class="loading-bar-container"
             role="progressbar"
@@ -1364,19 +1364,19 @@
           <div class="stem-meter" role="meter" aria-label="Drums level" aria-valuemin="0" aria-valuemax="100">
             <label id="label-drums">Drums</label>
             <div class="stem-meter-bar">
-              <div class="stem-meter-fill" id="meter-drums" aria-labelledby="label-drums"></div>
+              <div class="stem-meter-fill" id="meter-drums"></div>
             </div>
           </div>
           <div class="stem-meter" role="meter" aria-label="Bass level" aria-valuemin="0" aria-valuemax="100">
             <label id="label-bass">Bass</label>
             <div class="stem-meter-bar">
-              <div class="stem-meter-fill" id="meter-bass" aria-labelledby="label-bass"></div>
+              <div class="stem-meter-fill" id="meter-bass"></div>
             </div>
           </div>
           <div class="stem-meter" role="meter" aria-label="Vocals level" aria-valuemin="0" aria-valuemax="100">
             <label id="label-vocals">Vocals</label>
             <div class="stem-meter-bar">
-              <div class="stem-meter-fill" id="meter-vocals" aria-labelledby="label-vocals"></div>
+              <div class="stem-meter-fill" id="meter-vocals"></div>
             </div>
           </div>
           <div
@@ -1388,17 +1388,20 @@
           >
             <label id="label-other">Other</label>
             <div class="stem-meter-bar">
-              <div class="stem-meter-fill" id="meter-other" aria-labelledby="label-other"></div>
+              <div class="stem-meter-fill" id="meter-other"></div>
             </div>
           </div>
         </div>
       </aside>
 
       <!-- Audio Control -->
-      <button id="audio-btn" aria-label="Start audio playback" aria-pressed="false">Click to Start Audio</button>
+      <button type="button" id="audio-btn" aria-label="Start audio playback" aria-pressed="false">
+        Click to Start Audio
+      </button>
 
       <!-- Settings Button -->
       <button
+        type="button"
         id="settings-btn"
         aria-label="Open settings panel"
         aria-haspopup="dialog"
@@ -1422,10 +1425,10 @@
       </button>
 
       <!-- Track Selector -->
-      <nav id="track-selector" role="navigation" aria-label="Track selection">
+      <nav id="track-selector" aria-label="Track selection">
         <!-- Populated by JavaScript -->
       </nav>
-    </div>
+    </main>
 
     <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js" crossorigin="anonymous"></script>

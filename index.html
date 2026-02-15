@@ -85,7 +85,7 @@
     <div id="page-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
     <!-- All Pages-->
-    <main id="pages" class="min-vh-100" role="main" aria-label="Main content">
+    <main id="pages" class="min-vh-100" aria-label="Main content">
       <!-- Landing Page  -->
       <section id="landing" class="dn vh-100 w-100 pb-6rem">
         <!-- <h1 class="dn"> Landing Page </h1>  Used for HTML5 Outline  -->
@@ -113,7 +113,6 @@
           <nav
             id="menuPageMenu"
             class="flex flex-column justify-between center tc ba bw1 b--black pa4"
-            role="navigation"
             aria-label="Primary navigation"
           >
             <div class="tji tji-fix">
@@ -561,12 +560,12 @@
               class="flex flex-column justify-between center tc ba bg-yellow bw1 b--black pa0 bn"
             >
               <div class="tji tji-fix">
-                <a href="mailto:etceter4@etceter4.com" id="" class="f3 f-2_250rem-ns link white-link"
+                <a href="mailto:etceter4@etceter4.com" class="f3 f-2_250rem-ns link white-link"
                   >4NTHONEE J4MES P4D4V4NO</a
                 >
               </div>
               <div class="tji tji-fix">
-                <a href="mailto:etceter4@etceter4.com" id="" class="f3 f-2_250rem-ns link red-link">D E S I G N E R</a>
+                <a href="mailto:etceter4@etceter4.com" class="f3 f-2_250rem-ns link red-link">D E S I G N E R</a>
               </div>
               <div class="tji tji-fix">
                 <a href="#akademia" class="f3 f-2_250rem-ns link cyan-link">C U R R I C U L U M V I T A E</a>
@@ -689,13 +688,14 @@
     </section>
 
     <!-- Image Storage -->
-    <img id="imageStorage" class="dn" src="" alt="Storage For Canvases!" />
+    <img id="imageStorage" class="dn" src="data:," alt="Storage For Canvases" />
 
     <!-- Footer -->
-    <footer id="footer" class="fixed bottom-0 w-100 pa3 bw1 bg-white b--black-10" role="contentinfo">
+    <footer id="footer" class="fixed bottom-0 w-100 pa3 bw1 bg-white b--black-10">
       <nav class="flex flex-row page-wrap justify-around center h-100" aria-label="Footer navigation">
         <section id="mobileHamburger" class="width: 100%;">
           <button
+            type="button"
             class="c-hamburger c-hamburger--htx"
             aria-label="Toggle mobile menu"
             aria-expanded="false"
@@ -735,7 +735,6 @@
       crossorigin="anonymous"
     ></script>
     <script
-      type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/velocity/2.0.6/velocity.min.js"
       integrity="sha512-+ZPnKPFqf/PjXPKJLBykOgAOnUmCp0ufqCYWsuvMV5FhlYCf/DlTdB3PQJuXzA3otXm1FiooUNrBncLRLbYaxA=="
       crossorigin="anonymous"
@@ -753,32 +752,32 @@
       crossorigin="anonymous"
     ></script>
     <!-- Core application scripts -->
-    <script type="text/javascript" src="js/config.js" defer></script>
-    <script type="text/javascript" src="js/data/ogodTracks.js" defer></script>
-    <script type="text/javascript" src="js/audioAnalyzerBridge.js" defer></script>
-    <script type="text/javascript" src="js/uiSounds.js" defer></script>
+    <script src="js/config.js" defer></script>
+    <script src="js/data/ogodTracks.js" defer></script>
+    <script src="js/audioAnalyzerBridge.js" defer></script>
+    <script src="js/uiSounds.js" defer></script>
     <!-- Module infrastructure -->
-    <script type="text/javascript" src="js/modules/ScriptLoader.js" defer></script>
-    <script type="text/javascript" src="js/modules/ChamberLoader.js" defer></script>
-    <script type="text/javascript" src="js/modules/JourneyTracker.js" defer></script>
-    <script type="text/javascript" src="js/modules/JourneyNarrative.js" defer></script>
-    <script type="text/javascript" src="js/chamberManifest.js" defer></script>
+    <script src="js/modules/ScriptLoader.js" defer></script>
+    <script src="js/modules/ChamberLoader.js" defer></script>
+    <script src="js/modules/JourneyTracker.js" defer></script>
+    <script src="js/modules/JourneyNarrative.js" defer></script>
+    <script src="js/chamberManifest.js" defer></script>
     <!-- Navigation and entry point -->
-    <script type="text/javascript" src="js/page.js" defer></script>
-    <script type="text/javascript" src="js/pageData.js" defer></script>
-    <script type="text/javascript" src="js/main.js" defer></script>
+    <script src="js/page.js" defer></script>
+    <script src="js/pageData.js" defer></script>
+    <script src="js/main.js" defer></script>
     <!-- 3D Landing Compositor -->
-    <script type="text/javascript" src="js/3d/core/SceneManager.js" defer></script>
-    <script type="text/javascript" src="js/3d/core/EnvironmentData.js" defer></script>
-    <script type="text/javascript" src="js/3d/landing/LandingCompositor.js" defer></script>
+    <script src="js/3d/core/SceneManager.js" defer></script>
+    <script src="js/3d/core/EnvironmentData.js" defer></script>
+    <script src="js/3d/landing/LandingCompositor.js" defer></script>
     <!-- Living Pantheon System -->
-    <script type="text/javascript" src="js/living-pantheon/LivingPantheonCore.js" defer></script>
-    <script type="text/javascript" src="js/living-pantheon/AmbientSoundLayer.js" defer></script>
-    <script type="text/javascript" src="js/living-pantheon/AnimatedContentSystem.js" defer></script>
-    <script type="text/javascript" src="js/living-pantheon/MorphingImageSystem.js" defer></script>
-    <script type="text/javascript" src="js/living-pantheon/GlobalGlitchSystem.js" defer></script>
-    <script type="text/javascript" src="js/living-pantheon/LabyrinthGenerator.js" defer></script>
-    <script type="text/javascript" src="js/living-pantheon/GlitchTunnelSystem.js" defer></script>
-    <script type="text/javascript" src="js/ogod/utils/PixelSortUtils.js" defer></script>
+    <script src="js/living-pantheon/LivingPantheonCore.js" defer></script>
+    <script src="js/living-pantheon/AmbientSoundLayer.js" defer></script>
+    <script src="js/living-pantheon/AnimatedContentSystem.js" defer></script>
+    <script src="js/living-pantheon/MorphingImageSystem.js" defer></script>
+    <script src="js/living-pantheon/GlobalGlitchSystem.js" defer></script>
+    <script src="js/living-pantheon/LabyrinthGenerator.js" defer></script>
+    <script src="js/living-pantheon/GlitchTunnelSystem.js" defer></script>
+    <script src="js/ogod/utils/PixelSortUtils.js" defer></script>
   </body>
 </html>

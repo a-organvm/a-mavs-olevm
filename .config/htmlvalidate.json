@@ -2,6 +2,8 @@
   "extends": ["html-validate:recommended"],
   "rules": {
     "no-trailing-whitespace": "off",
+    "doctype-style": "off",
+    "prefer-native-element": "warn",
     "void-style": ["error", { "style": "selfclosing" }],
     "no-inline-style": "warn",
     "require-sri": "off",
