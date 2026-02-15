@@ -30,7 +30,8 @@ const akademiaConfig = {
     essays: {
       id: 'essays',
       title: 'Essays',
-      description: 'Long-form explorations of ideas, culture, and creative practice',
+      description:
+        'Long-form explorations of ideas, culture, and creative practice',
       items: [
         {
           id: 'digital-temple-web-architecture',
@@ -41,7 +42,8 @@ const akademiaConfig = {
         {
           id: 'generative-aesthetics-browser-canvas',
           title: 'Generative Aesthetics and the Browser Canvas',
-          subtitle: 'How p5.js and WebGL reshape the relationship between artist and algorithm',
+          subtitle:
+            'How p5.js and WebGL reshape the relationship between artist and algorithm',
           readTime: '12 min',
         },
       ],
@@ -55,13 +57,15 @@ const akademiaConfig = {
         {
           id: 'procedural-music-emotional-architecture',
           title: 'Procedural Music as Emotional Architecture',
-          subtitle: 'A framework for mapping algorithmic composition to affective states in interactive media',
+          subtitle:
+            'A framework for mapping algorithmic composition to affective states in interactive media',
           category: 'Sound Studies',
         },
         {
           id: 'spa-navigation-spatial-metaphor',
           title: 'SPA Navigation as Spatial Metaphor',
-          subtitle: 'Analyzing single-page application routing through the lens of architectural wayfinding',
+          subtitle:
+            'Analyzing single-page application routing through the lens of architectural wayfinding',
           category: 'Digital Culture',
         },
       ],
@@ -75,21 +79,24 @@ const akademiaConfig = {
         {
           id: 'generative-art-gallery-p5js',
           title: 'Building a Generative Art Gallery with p5.js',
-          subtitle: 'Instance-mode sketches, IntersectionObserver optimization, and canvas lifecycle management',
+          subtitle:
+            'Instance-mode sketches, IntersectionObserver optimization, and canvas lifecycle management',
           category: 'Creative Coding',
           level: 'Intermediate',
         },
         {
           id: 'audio-reactive-visuals-web-audio',
           title: 'Audio-Reactive Visuals with Web Audio API',
-          subtitle: 'Connecting frequency analysis to shader parameters for live audiovisual performance',
+          subtitle:
+            'Connecting frequency analysis to shader parameters for live audiovisual performance',
           category: 'Creative Coding',
           level: 'Advanced',
         },
         {
           id: 'spa-navigation-without-framework',
           title: 'Designing SPA Navigation Without a Framework',
-          subtitle: 'Page class patterns, transition state machines, and hash-based routing from scratch',
+          subtitle:
+            'Page class patterns, transition state machines, and hash-based routing from scratch',
           category: 'Technology & Art',
           level: 'Intermediate',
         },
@@ -104,13 +111,15 @@ const akademiaConfig = {
         {
           id: 'living-pantheon-generative-atmosphere',
           title: 'Living Pantheon: Generative Atmosphere Systems',
-          subtitle: 'Research into chamber-aware ambient visual layers that respond to user navigation and presence',
+          subtitle:
+            'Research into chamber-aware ambient visual layers that respond to user navigation and presence',
           status: 'Ongoing',
         },
         {
           id: 'ogod-visual-album',
           title: 'OGOD: One Game One Day Visual Album',
-          subtitle: '29 procedurally-generated audio-visual compositions exploring the boundaries of music and code',
+          subtitle:
+            '29 procedurally-generated audio-visual compositions exploring the boundaries of music and code',
           status: 'Completed',
         },
       ],
@@ -124,13 +133,15 @@ const akademiaConfig = {
         {
           id: 'nature-of-code-shiffman',
           title: 'The Nature of Code by Daniel Shiffman',
-          subtitle: 'A review of the foundational text for creative coders bridging biology, physics, and generative art',
+          subtitle:
+            'A review of the foundational text for creative coders bridging biology, physics, and generative art',
           type: 'Book',
         },
         {
           id: 'designing-sound-farnell',
           title: 'Designing Sound by Andy Farnell',
-          subtitle: 'Pure Data, procedural audio, and the philosophy of synthesizing reality from first principles',
+          subtitle:
+            'Pure Data, procedural audio, and the philosophy of synthesizing reality from first principles',
           type: 'Book',
         },
       ],

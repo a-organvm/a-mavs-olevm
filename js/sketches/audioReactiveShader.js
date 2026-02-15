@@ -165,7 +165,10 @@ const audioReactiveShaderSketch = function (p) {
       // If file loading failed, create shader from inline sources
       if (shaderError || !audioShader) {
         try {
-          audioShader = p.createShader(vertexShaderSource, fragmentShaderSource);
+          audioShader = p.createShader(
+            vertexShaderSource,
+            fragmentShaderSource
+          );
           shaderLoaded = true;
           console.log('Using inline audio reactive shader');
         } catch (inlineErr) {
@@ -175,7 +178,10 @@ const audioReactiveShaderSketch = function (p) {
       }
 
       // Try to connect audio analyzer
-      if (typeof window.audioBridge !== 'undefined' && !window.audioBridge.isConnected) {
+      if (
+        typeof window.audioBridge !== 'undefined' &&
+        !window.audioBridge.isConnected
+      ) {
         window.audioBridge.connect();
       }
     } catch (err) {
@@ -195,7 +201,10 @@ const audioReactiveShaderSketch = function (p) {
 
     try {
       // Get audio data if available
-      if (typeof window.audioBridge !== 'undefined' && window.audioBridge.isConnected) {
+      if (
+        typeof window.audioBridge !== 'undefined' &&
+        window.audioBridge.isConnected
+      ) {
         audioValues = window.audioBridge.update();
 
         // Update beat intensity with decay
@@ -247,7 +256,10 @@ const audioReactiveShaderSketch = function (p) {
    */
   p.mouseClicked = function () {
     // Try to connect audio analyzer on first click
-    if (typeof window.audioBridge !== 'undefined' && !window.audioBridge.isConnected) {
+    if (
+      typeof window.audioBridge !== 'undefined' &&
+      !window.audioBridge.isConnected
+    ) {
       window.audioBridge.connect();
     }
   };
@@ -343,7 +355,10 @@ const audioReactive2DSketch = function (p) {
     p.background(20, 20, 40, 30);
 
     // Get audio data
-    if (typeof window.audioBridge !== 'undefined' && window.audioBridge.isConnected) {
+    if (
+      typeof window.audioBridge !== 'undefined' &&
+      window.audioBridge.isConnected
+    ) {
       audioValues = window.audioBridge.update();
     } else {
       // Simulate values
@@ -365,7 +380,10 @@ const audioReactive2DSketch = function (p) {
   };
 
   p.mouseClicked = function () {
-    if (typeof window.audioBridge !== 'undefined' && !window.audioBridge.isConnected) {
+    if (
+      typeof window.audioBridge !== 'undefined' &&
+      !window.audioBridge.isConnected
+    ) {
       window.audioBridge.connect();
     }
   };

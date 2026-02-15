@@ -47,7 +47,13 @@ class OGOD3DController {
     this._initTrackSelector();
     this._initAudioButton();
     this._initBackButton();
-    this._loadTrack(this.state.currentTrack, container, loadingScreen, loadingBar, loadingText);
+    this._loadTrack(
+      this.state.currentTrack,
+      container,
+      loadingScreen,
+      loadingBar,
+      loadingText
+    );
   }
 
   /**
@@ -74,7 +80,13 @@ class OGOD3DController {
    * @param {HTMLElement} loadingBar - Progress bar
    * @param {HTMLElement} loadingText - Status text
    */
-  async _loadTrack(trackNum, container, loadingScreen, loadingBar, loadingText) {
+  async _loadTrack(
+    trackNum,
+    container,
+    loadingScreen,
+    loadingBar,
+    loadingText
+  ) {
     if (this.state.isTransitioning) {
       return;
     }
@@ -95,10 +107,7 @@ class OGOD3DController {
     this.state.currentTrack = trackNum;
 
     document.querySelectorAll('.ogod3d-track-btn').forEach(btn => {
-      btn.classList.toggle(
-        'active',
-        parseInt(btn.dataset.track) === trackNum
-      );
+      btn.classList.toggle('active', parseInt(btn.dataset.track) === trackNum);
     });
 
     try {
@@ -156,7 +165,13 @@ class OGOD3DController {
         const loadingScreen = document.getElementById('ogod3d-loading');
         const loadingBar = document.getElementById('ogod3d-loading-bar');
         const loadingText = document.getElementById('ogod3d-loading-text');
-        this._loadTrack(parseInt(num), container, loadingScreen, loadingBar, loadingText);
+        this._loadTrack(
+          parseInt(num),
+          container,
+          loadingScreen,
+          loadingBar,
+          loadingText
+        );
       };
       trackSelector.appendChild(btn);
     });
@@ -205,7 +220,34 @@ class OGOD3DController {
 
 /** Roman numeral lookup table */
 OGOD3DController.ROMAN_NUMERALS = [
-  '', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX',
-  'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX',
-  'XX', 'XXI', 'XXII', 'XXIII', 'XXIV', 'XXV', 'XXVI', 'XXVII', 'XXVIII', 'XXIX',
+  '',
+  'I',
+  'II',
+  'III',
+  'IV',
+  'V',
+  'VI',
+  'VII',
+  'VIII',
+  'IX',
+  'X',
+  'XI',
+  'XII',
+  'XIII',
+  'XIV',
+  'XV',
+  'XVI',
+  'XVII',
+  'XVIII',
+  'XIX',
+  'XX',
+  'XXI',
+  'XXII',
+  'XXIII',
+  'XXIV',
+  'XXV',
+  'XXVI',
+  'XXVII',
+  'XXVIII',
+  'XXIX',
 ];

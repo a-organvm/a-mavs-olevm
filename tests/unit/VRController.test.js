@@ -8,9 +8,8 @@ import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import '../unit/setup.js';
 
 // Import module by evaluating the source
-const VRControllerSource = await import(
-  '../../js/3d/vr/VRController.js?raw'
-).then(m => m.default);
+const VRControllerSource =
+  await import('../../js/3d/vr/VRController.js?raw').then(m => m.default);
 eval(VRControllerSource);
 
 describe('VRController', () => {

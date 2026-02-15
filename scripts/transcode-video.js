@@ -123,7 +123,7 @@ function getVideoInfo(inputPath) {
  * @returns {{width: number, height: number}}
  */
 function getSourceDimensions(videoInfo) {
-  const videoStream = videoInfo.streams.find((s) => s.codec_type === 'video');
+  const videoStream = videoInfo.streams.find(s => s.codec_type === 'video');
   if (videoStream) {
     return {
       width: videoStream.width,
@@ -215,7 +215,7 @@ function generateVariant(inputPath, outputDir, preset) {
     const proc = spawn('ffmpeg', args);
     let stderr = '';
 
-    proc.stderr.on('data', (data) => {
+    proc.stderr.on('data', data => {
       stderr += data.toString();
       // Parse progress from FFmpeg output
       const timeMatch = stderr.match(/time=(\d+:\d+:\d+\.\d+)/);
@@ -224,7 +224,7 @@ function generateVariant(inputPath, outputDir, preset) {
       }
     });
 
-    proc.on('close', (code) => {
+    proc.on('close', code => {
       process.stdout.write('\n');
       if (code === 0) {
         console.log(`    -> ${preset.name}.m3u8`);
@@ -235,7 +235,7 @@ function generateVariant(inputPath, outputDir, preset) {
       }
     });
 
-    proc.on('error', (err) => {
+    proc.on('error', err => {
       console.error(`    Error spawning ffmpeg: ${err.message}`);
       resolve(false);
     });
@@ -299,7 +299,7 @@ function generateThumbnails(inputPath, outputDir, videoInfo) {
 
     const proc = spawn('ffmpeg', args);
 
-    proc.on('close', (code) => {
+    proc.on('close', code => {
       if (code !== 0) {
         console.error('    Error generating thumbnails');
         resolve(false);
@@ -330,7 +330,7 @@ function generateThumbnails(inputPath, outputDir, videoInfo) {
       resolve(true);
     });
 
-    proc.on('error', (err) => {
+    proc.on('error', err => {
       console.error(`    Error: ${err.message}`);
       resolve(false);
     });
@@ -391,15 +391,21 @@ async function main() {
   const options = parseArgs();
 
   if (!options.input || !options.output) {
-    console.log('Usage: node scripts/transcode-video.js <input-file> <output-dir> [options]');
+    console.log(
+      'Usage: node scripts/transcode-video.js <input-file> <output-dir> [options]'
+    );
     console.log('');
     console.log('Options:');
     console.log('  --thumbnails      Generate thumbnail VTT sprite');
-    console.log('  --qualities       Comma-separated quality levels (default: 1080,720,480,360)');
+    console.log(
+      '  --qualities       Comma-separated quality levels (default: 1080,720,480,360)'
+    );
     console.log('  --audio-only      Only transcode audio track');
     console.log('');
     console.log('Example:');
-    console.log('  node scripts/transcode-video.js ./video.mp4 ./output/my-video --thumbnails');
+    console.log(
+      '  node scripts/transcode-video.js ./video.mp4 ./output/my-video --thumbnails'
+    );
     process.exit(1);
   }
 
@@ -428,7 +434,9 @@ async function main() {
   }
 
   const sourceDimensions = getSourceDimensions(videoInfo);
-  console.log(`Source resolution: ${sourceDimensions.width}x${sourceDimensions.height}`);
+  console.log(
+    `Source resolution: ${sourceDimensions.width}x${sourceDimensions.height}`
+  );
 
   // Filter quality presets
   const presets = filterQualityPresets(sourceDimensions, options.qualities);
@@ -437,13 +445,19 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`Generating ${presets.length} quality variant(s): ${presets.map((p) => p.name).join(', ')}\n`);
+  console.log(
+    `Generating ${presets.length} quality variant(s): ${presets.map(p => p.name).join(', ')}\n`
+  );
 
   // Generate variants
   const successfulVariants = [];
 
   for (const preset of presets) {
-    const success = await generateVariant(options.input, options.output, preset);
+    const success = await generateVariant(
+      options.input,
+      options.output,
+      preset
+    );
     if (success) {
       successfulVariants.push(preset);
     }
@@ -469,7 +483,7 @@ async function main() {
 
   console.log('\nGenerated files:');
   console.log(`  ${options.output}/master.m3u8`);
-  successfulVariants.forEach((v) => {
+  successfulVariants.forEach(v => {
     console.log(`  ${options.output}/${v.name}.m3u8`);
   });
   if (options.thumbnails) {
@@ -480,7 +494,7 @@ async function main() {
 }
 
 // Run main function
-main().catch((err) => {
+main().catch(err => {
   console.error('Unexpected error:', err);
   process.exit(1);
 });

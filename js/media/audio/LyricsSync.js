@@ -68,7 +68,9 @@ class LyricsSync {
     this.container = document.querySelector(this.containerSelector);
 
     if (!this.container) {
-      console.warn(`LyricsSync: Container not found (${this.containerSelector})`);
+      console.warn(
+        `LyricsSync: Container not found (${this.containerSelector})`
+      );
       this.container = document.createElement('div');
       this.container.id = this.containerSelector.replace('#', '');
       document.body.appendChild(this.container);
@@ -110,7 +112,7 @@ class LyricsSync {
     const lines = lrcText.split('\n');
     const parsedLyrics = [];
 
-    lines.forEach((line) => {
+    lines.forEach(line => {
       const trimmed = line.trim();
       if (!trimmed) {
         return;
@@ -127,12 +129,12 @@ class LyricsSync {
 
       // Extract lyrics text (everything after the last timestamp)
       let lyricsText = trimmed;
-      timestamps.forEach((ts) => {
+      timestamps.forEach(ts => {
         lyricsText = lyricsText.replace(ts, '').trim();
       });
 
       // Create entry for each timestamp (handle multi-timestamp lines)
-      timestamps.forEach((timestamp) => {
+      timestamps.forEach(timestamp => {
         const time = this.parseTimestamp(timestamp);
         if (time >= 0) {
           parsedLyrics.push({
@@ -188,7 +190,7 @@ class LyricsSync {
 
       // Build timestamp map for O(1) lookups
       this.lyricsMap.clear();
-      this.lyrics.forEach((item) => {
+      this.lyrics.forEach(item => {
         this.lyricsMap.set(item.time, item);
       });
 
@@ -260,7 +262,7 @@ class LyricsSync {
     }
 
     // Listen to player progress events
-    this.playerProgressListener = (event) => {
+    this.playerProgressListener = event => {
       this.updateCurrentLine(event.position * 1000); // Convert seconds to ms
     };
 
@@ -338,7 +340,10 @@ class LyricsSync {
    */
   setCurrentLine(lineIndex) {
     // Remove highlight from previous line
-    if (this.currentLineIndex >= 0 && this.currentLineIndex < this.lineElements.length) {
+    if (
+      this.currentLineIndex >= 0 &&
+      this.currentLineIndex < this.lineElements.length
+    ) {
       const prevElement = this.lineElements[this.currentLineIndex];
       if (prevElement && this.highlightCurrent) {
         prevElement.classList.remove(this.currentLineClass);
@@ -348,7 +353,10 @@ class LyricsSync {
     this.currentLineIndex = lineIndex;
 
     // Highlight new line
-    if (this.currentLineIndex >= 0 && this.currentLineIndex < this.lineElements.length) {
+    if (
+      this.currentLineIndex >= 0 &&
+      this.currentLineIndex < this.lineElements.length
+    ) {
       const currentElement = this.lineElements[this.currentLineIndex];
       if (currentElement && this.highlightCurrent) {
         currentElement.classList.add(this.currentLineClass);
@@ -373,7 +381,11 @@ class LyricsSync {
    * @param {number} lineIndex - Index of the line to scroll to
    */
   scrollToLine(lineIndex) {
-    if (lineIndex < 0 || lineIndex >= this.lineElements.length || !this.container) {
+    if (
+      lineIndex < 0 ||
+      lineIndex >= this.lineElements.length ||
+      !this.container
+    ) {
       return;
     }
 
@@ -409,7 +421,10 @@ class LyricsSync {
    * @returns {Object|null} Current lyric object or null if none
    */
   getCurrentLine() {
-    if (this.currentLineIndex >= 0 && this.currentLineIndex < this.lyrics.length) {
+    if (
+      this.currentLineIndex >= 0 &&
+      this.currentLineIndex < this.lyrics.length
+    ) {
       return this.lyrics[this.currentLineIndex];
     }
     return null;
@@ -484,7 +499,10 @@ class LyricsSync {
   disableHighlighting() {
     this.highlightCurrent = false;
     // Remove current highlighting
-    if (this.currentLineIndex >= 0 && this.currentLineIndex < this.lineElements.length) {
+    if (
+      this.currentLineIndex >= 0 &&
+      this.currentLineIndex < this.lineElements.length
+    ) {
       const element = this.lineElements[this.currentLineIndex];
       if (element) {
         element.classList.remove(this.currentLineClass);
@@ -527,7 +545,7 @@ class LyricsSync {
    */
   emit(event, data) {
     if (this.listeners.has(event)) {
-      this.listeners.get(event).forEach((callback) => {
+      this.listeners.get(event).forEach(callback => {
         try {
           callback(data);
         } catch (err) {

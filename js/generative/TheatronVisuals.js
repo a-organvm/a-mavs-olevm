@@ -84,7 +84,11 @@ class TheatronVisuals {
 
     // Record interaction
     if (typeof JourneyTracker !== 'undefined') {
-      JourneyTracker.getInstance().recordInteraction('theatron', 'visual_generated', { sketch: sketchName });
+      JourneyTracker.getInstance().recordInteraction(
+        'theatron',
+        'visual_generated',
+        { sketch: sketchName }
+      );
     }
   }
 

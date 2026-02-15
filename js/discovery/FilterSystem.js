@@ -51,9 +51,10 @@ class FilterSystem {
    */
   constructor() {
     // Configuration
-    this.config = typeof ETCETER4_CONFIG !== 'undefined'
-      ? ETCETER4_CONFIG.discovery?.filters || {}
-      : {};
+    this.config =
+      typeof ETCETER4_CONFIG !== 'undefined'
+        ? ETCETER4_CONFIG.discovery?.filters || {}
+        : {};
 
     // Current filter state
     this.state = {
@@ -65,7 +66,7 @@ class FilterSystem {
       fromYear: null,
       toYear: null,
       sortBy: 'relevance', // relevance, date, title
-      sortOrder: 'desc',   // asc, desc
+      sortOrder: 'desc', // asc, desc
     };
 
     // State change listeners
@@ -113,7 +114,9 @@ class FilterSystem {
    * @returns {FilterSystem}
    */
   setTags(tags, replace = true) {
-    const normalizedTags = (tags || []).map(t => t.toLowerCase().trim()).filter(Boolean);
+    const normalizedTags = (tags || [])
+      .map(t => t.toLowerCase().trim())
+      .filter(Boolean);
 
     if (replace) {
       this.state.tags = normalizedTags;
@@ -151,12 +154,16 @@ class FilterSystem {
    * @returns {FilterSystem}
    */
   setChambers(chambers, replace = true) {
-    const normalized = (chambers || []).map(c => c.toLowerCase().trim()).filter(Boolean);
+    const normalized = (chambers || [])
+      .map(c => c.toLowerCase().trim())
+      .filter(Boolean);
 
     if (replace) {
       this.state.chambers = normalized;
     } else {
-      this.state.chambers = [...new Set([...this.state.chambers, ...normalized])];
+      this.state.chambers = [
+        ...new Set([...this.state.chambers, ...normalized]),
+      ];
     }
 
     this._emitChange();
@@ -189,7 +196,9 @@ class FilterSystem {
    * @returns {FilterSystem}
    */
   setTypes(types, replace = true) {
-    const normalized = (types || []).map(t => t.toLowerCase().trim()).filter(Boolean);
+    const normalized = (types || [])
+      .map(t => t.toLowerCase().trim())
+      .filter(Boolean);
 
     if (replace) {
       this.state.types = normalized;
@@ -227,7 +236,9 @@ class FilterSystem {
    * @returns {FilterSystem}
    */
   setWings(wings, replace = true) {
-    const normalized = (wings || []).map(w => w.toLowerCase().trim()).filter(Boolean);
+    const normalized = (wings || [])
+      .map(w => w.toLowerCase().trim())
+      .filter(Boolean);
 
     if (replace) {
       this.state.wings = normalized;
@@ -478,9 +489,11 @@ class FilterSystem {
     }
 
     // Emit custom event
-    window.dispatchEvent(new CustomEvent('discovery-filter-change', {
-      detail: { state },
-    }));
+    window.dispatchEvent(
+      new CustomEvent('discovery-filter-change', {
+        detail: { state },
+      })
+    );
   }
 
   /**
@@ -536,11 +549,21 @@ class FilterSystem {
     const params = new URLSearchParams(window.location.search);
 
     const state = {
-      tags: params.get('tags') ? params.get('tags').split(',').filter(Boolean) : [],
-      chambers: params.get('chambers') ? params.get('chambers').split(',').filter(Boolean) : [],
-      types: params.get('types') ? params.get('types').split(',').filter(Boolean) : [],
-      wings: params.get('wings') ? params.get('wings').split(',').filter(Boolean) : [],
-      statuses: params.get('statuses') ? params.get('statuses').split(',').filter(Boolean) : [],
+      tags: params.get('tags')
+        ? params.get('tags').split(',').filter(Boolean)
+        : [],
+      chambers: params.get('chambers')
+        ? params.get('chambers').split(',').filter(Boolean)
+        : [],
+      types: params.get('types')
+        ? params.get('types').split(',').filter(Boolean)
+        : [],
+      wings: params.get('wings')
+        ? params.get('wings').split(',').filter(Boolean)
+        : [],
+      statuses: params.get('statuses')
+        ? params.get('statuses').split(',').filter(Boolean)
+        : [],
       fromYear: params.get('from') ? parseInt(params.get('from'), 10) : null,
       toYear: params.get('to') ? parseInt(params.get('to'), 10) : null,
       sortBy: params.get('sort') || 'relevance',
@@ -597,7 +620,8 @@ class FilterSystem {
     }
 
     const queryString = params.toString();
-    const base = window.location.origin + window.location.pathname + '#discovery';
+    const base =
+      window.location.origin + window.location.pathname + '#discovery';
 
     return queryString ? `${base}?${queryString}` : base;
   }

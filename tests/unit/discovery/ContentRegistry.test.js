@@ -143,22 +143,21 @@ describe('ContentRegistry', () => {
   describe('Singleton Pattern', () => {
     it('should return the same instance on multiple calls', async () => {
       // Inline implementation of singleton check
-      const ContentRegistry = await import(
-        '../../../js/discovery/ContentRegistry.js'
-      )
-        .then(() => window.ContentRegistry)
-        .catch(() => {
-          // Fallback: create mock for test environment
-          class MockRegistry {
-            static getInstance() {
-              if (!window.contentRegistryInstance) {
-                window.contentRegistryInstance = new MockRegistry();
+      const ContentRegistry =
+        await import('../../../js/discovery/ContentRegistry.js')
+          .then(() => window.ContentRegistry)
+          .catch(() => {
+            // Fallback: create mock for test environment
+            class MockRegistry {
+              static getInstance() {
+                if (!window.contentRegistryInstance) {
+                  window.contentRegistryInstance = new MockRegistry();
+                }
+                return window.contentRegistryInstance;
               }
-              return window.contentRegistryInstance;
             }
-          }
-          return MockRegistry;
-        });
+            return MockRegistry;
+          });
 
       if (ContentRegistry) {
         const instance1 = ContentRegistry.getInstance();

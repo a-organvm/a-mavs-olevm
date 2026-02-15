@@ -188,7 +188,11 @@ class SymposionDialogues {
 
     // Record interaction
     if (typeof JourneyTracker !== 'undefined') {
-      JourneyTracker.getInstance().recordInteraction('symposion', 'dialogue_generated', { mode, topic });
+      JourneyTracker.getInstance().recordInteraction(
+        'symposion',
+        'dialogue_generated',
+        { mode, topic }
+      );
     }
 
     // Bind regenerate button

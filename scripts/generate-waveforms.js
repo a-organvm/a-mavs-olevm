@@ -131,11 +131,11 @@ function generateWaveform(inputPath, outputPath) {
 
     let stderr = '';
 
-    proc.stderr.on('data', (data) => {
+    proc.stderr.on('data', data => {
       stderr += data.toString();
     });
 
-    proc.on('close', (code) => {
+    proc.on('close', code => {
       if (code === 0) {
         // Post-process the JSON to normalize peaks
         try {
@@ -154,7 +154,7 @@ function generateWaveform(inputPath, outputPath) {
       }
     });
 
-    proc.on('error', (err) => {
+    proc.on('error', err => {
       console.error(`    Error spawning audiowaveform: ${err.message}`);
       resolve(false);
     });
@@ -225,11 +225,15 @@ async function main() {
   const args = process.argv.slice(2);
 
   if (args.length < 1) {
-    console.log('Usage: node scripts/generate-waveforms.js <input-dir> [output-dir]');
+    console.log(
+      'Usage: node scripts/generate-waveforms.js <input-dir> [output-dir]'
+    );
     console.log('');
     console.log('Arguments:');
     console.log('  input-dir   Directory containing audio files');
-    console.log('  output-dir  Directory for waveform JSON files (default: same as input)');
+    console.log(
+      '  output-dir  Directory for waveform JSON files (default: same as input)'
+    );
     console.log('');
     console.log('Example:');
     console.log(
@@ -294,7 +298,7 @@ async function main() {
 }
 
 // Run main function
-main().catch((err) => {
+main().catch(err => {
   console.error('Unexpected error:', err);
   process.exit(1);
 });

@@ -18,7 +18,8 @@ const SYMPOSION_CONFIG = {
     id: 'symposion',
     name: 'SYMPOSION',
     subtitle: 'Dialogues, interviews, conversations',
-    description: 'Multi-voice format exploring collaborative discourse, artistic dialogue, and conversational thought.',
+    description:
+      'Multi-voice format exploring collaborative discourse, artistic dialogue, and conversational thought.',
     wing: 'west',
     color: '#722F37',
     secondaryColor: '#F5F5DC',
@@ -36,7 +37,8 @@ const SYMPOSION_CONFIG = {
       date: '2024-01-15',
       speakers: ['ET CETER4', '[Guest Name]'],
       speakerColors: ['#722F37', '#A0522D'],
-      excerpt: 'A structured exploration of artistic practice and creative philosophy.',
+      excerpt:
+        'A structured exploration of artistic practice and creative philosophy.',
       featured: true,
       file: 'interviews/interview-001.html',
     },
@@ -65,7 +67,8 @@ const SYMPOSION_CONFIG = {
       date: '2024-01-10',
       speakers: ['ET CETER4', 'Collaborator A', 'Collaborator B'],
       speakerColors: ['#722F37', '#A0522D', '#8B4513'],
-      excerpt: 'An informal dialogue exploring the intersection of music, code, and visual art.',
+      excerpt:
+        'An informal dialogue exploring the intersection of music, code, and visual art.',
       featured: true,
       file: 'conversations/conversation-001.html',
     },
@@ -76,7 +79,8 @@ const SYMPOSION_CONFIG = {
       date: '2023-11-30',
       speakers: ['ET CETER4', 'Artist'],
       speakerColors: ['#722F37', '#CD919E'],
-      excerpt: 'Exploring aesthetics of error, digital decay, and intentional glitch in artistic practice.',
+      excerpt:
+        'Exploring aesthetics of error, digital decay, and intentional glitch in artistic practice.',
       featured: false,
       file: 'conversations/conversation-002.html',
     },
@@ -145,10 +149,10 @@ const SYMPOSION_CONFIG = {
     secondary: '#F5F5DC',
     dark: '#3E1B23',
     light: '#A0522D',
-    accent1: '#8B4513',     // Chocolate
-    accent2: '#CD919E',     // Rosy brown
-    accent3: '#A0522D',     // Sienna
-    accent4: '#8B7355',     // Burlywood
+    accent1: '#8B4513', // Chocolate
+    accent2: '#CD919E', // Rosy brown
+    accent3: '#A0522D', // Sienna
+    accent4: '#8B7355', // Burlywood
     text: '#1a1a1a',
     textLight: '#666666',
     border: 'rgba(114, 47, 55, 0.2)',
@@ -232,7 +236,8 @@ const SYMPOSION_CONFIG = {
     // Open Graph tags
     og: {
       title: 'SYMPOSION | Dialogues & Conversations',
-      description: 'Multi-voice explorations of artistic practice and creative philosophy',
+      description:
+        'Multi-voice explorations of artistic practice and creative philosophy',
       image: 'img/og/symposion-og.jpg',
     },
     // Schema.org markup for interviews

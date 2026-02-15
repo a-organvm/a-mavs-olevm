@@ -54,7 +54,8 @@ class AkademiaRenderer {
    */
   _renderCard(sectionId, sectionTitle, item) {
     const card = document.createElement('div');
-    card.className = 'chamber-card ba b--white-20 br3 pa4 ma3 mw6 hover-bg-white-10';
+    card.className =
+      'chamber-card ba b--white-20 br3 pa4 ma3 mw6 hover-bg-white-10';
     card.dataset.section = sectionId;
     card.style.borderLeft = `3px solid ${this.config.primaryColor}`;
 
@@ -97,9 +98,7 @@ class AkademiaRenderer {
         return;
       }
       section.items.forEach(item => {
-        container.appendChild(
-          this._renderCard(sectionId, section.title, item)
-        );
+        container.appendChild(this._renderCard(sectionId, section.title, item));
       });
     });
   }

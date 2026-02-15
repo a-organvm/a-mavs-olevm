@@ -172,7 +172,7 @@ class EnhancedVideoPlayer {
       this.emit('canplay');
     });
 
-    this.videoElement.addEventListener('error', (e) => {
+    this.videoElement.addEventListener('error', e => {
       console.error('Video error:', e);
       this.emit('error', { error: this.videoElement.error });
     });
@@ -203,7 +203,10 @@ class EnhancedVideoPlayer {
     };
 
     document.addEventListener('fullscreenchange', fullscreenChangeHandler);
-    document.addEventListener('webkitfullscreenchange', fullscreenChangeHandler);
+    document.addEventListener(
+      'webkitfullscreenchange',
+      fullscreenChangeHandler
+    );
     document.addEventListener('mozfullscreenchange', fullscreenChangeHandler);
     document.addEventListener('MSFullscreenChange', fullscreenChangeHandler);
   }
@@ -224,7 +227,10 @@ class EnhancedVideoPlayer {
    */
   handleKeydown(event) {
     // Only handle when video player is active (focused or fullscreen)
-    if (!this.container.contains(document.activeElement) && !this.isFullscreen) {
+    if (
+      !this.container.contains(document.activeElement) &&
+      !this.isFullscreen
+    ) {
       return;
     }
 
@@ -439,7 +445,9 @@ class EnhancedVideoPlayer {
         this.hlsInstance.on(Hls.Events.FRAG_BUFFERED, () => {
           this.emit('buffered');
         });
-      } else if (this.videoElement.canPlayType('application/vnd.apple.mpegurl')) {
+      } else if (
+        this.videoElement.canPlayType('application/vnd.apple.mpegurl')
+      ) {
         // Native HLS support (Safari)
         this.videoElement.src = url;
         this.videoElement.load();
@@ -464,7 +472,7 @@ class EnhancedVideoPlayer {
       return Promise.reject(new Error('No video element'));
     }
 
-    return this.videoElement.play().catch((err) => {
+    return this.videoElement.play().catch(err => {
       console.error('Play error:', err);
       this.emit('error', { error: err });
       throw err;
@@ -517,7 +525,10 @@ class EnhancedVideoPlayer {
       return;
     }
 
-    const clampedTime = Math.max(0, Math.min(seconds, this.duration || Infinity));
+    const clampedTime = Math.max(
+      0,
+      Math.min(seconds, this.duration || Infinity)
+    );
     this.videoElement.currentTime = clampedTime;
     this.emit('seek', { time: clampedTime });
   }
@@ -552,7 +563,7 @@ class EnhancedVideoPlayer {
     } else if (typeof quality === 'string') {
       // Try to match by name (e.g., '720p')
       const levelIndex = this.hlsInstance.levels.findIndex(
-        (level) => `${level.height}p` === quality
+        level => `${level.height}p` === quality
       );
       if (levelIndex >= 0) {
         this.hlsInstance.currentLevel = levelIndex;
@@ -805,7 +816,7 @@ class EnhancedVideoPlayer {
       return;
     }
     this.eventListeners[eventName] = this.eventListeners[eventName].filter(
-      (cb) => cb !== callback
+      cb => cb !== callback
     );
   }
 
@@ -819,7 +830,7 @@ class EnhancedVideoPlayer {
     if (!this.eventListeners[eventName]) {
       return;
     }
-    this.eventListeners[eventName].forEach((callback) => {
+    this.eventListeners[eventName].forEach(callback => {
       try {
         callback(data);
       } catch (err) {

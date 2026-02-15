@@ -4,12 +4,12 @@ A collection of four Google Gemini AI demo projects showcasing real-time voice i
 
 ## Project Overview
 
-| Project | Type | Primary Purpose | Tech Stack |
-|---------|------|-----------------|------------|
-| **audio-orb** | Interactive Demo | Real-time voice AI with 3D audio visualization | Lit + Three.js + Gemini Live Audio |
-| **gemini-ink-studio** | Creative Tool | AI voice-controlled digital painting with fluid dynamics | React + Custom LBM Physics + Gemini |
-| **p5js-playground** | IDE/Playground | AI-powered p5.js sketch generation via chat | Lit + Gemini 2.5 Pro + p5.js |
-| **synthwave-space** | Game Showcase | AI-generated 3D arcade game demonstration | React + Three.js + Gemini |
+| Project               | Type             | Primary Purpose                                          | Tech Stack                          |
+| --------------------- | ---------------- | -------------------------------------------------------- | ----------------------------------- |
+| **audio-orb**         | Interactive Demo | Real-time voice AI with 3D audio visualization           | Lit + Three.js + Gemini Live Audio  |
+| **gemini-ink-studio** | Creative Tool    | AI voice-controlled digital painting with fluid dynamics | React + Custom LBM Physics + Gemini |
+| **p5js-playground**   | IDE/Playground   | AI-powered p5.js sketch generation via chat              | Lit + Gemini 2.5 Pro + p5.js        |
+| **synthwave-space**   | Game Showcase    | AI-generated 3D arcade game demonstration                | React + Three.js + Gemini           |
 
 ---
 
@@ -17,65 +17,67 @@ A collection of four Google Gemini AI demo projects showcasing real-time voice i
 
 ### Audio Capabilities
 
-| Feature | audio-orb | gemini-ink-studio | p5js-playground | synthwave-space |
-|---------|:---------:|:-----------------:|:---------------:|:---------------:|
-| Real-time microphone | ✅ | ✅ | ❌ | ❌ |
-| Audio playback | ✅ | ✅ | ❌ | ❌ |
-| FFT analysis | ✅ (32-bin) | ❌ | ❌ | ❌ |
-| Audio-reactive visuals | ✅ | ❌ | ❌ | ❌ |
-| Voice AI interaction | ✅ | ✅ | ❌ | ❌ |
-| Web Audio API | ✅ | ✅ | ❌ | ❌ |
+| Feature                |  audio-orb  | gemini-ink-studio | p5js-playground | synthwave-space |
+| ---------------------- | :---------: | :---------------: | :-------------: | :-------------: |
+| Real-time microphone   |     ✅      |        ✅         |       ❌        |       ❌        |
+| Audio playback         |     ✅      |        ✅         |       ❌        |       ❌        |
+| FFT analysis           | ✅ (32-bin) |        ❌         |       ❌        |       ❌        |
+| Audio-reactive visuals |     ✅      |        ❌         |       ❌        |       ❌        |
+| Voice AI interaction   |     ✅      |        ✅         |       ❌        |       ❌        |
+| Web Audio API          |     ✅      |        ✅         |       ❌        |       ❌        |
 
 ### Visual/Graphics Capabilities
 
-| Feature | audio-orb | gemini-ink-studio | p5js-playground | synthwave-space |
-|---------|:---------:|:-----------------:|:---------------:|:---------------:|
-| 3D rendering | ✅ Three.js | ❌ | ✅ p5.js WEBGL | ✅ Three.js |
-| 2D Canvas | ❌ | ✅ LBM physics | ✅ p5.js | ❌ |
-| Custom shaders | ✅ GLSL | ❌ | ⚠️ (generated) | ✅ (generated) |
-| Post-processing | ✅ Bloom/FXAA | ❌ | ❌ | ✅ Bloom |
-| Particle systems | ✅ | ❌ | ⚠️ (generated) | ✅ (generated) |
-| Physics simulation | ❌ | ✅ Fluid dynamics | ⚠️ (generated) | ⚠️ (generated) |
+| Feature            |   audio-orb   | gemini-ink-studio | p5js-playground | synthwave-space |
+| ------------------ | :-----------: | :---------------: | :-------------: | :-------------: |
+| 3D rendering       |  ✅ Three.js  |        ❌         | ✅ p5.js WEBGL  |   ✅ Three.js   |
+| 2D Canvas          |      ❌       |  ✅ LBM physics   |    ✅ p5.js     |       ❌        |
+| Custom shaders     |    ✅ GLSL    |        ❌         | ⚠️ (generated)  | ✅ (generated)  |
+| Post-processing    | ✅ Bloom/FXAA |        ❌         |       ❌        |    ✅ Bloom     |
+| Particle systems   |      ✅       |        ❌         | ⚠️ (generated)  | ✅ (generated)  |
+| Physics simulation |      ❌       | ✅ Fluid dynamics | ⚠️ (generated)  | ⚠️ (generated)  |
 
 ### AI/Gemini Integration
 
-| Feature | audio-orb | gemini-ink-studio | p5js-playground | synthwave-space |
-|---------|:---------:|:-----------------:|:---------------:|:---------------:|
-| Gemini Live Audio | ✅ 2.5 Flash | ✅ 2.5 Flash | ❌ | ❌ |
-| Gemini Text API | ❌ | ❌ | ✅ 2.5 Pro | ✅ 2.5/3 Pro |
-| Voice commands | ✅ | ✅ Tool calling | ❌ | ❌ |
-| Code generation | ❌ | ✅ Sketch gen | ✅ Full sketches | ✅ Full games |
-| Streaming responses | ✅ | ✅ | ✅ | ❌ (one-shot) |
-| Error recovery | ❌ | ❌ | ✅ AI debugging | ❌ |
+| Feature             |  audio-orb   | gemini-ink-studio | p5js-playground  | synthwave-space |
+| ------------------- | :----------: | :---------------: | :--------------: | :-------------: |
+| Gemini Live Audio   | ✅ 2.5 Flash |   ✅ 2.5 Flash    |        ❌        |       ❌        |
+| Gemini Text API     |      ❌      |        ❌         |    ✅ 2.5 Pro    |  ✅ 2.5/3 Pro   |
+| Voice commands      |      ✅      |  ✅ Tool calling  |        ❌        |       ❌        |
+| Code generation     |      ❌      |   ✅ Sketch gen   | ✅ Full sketches |  ✅ Full games  |
+| Streaming responses |      ✅      |        ✅         |        ✅        |  ❌ (one-shot)  |
+| Error recovery      |      ❌      |        ❌         | ✅ AI debugging  |       ❌        |
 
 ### Platform & Architecture
 
-| Feature | audio-orb | gemini-ink-studio | p5js-playground | synthwave-space |
-|---------|:---------:|:-----------------:|:---------------:|:---------------:|
-| Framework | Lit | React | Lit | React |
-| TypeScript | ✅ | ✅ | ✅ | ✅ |
-| Build tool | Vite | Vite | Vite | Vite |
-| Iframe sandbox | ❌ | ❌ | ✅ | ✅ |
-| Mobile support | ⚠️ | ✅ Touch | ✅ | ✅ Virtual joystick |
-| API key required | ✅ Gemini | ✅ Gemini | ✅ Gemini | ✅ Gemini |
+| Feature          | audio-orb | gemini-ink-studio | p5js-playground |   synthwave-space   |
+| ---------------- | :-------: | :---------------: | :-------------: | :-----------------: |
+| Framework        |    Lit    |       React       |       Lit       |        React        |
+| TypeScript       |    ✅     |        ✅         |       ✅        |         ✅          |
+| Build tool       |   Vite    |       Vite        |      Vite       |        Vite         |
+| Iframe sandbox   |    ❌     |        ❌         |       ✅        |         ✅          |
+| Mobile support   |    ⚠️     |     ✅ Touch      |       ✅        | ✅ Virtual joystick |
+| API key required | ✅ Gemini |     ✅ Gemini     |    ✅ Gemini    |      ✅ Gemini      |
 
 ### Unique Features
 
-| Project | Standout Capabilities |
-|---------|----------------------|
-| **audio-orb** | Real-time voice conversation with AI, audio-reactive 3D sphere, dual input/output FFT |
+| Project               | Standout Capabilities                                                                  |
+| --------------------- | -------------------------------------------------------------------------------------- |
+| **audio-orb**         | Real-time voice conversation with AI, audio-reactive 3D sphere, dual input/output FFT  |
 | **gemini-ink-studio** | Lattice Boltzmann fluid sim, CMY color model, voice-controlled painting, brush physics |
-| **p5js-playground** | Chat-based code generation, error→AI fix loop, extended thinking display |
-| **synthwave-space** | Model comparison (2.5 vs 3), remix system, complete game generation |
+| **p5js-playground**   | Chat-based code generation, error→AI fix loop, extended thinking display               |
+| **synthwave-space**   | Model comparison (2.5 vs 3), remix system, complete game generation                    |
 
 ---
 
 ## Detailed Project Breakdown
 
 ### audio-orb
+
 **Real-time Voice AI with 3D Audio Visualization**
 
 **Architecture:**
+
 ```
 Microphone → MediaStreamSource → ScriptProcessor → Analyser (FFT)
                                        ↓
@@ -87,6 +89,7 @@ Microphone → MediaStreamSource → ScriptProcessor → Analyser (FFT)
 ```
 
 **Key Components:**
+
 - `index.tsx` - Main Lit component, Gemini connection, audio contexts
 - `visual-3d.ts` - Three.js scene with icosahedron sphere + backdrop
 - `sphere-shader.ts` - GLSL vertex shader with audio displacement
@@ -94,6 +97,7 @@ Microphone → MediaStreamSource → ScriptProcessor → Analyser (FFT)
 - `utils.ts` - PCM ↔ Base64 audio encoding/decoding
 
 **Technical Highlights:**
+
 - Dual FFT analysis (input mic + output speaker)
 - Post-processing: EffectComposer → BloomPass → FXAAPass
 - EXR environment map for PBR reflections
@@ -103,9 +107,11 @@ Microphone → MediaStreamSource → ScriptProcessor → Analyser (FFT)
 ---
 
 ### gemini-ink-studio
+
 **AI Voice-Controlled Digital Painting with Fluid Dynamics**
 
 **Architecture:**
+
 ```
 Voice Input → Gemini Live Audio → Tool Calling → UI State
                                                     ↓
@@ -113,12 +119,14 @@ Mouse/Touch → InkSimulation (LBM) → Canvas 2D → Display
 ```
 
 **Key Components:**
+
 - `App.tsx` - Main React component (800+ lines), state management
 - `inkSimulation.ts` - Lattice Boltzmann Method physics engine
 - `liveApi.ts` - Gemini voice connection with tool declarations
 - `ControlPanel.tsx` - Tabbed settings UI
 
 **Fluid Simulation Details:**
+
 - D2Q9 lattice (9-direction velocity)
 - CMY pigment transport (separate cyan/magenta/yellow channels)
 - Paper fiber density affects ink absorption
@@ -126,6 +134,7 @@ Mouse/Touch → InkSimulation (LBM) → Canvas 2D → Display
 - Configurable: viscosity, drying speed, paper resistance
 
 **AI Tool Calling:**
+
 - Brush parameters (size, water, ink, type)
 - Paper settings (type, roughness, resolution)
 - Color mixing (HSV adjustments)
@@ -136,9 +145,11 @@ Mouse/Touch → InkSimulation (LBM) → Canvas 2D → Display
 ---
 
 ### p5js-playground
+
 **AI-Powered p5.js IDE with Chat Interface**
 
 **Architecture:**
+
 ```
 User Prompt → Gemini 2.5 Pro (streaming) → Markdown + Code
                                               ↓
@@ -148,11 +159,13 @@ User Prompt → Gemini 2.5 Pro (streaming) → Markdown + Code
 ```
 
 **Key Components:**
+
 - `playground.tsx` - Main Lit element with chat + code tabs
 - `index.tsx` - Gemini chat setup with thinking config
 - `index.html` - iframe template with p5.js CDN
 
 **Notable Patterns:**
+
 - Extended thinking mode for better reasoning (`includeThoughts: true`)
 - Error recovery loop: error → "Improve" button → AI debugging
 - Syntax highlighting with highlight.js + marked
@@ -162,9 +175,11 @@ User Prompt → Gemini 2.5 Pro (streaming) → Markdown + Code
 ---
 
 ### synthwave-space
+
 **AI-Generated 3D Arcade Game Showcase**
 
 **Architecture:**
+
 ```
 Prompt → Gemini (2.5 or 3 Pro) → Complete HTML Game
                                        ↓
@@ -174,11 +189,13 @@ Prompt → Gemini (2.5 or 3 Pro) → Complete HTML Game
 ```
 
 **Key Components:**
+
 - `index.tsx` - React app with model switcher + remix UI
 - `init/gemini2p5.html` - Pre-generated game (2.5 Pro version)
 - `init/gemini3.html` - Pre-generated game (3 Pro version)
 
 **Generated Game Features:**
+
 - Three.js scene with synthwave aesthetic
 - Third-person spaceship controls (WASD/arrows)
 - Laser firing (spacebar) + collision detection
@@ -187,6 +204,7 @@ Prompt → Gemini (2.5 or 3 Pro) → Complete HTML Game
 - Mobile virtual joystick
 
 **Remix System:**
+
 - "Hyper Speed" - Faster gameplay
 - "Vaporwave Filter" - Visual style change
 - "God Mode" - Invincibility
@@ -197,46 +215,48 @@ Prompt → Gemini (2.5 or 3 Pro) → Complete HTML Game
 
 ## Use Case Recommendations
 
-| Use Case | Recommended Project(s) |
-|----------|------------------------|
+| Use Case                          | Recommended Project(s)        |
+| --------------------------------- | ----------------------------- |
 | Voice-controlled art installation | audio-orb + gemini-ink-studio |
-| Audio-reactive 3D visuals | audio-orb |
-| Digital painting with physics | gemini-ink-studio |
-| AI code generation IDE | p5js-playground |
-| Game generation/prototyping | synthwave-space |
-| Creative coding education | p5js-playground |
-| Voice AI experimentation | audio-orb, gemini-ink-studio |
-| Three.js + AI integration | audio-orb, synthwave-space |
+| Audio-reactive 3D visuals         | audio-orb                     |
+| Digital painting with physics     | gemini-ink-studio             |
+| AI code generation IDE            | p5js-playground               |
+| Game generation/prototyping       | synthwave-space               |
+| Creative coding education         | p5js-playground               |
+| Voice AI experimentation          | audio-orb, gemini-ink-studio  |
+| Three.js + AI integration         | audio-orb, synthwave-space    |
 
 ---
 
 ## ETCETER4 Compatibility Reference
 
 ### Current Project Stack
-| Component | Technology | Location |
-|-----------|-----------|----------|
-| 3D Rendering | Three.js 0.160.0 | ogod-3d.html, js/3d/ |
-| Audio Synthesis | Tone.js 14.8.49 | OGODAudioEngine.js |
-| Audio Playback | Howler.js | audioPlayer.js |
-| Audio Analysis | AudioAnalyzerBridge | js/audioAnalyzerBridge.js |
-| Generative Art | p5.js | js/sketches/ |
-| UI Framework | jQuery + Global Scope | js/page.js, js/main.js |
-| UI Sounds | SoundJS | js/uiSounds.js |
+
+| Component       | Technology            | Location                  |
+| --------------- | --------------------- | ------------------------- |
+| 3D Rendering    | Three.js 0.160.0      | ogod-3d.html, js/3d/      |
+| Audio Synthesis | Tone.js 14.8.49       | OGODAudioEngine.js        |
+| Audio Playback  | Howler.js             | audioPlayer.js            |
+| Audio Analysis  | AudioAnalyzerBridge   | js/audioAnalyzerBridge.js |
+| Generative Art  | p5.js                 | js/sketches/              |
+| UI Framework    | jQuery + Global Scope | js/page.js, js/main.js    |
+| UI Sounds       | SoundJS               | js/uiSounds.js            |
 
 ### Compatibility Summary
 
-| Project | Web Compatible | Reusable Components | Integration Effort |
-|---------|---------------|---------------------|-------------------|
-| **audio-orb** | ✅ Direct | Three.js scene, FFT analyser, GLSL shaders | Low |
-| **gemini-ink-studio** | ✅ Direct | InkSimulation class, Gemini Live client | Medium |
-| **p5js-playground** | ✅ Direct | Code generation patterns, iframe sandbox | Low |
-| **synthwave-space** | ✅ Direct | Game generation prompts, remix system | Low |
+| Project               | Web Compatible | Reusable Components                        | Integration Effort |
+| --------------------- | -------------- | ------------------------------------------ | ------------------ |
+| **audio-orb**         | ✅ Direct      | Three.js scene, FFT analyser, GLSL shaders | Low                |
+| **gemini-ink-studio** | ✅ Direct      | InkSimulation class, Gemini Live client    | Medium             |
+| **p5js-playground**   | ✅ Direct      | Code generation patterns, iframe sandbox   | Low                |
+| **synthwave-space**   | ✅ Direct      | Game generation prompts, remix system      | Low                |
 
 ---
 
 ## Integration Notes by Project
 
 ### audio-orb
+
 **Reusable for:** Voice-controlled experiences, audio-reactive 3D visuals
 
 **Extractable Components:**
@@ -249,6 +269,7 @@ Prompt → Gemini (2.5 or 3 Pro) → Complete HTML Game
 | Gemini Client | `index.tsx` | Live audio streaming setup |
 
 **Standalone Usage Pattern:**
+
 ```javascript
 // Remove Lit dependency
 const scene = new THREE.Scene();
@@ -263,6 +284,7 @@ function animate() {
 ```
 
 **Considerations:**
+
 - EXR environment map is 1.8MB (cache or replace)
 - Gemini API: ~$0.08-0.30/min voice
 - Lit web components use Shadow DOM (encapsulated)
@@ -270,6 +292,7 @@ function animate() {
 ---
 
 ### gemini-ink-studio
+
 **Reusable for:** Fluid simulations, digital painting, physics-based art
 
 **Extractable Components:**
@@ -280,12 +303,13 @@ function animate() {
 | Brush System | (in App.tsx) | Pressure-sensitive input handling |
 
 **Standalone Usage Pattern:**
+
 ```javascript
 // Framework-agnostic fluid simulation
 const sim = new InkSimulation(512, 512);
 sim.generatePaper('rice', 50, 50, 10);
 
-canvas.addEventListener('pointermove', (e) => {
+canvas.addEventListener('pointermove', e => {
   if (e.buttons) {
     sim.addInput(e.offsetX, e.offsetY, velocity, e.pressure, currentColor);
   }
@@ -299,6 +323,7 @@ function animate() {
 ```
 
 **Considerations:**
+
 - CMY color model (different from RGB)
 - Performance scales with resolution (256/512/1024)
 - React state management tightly coupled - needs extraction
@@ -306,6 +331,7 @@ function animate() {
 ---
 
 ### p5js-playground
+
 **Reusable for:** AI code generation, creative coding tools, sandboxed execution
 
 **Extractable Components:**
@@ -317,12 +343,13 @@ function animate() {
 | Error Loop | (message handler) | Runtime error → AI fix |
 
 **Standalone Usage Pattern:**
+
 ```javascript
 // Code generation without UI
 async function generateSketch(prompt) {
   const response = await gemini.generateContentStream({
-    contents: [{ role: "user", parts: [{ text: prompt }] }],
-    systemInstruction: "Write p5.js code. Return only code block."
+    contents: [{ role: 'user', parts: [{ text: prompt }] }],
+    systemInstruction: 'Write p5.js code. Return only code block.',
   });
 
   let code = '';
@@ -339,6 +366,7 @@ iframe.srcdoc = `<script src="p5.min.js"></script><script>${code}</script>`;
 ```
 
 **Considerations:**
+
 - Gemini 2.5 Pro with extended thinking
 - iframe sandbox for safe code execution
 - postMessage for play/stop/error communication
@@ -346,6 +374,7 @@ iframe.srcdoc = `<script src="p5.min.js"></script><script>${code}</script>`;
 ---
 
 ### synthwave-space
+
 **Reusable for:** AI game generation, Three.js scene generation, remix systems
 
 **Extractable Components:**
@@ -357,6 +386,7 @@ iframe.srcdoc = `<script src="p5.min.js"></script><script>${code}</script>`;
 | Pre-built Games | `init/*.html` | Working Three.js games |
 
 **Standalone Usage Pattern:**
+
 ```javascript
 // Generate Three.js scene
 const scenePrompt = `
@@ -376,13 +406,14 @@ iframe.srcdoc = html;
 // Remix existing
 async function remix(currentHtml, modification) {
   const response = await gemini.generateContent({
-    contents: [{ text: `Modify: ${modification}\n\nCurrent:\n${currentHtml}` }]
+    contents: [{ text: `Modify: ${modification}\n\nCurrent:\n${currentHtml}` }],
   });
   return cleanMarkdown(response.text());
 }
 ```
 
 **Considerations:**
+
 - One-shot generation (not streaming)
 - Pre-generated games work offline
 - Parent ↔ iframe pause/resume protocol
@@ -392,30 +423,33 @@ async function remix(currentHtml, modification) {
 ## Quick Reference
 
 ### Immediate Use (No Modification)
-| Project | How to Use | Location |
-|---------|-----------|----------|
-| p5js-playground | Embed via iframe or run standalone | `absorb-alchemize/p5js-playground/` |
-| synthwave-space | Host HTML files or embed games | `absorb-alchemize/synthwave-space/init/` |
+
+| Project         | How to Use                         | Location                                 |
+| --------------- | ---------------------------------- | ---------------------------------------- |
+| p5js-playground | Embed via iframe or run standalone | `absorb-alchemize/p5js-playground/`      |
+| synthwave-space | Host HTML files or embed games     | `absorb-alchemize/synthwave-space/init/` |
 
 ### Requires Extraction
-| Project | Component | Effort |
-|---------|-----------|--------|
-| audio-orb | Three.js visualizer + shaders | Low - remove Lit wrapper |
-| audio-orb | Gemini Live Audio client | Low - standalone class |
-| gemini-ink-studio | InkSimulation engine | Medium - extract from React |
-| gemini-ink-studio | Voice tool calling | Low - adapt liveApi.ts |
+
+| Project           | Component                     | Effort                      |
+| ----------------- | ----------------------------- | --------------------------- |
+| audio-orb         | Three.js visualizer + shaders | Low - remove Lit wrapper    |
+| audio-orb         | Gemini Live Audio client      | Low - standalone class      |
+| gemini-ink-studio | InkSimulation engine          | Medium - extract from React |
+| gemini-ink-studio | Voice tool calling            | Low - adapt liveApi.ts      |
 
 ---
 
 ## API Requirements
 
-| Service | Used By | Cost Estimate |
-|---------|---------|---------------|
+| Service                       | Used By                      | Cost Estimate         |
+| ----------------------------- | ---------------------------- | --------------------- |
 | Gemini Live Audio (2.5 Flash) | audio-orb, gemini-ink-studio | ~$0.08-0.30/min voice |
-| Gemini Text (2.5 Pro) | p5js-playground | ~$0.00125/1K tokens |
-| Gemini Text (3 Pro Preview) | synthwave-space | ~$0.00125/1K tokens |
+| Gemini Text (2.5 Pro)         | p5js-playground              | ~$0.00125/1K tokens   |
+| Gemini Text (3 Pro Preview)   | synthwave-space              | ~$0.00125/1K tokens   |
 
 **API Key Setup:**
+
 ```bash
 # All projects use environment variables
 echo "GEMINI_API_KEY=your_key_here" > .env.local
@@ -428,6 +462,7 @@ echo "API_KEY=your_key_here" > .env.local
 ## File Inventory
 
 ### absorb-alchemize/audio-orb/
+
 ```
 ├── index.html          # Entry point
 ├── index.tsx           # Main Lit component + Gemini connection
@@ -443,6 +478,7 @@ echo "API_KEY=your_key_here" > .env.local
 ```
 
 ### absorb-alchemize/gemini-ink-studio/
+
 ```
 ├── index.html          # Entry point
 ├── index.tsx           # React bootstrap
@@ -460,6 +496,7 @@ echo "API_KEY=your_key_here" > .env.local
 ```
 
 ### absorb-alchemize/p5js-playground/
+
 ```
 ├── index.html          # Entry point + iframe template
 ├── index.tsx           # Lit setup + Gemini chat
@@ -470,6 +507,7 @@ echo "API_KEY=your_key_here" > .env.local
 ```
 
 ### absorb-alchemize/synthwave-space/
+
 ```
 ├── index.html          # Entry point
 ├── index.tsx           # React app + remix UI
@@ -505,13 +543,13 @@ All projects use Vite and follow the same pattern.
 
 ## Future Integration Ideas
 
-| Idea | Projects Involved | Notes |
-|------|-------------------|-------|
-| Voice-controlled visual experiences | audio-orb + Tone.js | Real-time conversation with AI narrator |
-| Audio-reactive fluid painting | gemini-ink-studio + AudioAnalyzer | Sound drives ink parameters |
-| AI-generated ETCETER4 content | p5js-playground | Generate new sketches on demand |
-| Custom Three.js environments | synthwave-space prompts | Generate track-specific visuals |
-| Offline game collection | synthwave-space init/ | Host pre-generated games |
+| Idea                                | Projects Involved                 | Notes                                   |
+| ----------------------------------- | --------------------------------- | --------------------------------------- |
+| Voice-controlled visual experiences | audio-orb + Tone.js               | Real-time conversation with AI narrator |
+| Audio-reactive fluid painting       | gemini-ink-studio + AudioAnalyzer | Sound drives ink parameters             |
+| AI-generated ETCETER4 content       | p5js-playground                   | Generate new sketches on demand         |
+| Custom Three.js environments        | synthwave-space prompts           | Generate track-specific visuals         |
+| Offline game collection             | synthwave-space init/             | Host pre-generated games                |
 
 ---
 

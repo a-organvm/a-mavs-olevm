@@ -10,8 +10,7 @@ View your app in AI Studio: https://ai.studio/apps/bundled/live_audio
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
-
+**Prerequisites:** Node.js
 
 1. Install dependencies:
    `npm install`

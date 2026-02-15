@@ -7,7 +7,7 @@
 'use strict';
 
 // eslint-disable-next-line no-unused-vars
-const OdeionChamber = (function() {
+const OdeionChamber = (function () {
   let currentCategory = 'all';
   let currentTrack = null;
   let audioPlayer = null;
@@ -31,7 +31,7 @@ const OdeionChamber = (function() {
     const sectionButtons = document.querySelectorAll('.section-nav-btn');
 
     sectionButtons.forEach(btn => {
-      btn.addEventListener('click', function(e) {
+      btn.addEventListener('click', function (e) {
         e.preventDefault();
         const section = this.getAttribute('data-section');
         filterByCategory(section);
@@ -41,7 +41,7 @@ const OdeionChamber = (function() {
     // Volume control
     const volumeSlider = document.getElementById('volume-slider');
     if (volumeSlider) {
-      volumeSlider.addEventListener('input', function() {
+      volumeSlider.addEventListener('input', function () {
         const volume = this.value;
         document.getElementById('volume-percent').textContent = volume + '%';
         if (audioPlayer) {
@@ -160,7 +160,8 @@ const OdeionChamber = (function() {
     if (coverEl && coverUrl) {
       coverEl.src = coverUrl;
       coverEl.style.display = 'block';
-      const placeholderText = coverEl.parentElement.querySelector('.placeholder-text');
+      const placeholderText =
+        coverEl.parentElement.querySelector('.placeholder-text');
       if (placeholderText) {
         placeholderText.style.display = 'none';
       }
@@ -211,7 +212,9 @@ const OdeionChamber = (function() {
     document.querySelectorAll('.section-nav-btn').forEach(btn => {
       btn.classList.remove('active');
     });
-    document.querySelector(`[data-section="${category}"]`).classList.add('active');
+    document
+      .querySelector(`[data-section="${category}"]`)
+      .classList.add('active');
 
     // Render filtered grid
     renderMusicGrid(category);
@@ -227,7 +230,8 @@ const OdeionChamber = (function() {
     const items = ODEION_CONFIG.getItemsByCategory(category);
 
     if (items.length === 0) {
-      container.innerHTML = '<p class="tc white-70 w-100">No items in this category yet.</p>';
+      container.innerHTML =
+        '<p class="tc white-70 w-100">No items in this category yet.</p>';
       return;
     }
 
@@ -235,7 +239,7 @@ const OdeionChamber = (function() {
 
     // Add event listeners to play buttons
     document.querySelectorAll('.play-track-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', e => {
         e.preventDefault();
         const trackId = btn.getAttribute('data-track-id');
         const track = ODEION_CONFIG.getItemById(trackId);
@@ -249,7 +253,8 @@ const OdeionChamber = (function() {
    */
   function createMusicItemCard(item) {
     const coverUrl = ODEION_CONFIG.getCoverArt(item, 'medium');
-    const categoryLabel = item.category.charAt(0).toUpperCase() + item.category.slice(1);
+    const categoryLabel =
+      item.category.charAt(0).toUpperCase() + item.category.slice(1);
 
     let coverHtml = '';
     if (coverUrl) {
@@ -258,11 +263,12 @@ const OdeionChamber = (function() {
       coverHtml = '<div class="placeholder"><span>No Cover Art</span></div>';
     }
 
-    const featuresHtml = item.features && item.features.length > 0
-      ? `<div class="music-item-features">
+    const featuresHtml =
+      item.features && item.features.length > 0
+        ? `<div class="music-item-features">
            ${item.features.map(f => `<span class="feature-tag">${f}</span>`).join('')}
          </div>`
-      : '';
+        : '';
 
     return `
       <div class="music-item" data-item-id="${item.id}" data-category="${item.category}">
@@ -320,7 +326,10 @@ const OdeionChamber = (function() {
           audioUrl = MediaURLResolver.resolveAlbumTrack(track.id, 1, 'mp3');
         } else {
           // For singles/demos/experimental, use direct path
-          audioUrl = MediaURLResolver.resolve(`${track.category}/${track.id}/track.mp3`, 'audio');
+          audioUrl = MediaURLResolver.resolve(
+            `${track.category}/${track.id}/track.mp3`,
+            'audio'
+          );
         }
         // Resolve cover art from R2
         if (track.id) {

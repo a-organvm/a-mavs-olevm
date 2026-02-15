@@ -3,7 +3,7 @@
  * @description OIKOS chamber configuration
  * Metadata for reflections, dreams, and confessions sections
  */
-"use strict";
+'use strict';
 /**
  * @global {Object} OIKOS_CONFIG - Oikos chamber configuration
  */
@@ -13,15 +13,15 @@ const OIKOS_CONFIG = {
    * Chamber identification and display
    */
   chamber: {
-    id: "oikos",
-    name: "OIKOS",
-    subtitle: "Reflections, dreams, confessions",
+    id: 'oikos',
+    name: 'OIKOS',
+    subtitle: 'Reflections, dreams, confessions',
     description:
-      "The intimate chamber of personal reflection, unconscious exploration, and honest confession",
-    color: "#FF8C00",
-    secondaryColor: "#FFB6C1",
-    darkColor: "#CC7000",
-    lightColor: "#FFD9B3",
+      'The intimate chamber of personal reflection, unconscious exploration, and honest confession',
+    color: '#FF8C00',
+    secondaryColor: '#FFB6C1',
+    darkColor: '#CC7000',
+    lightColor: '#FFD9B3',
   },
   /**
    * Sections configuration
@@ -29,37 +29,37 @@ const OIKOS_CONFIG = {
    */
   sections: {
     reflections: {
-      id: "reflections",
-      name: "REFLECTIONS",
-      icon: "◇",
-      description: "Conscious observations and meditations",
-      color: "#FF8C00",
+      id: 'reflections',
+      name: 'REFLECTIONS',
+      icon: '◇',
+      description: 'Conscious observations and meditations',
+      color: '#FF8C00',
       entryCount: 0,
-      sortOrder: "desc", // Most recent first
-      dateFormat: "MMDDYY",
-      storageKey: "oikos-reflections",
+      sortOrder: 'desc', // Most recent first
+      dateFormat: 'MMDDYY',
+      storageKey: 'oikos-reflections',
     },
     dreams: {
-      id: "dreams",
-      name: "DREAMS",
-      icon: "◐",
-      description: "Nocturnal visions and subconscious narratives",
-      color: "#FFB6C1",
+      id: 'dreams',
+      name: 'DREAMS',
+      icon: '◐',
+      description: 'Nocturnal visions and subconscious narratives',
+      color: '#FFB6C1',
       entryCount: 0,
-      sortOrder: "desc",
-      dateFormat: "MMDDYY",
-      storageKey: "oikos-dreams",
+      sortOrder: 'desc',
+      dateFormat: 'MMDDYY',
+      storageKey: 'oikos-dreams',
     },
     confessions: {
-      id: "confessions",
-      name: "CONFESSIONS",
-      icon: "◆",
-      description: "Honest admissions and vulnerable truths",
-      color: "#FFD9B3",
+      id: 'confessions',
+      name: 'CONFESSIONS',
+      icon: '◆',
+      description: 'Honest admissions and vulnerable truths',
+      color: '#FFD9B3',
       entryCount: 0,
-      sortOrder: "desc",
-      dateFormat: "MMDDYY",
-      storageKey: "oikos-confessions",
+      sortOrder: 'desc',
+      dateFormat: 'MMDDYY',
+      storageKey: 'oikos-confessions',
     },
   },
   /**
@@ -73,9 +73,9 @@ const OIKOS_CONFIG = {
     // Whether to show timestamps
     showTimestamp: true,
     // Date display format (MMDDYY or YYYY-MM-DD)
-    dateDisplay: "MMDDYY",
+    dateDisplay: 'MMDDYY',
     // Truncation indicator
-    truncationMarker: "…",
+    truncationMarker: '…',
     // Show entry count per section
     showCounts: true,
     // Enable entry search
@@ -90,7 +90,7 @@ const OIKOS_CONFIG = {
     enabled: true,
     // Sync to server endpoint (optional)
     syncEnabled: false,
-    syncEndpoint: "/api/chambers/oikos/entries",
+    syncEndpoint: '/api/chambers/oikos/entries',
     // Backup frequency in milliseconds (24 hours)
     backupInterval: 86400000,
     // Maximum stored entries per section
@@ -105,7 +105,7 @@ const OIKOS_CONFIG = {
     // Transition between sections (ms)
     transitionDuration: 300,
     // Show/hide animation easing
-    easing: "easeInOutQuad",
+    easing: 'easeInOutQuad',
     // Card hover effects
     hoverEffects: true,
     // Glow intensity on hover
@@ -129,16 +129,16 @@ const OIKOS_CONFIG = {
    */
   entryTemplate: {
     reflections: {
-      prompt: "What clarity emerged today?",
-      placeholder: "Record your observation...",
+      prompt: 'What clarity emerged today?',
+      placeholder: 'Record your observation...',
     },
     dreams: {
-      prompt: "What did your unconscious reveal?",
-      placeholder: "Describe your dream...",
+      prompt: 'What did your unconscious reveal?',
+      placeholder: 'Describe your dream...',
     },
     confessions: {
-      prompt: "What truth do you need to speak?",
-      placeholder: "Write your confession...",
+      prompt: 'What truth do you need to speak?',
+      placeholder: 'Write your confession...',
     },
   },
 };

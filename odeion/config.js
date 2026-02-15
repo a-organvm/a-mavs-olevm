@@ -15,7 +15,8 @@ const ODEION_CONFIG = {
     id: 'odeion',
     name: 'ODEION',
     subtitle: 'Albums, singles, demos, experimental',
-    description: 'Music hall and performance chamber featuring audio works, compositions, and sonic experiments',
+    description:
+      'Music hall and performance chamber featuring audio works, compositions, and sonic experiments',
     color: '#FFD700', // Gold
     secondaryColor: '#000000', // Black
     wing: 'south',
@@ -49,7 +50,8 @@ const ODEION_CONFIG = {
       title: 'The Progression of Digression',
       artist: 'ET CETER4',
       year: 2012,
-      description: 'Full-length debut exploring musical transformation and evolutionary themes',
+      description:
+        'Full-length debut exploring musical transformation and evolutionary themes',
       trackCount: 12,
       duration: '48:15',
       coverArt: {
@@ -67,7 +69,8 @@ const ODEION_CONFIG = {
       title: 'ET CETER4 RMXS',
       artist: 'ET CETER4',
       year: 2020,
-      description: 'Comprehensive remix collection featuring collaborations and reinterpretations',
+      description:
+        'Comprehensive remix collection featuring collaborations and reinterpretations',
       trackCount: 0, // TBD
       duration: 'TBD',
       coverArt: {
@@ -85,7 +88,8 @@ const ODEION_CONFIG = {
       title: 'Etc',
       artist: 'ET CETER4',
       year: 2011,
-      description: 'Early collection of instrumental sketches and melodic studies',
+      description:
+        'Early collection of instrumental sketches and melodic studies',
       trackCount: 0, // TBD
       duration: 'TBD',
       coverArt: {
@@ -157,7 +161,8 @@ const ODEION_CONFIG = {
       title: 'Ambient Study No. 1',
       artist: 'ET CETER4',
       year: 2023,
-      description: 'Generative ambient soundscape using algorithmic composition',
+      description:
+        'Generative ambient soundscape using algorithmic composition',
       trackCount: 1,
       duration: '~15:00',
       coverArt: {
@@ -175,7 +180,8 @@ const ODEION_CONFIG = {
       title: 'Glitch Variations',
       artist: 'ET CETER4',
       year: 2023,
-      description: 'Sound design exploration using digital artifacts as musical material',
+      description:
+        'Sound design exploration using digital artifacts as musical material',
       trackCount: 1,
       duration: '6:30',
       coverArt: {
@@ -211,7 +217,7 @@ const ODEION_CONFIG = {
   /**
    * Get all music items across all categories
    */
-  getAllItems: function() {
+  getAllItems: function () {
     return [
       ...this.albums,
       ...this.singles,
@@ -223,7 +229,7 @@ const ODEION_CONFIG = {
   /**
    * Get items by category
    */
-  getItemsByCategory: function(category) {
+  getItemsByCategory: function (category) {
     if (category === 'all') {
       return this.getAllItems();
     }
@@ -233,7 +239,7 @@ const ODEION_CONFIG = {
   /**
    * Get item by ID
    */
-  getItemById: function(id) {
+  getItemById: function (id) {
     return this.getAllItems().find(item => item.id === id);
   },
 
@@ -241,7 +247,7 @@ const ODEION_CONFIG = {
    * Get cover art URL
    * Uses MediaURLResolver if available, otherwise falls back to local paths
    */
-  getCoverArt: function(item, size = 'medium') {
+  getCoverArt: function (item, size = 'medium') {
     if (!item) return null;
 
     // Use MediaURLResolver if available for R2 URLs
@@ -258,7 +264,7 @@ const ODEION_CONFIG = {
    * Get audio URL for a track
    * Uses MediaURLResolver if available for R2 URLs
    */
-  getAudioUrl: function(albumId, trackNumber, format = 'mp3') {
+  getAudioUrl: function (albumId, trackNumber, format = 'mp3') {
     if (typeof MediaURLResolver !== 'undefined') {
       return MediaURLResolver.resolveAlbumTrack(albumId, trackNumber, format);
     }
@@ -270,7 +276,7 @@ const ODEION_CONFIG = {
   /**
    * Get waveform URL for a track
    */
-  getWaveformUrl: function(albumId, trackNumber) {
+  getWaveformUrl: function (albumId, trackNumber) {
     if (typeof MediaURLResolver !== 'undefined') {
       return MediaURLResolver.resolveWaveform(albumId, trackNumber);
     }
@@ -282,7 +288,7 @@ const ODEION_CONFIG = {
   /**
    * Get lyrics URL for a track
    */
-  getLyricsUrl: function(albumId, trackNumber) {
+  getLyricsUrl: function (albumId, trackNumber) {
     if (typeof MediaURLResolver !== 'undefined') {
       return MediaURLResolver.resolveLyrics(albumId, trackNumber);
     }

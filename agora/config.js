@@ -12,17 +12,17 @@ const AGORA_CONFIG = {
     subtitle: 'Political commentary, manifestos, social critique',
     description: 'The public assembly speaks. Discourse shapes discourse.',
     wing: 'West',
-    wingTheme: 'discourse'
+    wingTheme: 'discourse',
   },
 
   // Visual theming
   theme: {
-    primary: '#DC143C',      // Crimson Red
-    secondary: '#000000',    // Black
-    accent: '#8B0000',       // Dark Red
-    light: '#FF69B4',        // Light variant (not used for agora)
+    primary: '#DC143C', // Crimson Red
+    secondary: '#000000', // Black
+    accent: '#8B0000', // Dark Red
+    light: '#FF69B4', // Light variant (not used for agora)
     gradient: 'linear-gradient(135deg, #DC143C, #8B0000)',
-    darkMode: true           // Bold, high-contrast theme
+    darkMode: true, // Bold, high-contrast theme
   },
 
   // Chamber sections
@@ -31,20 +31,20 @@ const AGORA_CONFIG = {
       id: 'feed',
       label: 'CHRONOLOGICAL FEED',
       contentId: 'feed-section',
-      description: 'Timeline of all content, newest first'
+      description: 'Timeline of all content, newest first',
     },
     commentary: {
       id: 'commentary',
       label: 'COMMENTARY',
       contentId: 'commentary-section',
-      description: 'Sharp analysis and critical perspectives'
+      description: 'Sharp analysis and critical perspectives',
     },
     manifestos: {
       id: 'manifestos',
       label: 'MANIFESTOS',
       contentId: 'manifestos-section',
-      description: 'Declarations of position and principle'
-    }
+      description: 'Declarations of position and principle',
+    },
   },
 
   // Content metadata and filtering
@@ -54,10 +54,22 @@ const AGORA_CONFIG = {
       { id: 'all', label: 'ALL', description: 'All content' },
       { id: 'politics', label: 'POLITICS', description: 'Political analysis' },
       { id: 'society', label: 'SOCIETY', description: 'Social critique' },
-      { id: 'ideology', label: 'IDEOLOGY', description: 'Ideological examination' },
-      { id: 'power', label: 'POWER', description: 'Power structures and dynamics' },
+      {
+        id: 'ideology',
+        label: 'IDEOLOGY',
+        description: 'Ideological examination',
+      },
+      {
+        id: 'power',
+        label: 'POWER',
+        description: 'Power structures and dynamics',
+      },
       { id: 'justice', label: 'JUSTICE', description: 'Justice and equity' },
-      { id: 'discourse', label: 'DISCOURSE', description: 'Language and dialogue' }
+      {
+        id: 'discourse',
+        label: 'DISCOURSE',
+        description: 'Language and dialogue',
+      },
     ],
 
     // Chronological order (newest first)
@@ -69,7 +81,8 @@ const AGORA_CONFIG = {
         section: 'feed',
         topic: 'POLITICS',
         tags: ['politics', 'society', 'discourse'],
-        excerpt: 'How systems designed to amplify the many end up silencing the singular voice. A meditation on plurality, consent, and the tyranny of the majority.'
+        excerpt:
+          'How systems designed to amplify the many end up silencing the singular voice. A meditation on plurality, consent, and the tyranny of the majority.',
       },
       {
         id: 'power-narrative',
@@ -78,7 +91,8 @@ const AGORA_CONFIG = {
         section: 'feed',
         topic: 'IDEOLOGY',
         tags: ['ideology', 'power'],
-        excerpt: 'The stories we tell ourselves become the structures we live within. An examination of how ideology manifests through language, symbols, and social institutions.'
+        excerpt:
+          'The stories we tell ourselves become the structures we live within. An examination of how ideology manifests through language, symbols, and social institutions.',
       },
       {
         id: 'violence-silence',
@@ -87,7 +101,8 @@ const AGORA_CONFIG = {
         section: 'feed',
         topic: 'JUSTICE',
         tags: ['justice', 'society', 'discourse'],
-        excerpt: 'What is not spoken becomes normalized. A critical investigation into the ethics of visibility, voice, and the political act of witnessing.'
+        excerpt:
+          'What is not spoken becomes normalized. A critical investigation into the ethics of visibility, voice, and the political act of witnessing.',
       },
       {
         id: 'spectacle-transparency',
@@ -96,8 +111,10 @@ const AGORA_CONFIG = {
         section: 'commentary',
         topic: 'DISCOURSE',
         tags: ['politics', 'discourse'],
-        excerpt: 'On institutional visibility, surveillance, and the paradox of perfect information. Transparency as an ideal has become transparency as a tool of control.',
-        content: 'Transparency as an ideal has become transparency as a tool of control. Institutions parade their openness while data flows in unmarked channels. A commentary on the distinction between revelation and confession.'
+        excerpt:
+          'On institutional visibility, surveillance, and the paradox of perfect information. Transparency as an ideal has become transparency as a tool of control.',
+        content:
+          'Transparency as an ideal has become transparency as a tool of control. Institutions parade their openness while data flows in unmarked channels. A commentary on the distinction between revelation and confession.',
       },
       {
         id: 'authority-aesthetic',
@@ -106,8 +123,10 @@ const AGORA_CONFIG = {
         section: 'commentary',
         topic: 'POWER',
         tags: ['power', 'ideology'],
-        excerpt: 'How design, gesture, and form legitimize power. The architecture of authority is aesthetic before it is legal.',
-        content: 'The architecture of authority is aesthetic before it is legal. Consider the marble halls, the formal dress, the ceremonial language. These are not ornamental—they are fundamental to how power maintains itself in the realm of perception and feeling.'
+        excerpt:
+          'How design, gesture, and form legitimize power. The architecture of authority is aesthetic before it is legal.',
+        content:
+          'The architecture of authority is aesthetic before it is legal. Consider the marble halls, the formal dress, the ceremonial language. These are not ornamental—they are fundamental to how power maintains itself in the realm of perception and feeling.',
       },
       {
         id: 'manifesto-comfort',
@@ -116,8 +135,10 @@ const AGORA_CONFIG = {
         section: 'manifestos',
         topic: 'IDEOLOGY',
         tags: ['ideology'],
-        excerpt: 'We refuse the ease of the familiar. We declare: discomfort is prerequisite to thought.',
-        content: 'We refuse the ease of the familiar. We declare: discomfort is prerequisite to thought. Complacency is the enemy of justice. The comfortable do not revolutionize; they preserve. Therefore: embrace the friction. Seek the contradiction. Stay in the question until the answer burns.'
+        excerpt:
+          'We refuse the ease of the familiar. We declare: discomfort is prerequisite to thought.',
+        content:
+          'We refuse the ease of the familiar. We declare: discomfort is prerequisite to thought. Complacency is the enemy of justice. The comfortable do not revolutionize; they preserve. Therefore: embrace the friction. Seek the contradiction. Stay in the question until the answer burns.',
       },
       {
         id: 'manifesto-critique',
@@ -126,10 +147,12 @@ const AGORA_CONFIG = {
         section: 'manifestos',
         topic: 'JUSTICE',
         tags: ['justice', 'society'],
-        excerpt: 'Critique is love in its most rigorous form. To examine, to question, to demand better—this is not destruction but reconstruction.',
-        content: 'Critique is love in its most rigorous form. To examine, to question, to demand better—this is not destruction but reconstruction. We manifest: criticism is care. Let the structures that fail us fall. Let the language that constrains us dissolve. From the rubble, new speech. From the silence, new sound.'
-      }
-    ]
+        excerpt:
+          'Critique is love in its most rigorous form. To examine, to question, to demand better—this is not destruction but reconstruction.',
+        content:
+          'Critique is love in its most rigorous form. To examine, to question, to demand better—this is not destruction but reconstruction. We manifest: criticism is care. Let the structures that fail us fall. Let the language that constrains us dissolve. From the rubble, new speech. From the silence, new sound.',
+      },
+    ],
   },
 
   // UI/UX Configuration
@@ -148,7 +171,7 @@ const AGORA_CONFIG = {
 
     // Typography emphasis
     boldHeadings: true,
-    trackingAmount: 'tracked-tight'
+    trackingAmount: 'tracked-tight',
   },
 
   // Features and behaviors
@@ -169,7 +192,7 @@ const AGORA_CONFIG = {
     smoothTransitions: true,
 
     // Accessible focus management
-    focusManagement: true
+    focusManagement: true,
   },
 
   // Typography configuration
@@ -183,14 +206,14 @@ const AGORA_CONFIG = {
 
     // Letter spacing (tracked classes)
     headingTracking: 'tracked-mega',
-    bodyTracking: 'tracked'
+    bodyTracking: 'tracked',
   },
 
   // Animation and transitions
   animation: {
-    sectionTransition: 300,    // ms - fade between sections
-    filterTransition: 200,     // ms - filter item visibility
-    hoverTransition: 200       // ms - card hover effects
+    sectionTransition: 300, // ms - fade between sections
+    filterTransition: 200, // ms - filter item visibility
+    hoverTransition: 200, // ms - card hover effects
   },
 
   // Content organization
@@ -203,7 +226,7 @@ const AGORA_CONFIG = {
     dateOrder: 'descending',
 
     // Grouping
-    groupBySection: true
+    groupBySection: true,
   },
 
   // Accessibility
@@ -211,7 +234,7 @@ const AGORA_CONFIG = {
     skipLinksEnabled: true,
     ariaLabelsEnabled: true,
     keyboardNavigation: true,
-    focusIndicators: true
+    focusIndicators: true,
   },
 
   // Living Pantheon integration
@@ -219,8 +242,8 @@ const AGORA_CONFIG = {
     enabled: true,
     chamber: 'agora',
     color: '#DC143C',
-    storeHistory: true
-  }
+    storeHistory: true,
+  },
 };
 
 // Export for use in other scripts

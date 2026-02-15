@@ -90,10 +90,7 @@ class OGODViewerController {
     container.innerHTML = '';
 
     document.querySelectorAll('.ogod-viewer-track-btn').forEach(btn => {
-      btn.classList.toggle(
-        'active',
-        parseInt(btn.dataset.track) === trackNum
-      );
+      btn.classList.toggle('active', parseInt(btn.dataset.track) === trackNum);
     });
 
     this._updateTrackInfo(trackNum);
@@ -198,7 +195,10 @@ class OGODViewerController {
 
     modeSelector.dataset.initialized = 'true';
     modeSelector.querySelectorAll('.ogod-viewer-mode-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.mode === this.state.currentMode);
+      btn.classList.toggle(
+        'active',
+        btn.dataset.mode === this.state.currentMode
+      );
       btn.onclick = () => this._setMode(btn.dataset.mode, container);
     });
   }
@@ -274,7 +274,9 @@ class OGODViewerController {
           if (this.state.engine) {
             this.state.engine.togglePause();
             if (pauseBtn) {
-              pauseBtn.textContent = this.state.engine.isPaused ? 'Play' : 'Pause';
+              pauseBtn.textContent = this.state.engine.isPaused
+                ? 'Play'
+                : 'Pause';
             }
           }
           break;
@@ -306,7 +308,34 @@ class OGODViewerController {
 
 /** Roman numeral lookup table */
 OGODViewerController.ROMAN_NUMERALS = [
-  '', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX',
-  'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX',
-  'XX', 'XXI', 'XXII', 'XXIII', 'XXIV', 'XXV', 'XXVI', 'XXVII', 'XXVIII', 'XXIX',
+  '',
+  'I',
+  'II',
+  'III',
+  'IV',
+  'V',
+  'VI',
+  'VII',
+  'VIII',
+  'IX',
+  'X',
+  'XI',
+  'XII',
+  'XIII',
+  'XIV',
+  'XV',
+  'XVI',
+  'XVII',
+  'XVIII',
+  'XIX',
+  'XX',
+  'XXI',
+  'XXII',
+  'XXIII',
+  'XXIV',
+  'XXV',
+  'XXVI',
+  'XXVII',
+  'XXVIII',
+  'XXIX',
 ];

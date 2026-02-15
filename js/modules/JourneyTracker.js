@@ -118,7 +118,10 @@ class JourneyTracker {
     for (const v of this._data.visits) {
       visited.add(v.id);
       // Deduplicate consecutive visits for path
-      if (pathSequence.length === 0 || pathSequence[pathSequence.length - 1] !== v.id) {
+      if (
+        pathSequence.length === 0 ||
+        pathSequence[pathSequence.length - 1] !== v.id
+      ) {
         pathSequence.push(v.id);
       }
     }
@@ -144,8 +147,9 @@ class JourneyTracker {
     }
 
     // Sort chambers: unvisited first, then least-visited
-    return JourneyTracker.ALL_CHAMBERS.slice()
-      .sort((a, b) => (visitCounts[a] || 0) - (visitCounts[b] || 0));
+    return JourneyTracker.ALL_CHAMBERS.slice().sort(
+      (a, b) => (visitCounts[a] || 0) - (visitCounts[b] || 0)
+    );
   }
 
   /**
@@ -176,7 +180,10 @@ class JourneyTracker {
       if (raw) {
         const parsed = JSON.parse(raw);
         // Validate structure
-        if (Array.isArray(parsed.visits) && Array.isArray(parsed.interactions)) {
+        if (
+          Array.isArray(parsed.visits) &&
+          Array.isArray(parsed.interactions)
+        ) {
           return parsed;
         }
       }

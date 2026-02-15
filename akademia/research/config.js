@@ -24,53 +24,52 @@ const researchConfig = {
     // }
   ],
   categories: [
-    "Music Theory",
-    "Sound Studies",
-    "Digital Culture",
-    "Technology & Art",
-    "Creative Coding",
-    "Philosophy",
-    "Education",
-    "Cultural Criticism",
-    "Performance Studies",
-    "Interdisciplinary Research",
+    'Music Theory',
+    'Sound Studies',
+    'Digital Culture',
+    'Technology & Art',
+    'Creative Coding',
+    'Philosophy',
+    'Education',
+    'Cultural Criticism',
+    'Performance Studies',
+    'Interdisciplinary Research',
   ],
-  statuses: ["ongoing", "completed", "paused", "planning"],
+  statuses: ['ongoing', 'completed', 'paused', 'planning'],
   // Get projects by category
   getByCategory: function (category) {
     return this.projects.filter(
-      (project) => project.category === category && project.published,
+      project => project.category === category && project.published
     );
   },
   // Get projects by status
   getByStatus: function (status) {
     return this.projects.filter(
-      (project) => project.status === status && project.published,
+      project => project.status === status && project.published
     );
   },
   // Get projects by tag
   getByTag: function (tag) {
     return this.projects.filter(
-      (project) =>
-        project.tags && project.tags.includes(tag) && project.published,
+      project => project.tags && project.tags.includes(tag) && project.published
     );
   },
   // Get published projects
   getPublished: function () {
-    return this.projects.filter((project) => project.published);
+    return this.projects.filter(project => project.published);
   },
   // Get ongoing projects
   getOngoing: function () {
     return this.projects.filter(
-      (project) => project.status === "ongoing" && project.published,
+      project => project.status === 'ongoing' && project.published
     );
   },
   // Get project by slug
   getBySlug: function (slug) {
-    return this.projects.find((project) => project.id === slug);
+    return this.projects.find(project => project.id === slug);
   },
 };
 // Export for use in other modules
-if (typeof module !== "undefined" && module.exports) {
+if (typeof module !== 'undefined' && module.exports) {
   module.exports = researchConfig;
 }

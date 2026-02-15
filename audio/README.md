@@ -206,13 +206,13 @@ The site uses SoundJS audio sprites for UI feedback sounds. These are subtle sou
 
 The UI sounds should be combined into a single audio file (`ui-sounds.ogg`) with the following layout:
 
-| Sound | Start Time (ms) | Duration (ms) |
+| Sound      | Start Time (ms) | Duration (ms) |
 | ---------- | --------------- | ------------- |
-| click | 0 | 100 |
-| hover | 150 | 80 |
-| pageEnter | 300 | 300 |
-| pageExit | 700 | 400 |
-| transition | 1200 | 500 |
+| click      | 0               | 100           |
+| hover      | 150             | 80            |
+| pageEnter  | 300             | 300           |
+| pageExit   | 700             | 400           |
+| transition | 1200            | 500           |
 
 **To create the sprite file:**
 

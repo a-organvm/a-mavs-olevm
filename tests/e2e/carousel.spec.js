@@ -102,7 +102,7 @@ test.describe('Stills Carousel', () => {
   });
 
   test('should display first image', async ({ page }) => {
-    const activeImage = page.locator('#stills #stillsImage.dtc');
+    const activeImage = page.locator('#stills .stillsImage.dtc');
     await expect(activeImage).toBeVisible({ timeout: 10000 });
   });
 
@@ -114,7 +114,7 @@ test.describe('Stills Carousel', () => {
     await page.waitForTimeout(500);
 
     // Carousel should have changed
-    const activeImage = page.locator('#stills #stillsImage.dtc');
+    const activeImage = page.locator('#stills .stillsImage.dtc');
     await expect(activeImage).toBeVisible();
   });
 
@@ -131,7 +131,7 @@ test.describe('Stills Carousel', () => {
     await page.keyboard.press('ArrowLeft');
     await page.waitForTimeout(500);
 
-    const activeImage = page.locator('#stills #stillsImage.dtc');
+    const activeImage = page.locator('#stills .stillsImage.dtc');
     await expect(activeImage).toBeVisible();
   });
 });
@@ -203,7 +203,7 @@ test.describe('Carousel Touch Support', () => {
 
       await page.waitForTimeout(500);
 
-      const activeImage = page.locator('#stills #stillsImage.dtc');
+      const activeImage = page.locator('#stills .stillsImage.dtc');
       await expect(activeImage).toBeVisible();
     }
   });

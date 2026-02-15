@@ -5,7 +5,7 @@
  * Draws grid cells from a source image onto a full-screen canvas.
  */
 
-"use strict";
+'use strict';
 
 /**
  * OGODCanvasRenderer - Faithful Canvas 2D renderer
@@ -19,11 +19,11 @@ class OGODCanvasRenderer {
    */
   constructor(options = {}) {
     if (!options.canvas) {
-      throw new Error("OGODCanvasRenderer requires a canvas element");
+      throw new Error('OGODCanvasRenderer requires a canvas element');
     }
 
     this.canvas = options.canvas;
-    this.ctx = this.canvas.getContext("2d");
+    this.ctx = this.canvas.getContext('2d');
     this.gridSize = options.gridSize || 21;
 
     /** @type {HTMLImageElement|null} */
@@ -35,7 +35,7 @@ class OGODCanvasRenderer {
 
     // Bind resize handler
     this._onResize = this._onResize.bind(this);
-    window.addEventListener("resize", this._onResize);
+    window.addEventListener('resize', this._onResize);
     this._onResize();
   }
 
@@ -72,7 +72,7 @@ class OGODCanvasRenderer {
       0, // Dest x
       0, // Dest y
       canvas.width, // Dest width
-      canvas.height, // Dest height
+      canvas.height // Dest height
     );
   }
 
@@ -106,14 +106,14 @@ class OGODCanvasRenderer {
    * @returns {string}
    */
   get type() {
-    return "faithful";
+    return 'faithful';
   }
 
   /**
    * Dispose of renderer resources
    */
   dispose() {
-    window.removeEventListener("resize", this._onResize);
+    window.removeEventListener('resize', this._onResize);
     this._image = null;
     this.ctx = null;
   }

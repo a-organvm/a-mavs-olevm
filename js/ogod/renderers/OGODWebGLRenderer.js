@@ -7,7 +7,7 @@
  * Audio-reactive shader parameters drive visual intensity.
  */
 
-"use strict";
+'use strict';
 
 /**
  * OGODWebGLRenderer - Enhanced Three.js shader renderer
@@ -24,11 +24,11 @@ class OGODWebGLRenderer {
    */
   constructor(options = {}) {
     if (!options.canvas) {
-      throw new Error("OGODWebGLRenderer requires a canvas element");
+      throw new Error('OGODWebGLRenderer requires a canvas element');
     }
 
-    if (typeof THREE === "undefined") {
-      throw new Error("OGODWebGLRenderer requires Three.js");
+    if (typeof THREE === 'undefined') {
+      throw new Error('OGODWebGLRenderer requires Three.js');
     }
 
     this.canvas = options.canvas;
@@ -45,8 +45,8 @@ class OGODWebGLRenderer {
 
     // Palette colors (up to 4)
     this._palette = (
-      options.palette || ["#00FFFF", "#FF00FF", "#000000", "#FFFFFF"]
-    ).map((c) => new THREE.Color(c));
+      options.palette || ['#00FFFF', '#FF00FF', '#000000', '#FFFFFF']
+    ).map(c => new THREE.Color(c));
 
     // Three.js objects
     this._renderer = null;
@@ -75,7 +75,7 @@ class OGODWebGLRenderer {
 
     // Resize handler
     this._onResize = this._onResize.bind(this);
-    window.addEventListener("resize", this._onResize);
+    window.addEventListener('resize', this._onResize);
 
     this._initThree();
   }
@@ -114,7 +114,7 @@ class OGODWebGLRenderer {
     });
     this._feedbackMesh = new THREE.Mesh(
       new THREE.PlaneGeometry(2, 2),
-      this._feedbackMaterial,
+      this._feedbackMaterial
     );
     this._feedbackScene.add(this._feedbackMesh);
 
@@ -135,10 +135,10 @@ class OGODWebGLRenderer {
         uNoiseAmount: { value: this._noiseAmount },
         uBloomStrength: { value: this._bloomStrength },
         // Palette
-        uPalette0: { value: this._palette[0] || new THREE.Color("#00FFFF") },
-        uPalette1: { value: this._palette[1] || new THREE.Color("#FF00FF") },
-        uPalette2: { value: this._palette[2] || new THREE.Color("#000000") },
-        uPalette3: { value: this._palette[3] || new THREE.Color("#FFFFFF") },
+        uPalette0: { value: this._palette[0] || new THREE.Color('#00FFFF') },
+        uPalette1: { value: this._palette[1] || new THREE.Color('#FF00FF') },
+        uPalette2: { value: this._palette[2] || new THREE.Color('#000000') },
+        uPalette3: { value: this._palette[3] || new THREE.Color('#FFFFFF') },
         uPaletteInfluence: { value: 0.15 },
         // Audio uniforms (zero when no audio)
         uBassLevel: { value: 0 },
@@ -310,7 +310,7 @@ class OGODWebGLRenderer {
    * @param {Array<string>} palette - Array of hex color strings
    */
   setPalette(palette) {
-    this._palette = palette.map((c) => new THREE.Color(c));
+    this._palette = palette.map(c => new THREE.Color(c));
     const u = this._material.uniforms;
     if (this._palette[0]) {
       u.uPalette0.value = this._palette[0];
@@ -356,7 +356,7 @@ class OGODWebGLRenderer {
       const tElapsed = now - this._transitionStartTime;
       this._transitionProgress = Math.min(
         tElapsed / this._transitionDuration,
-        1.0,
+        1.0
       );
     }
 
@@ -379,7 +379,7 @@ class OGODWebGLRenderer {
 
     // Copy current frame to feedback buffer
     this._feedbackMaterial.map = this._renderer.properties.get(
-      this._feedbackTarget,
+      this._feedbackTarget
     ).__webglTexture
       ? this._feedbackTarget.texture
       : null;
@@ -433,14 +433,14 @@ class OGODWebGLRenderer {
    * @returns {string}
    */
   get type() {
-    return "enhanced";
+    return 'enhanced';
   }
 
   /**
    * Dispose of all Three.js resources
    */
   dispose() {
-    window.removeEventListener("resize", this._onResize);
+    window.removeEventListener('resize', this._onResize);
 
     if (this._texture) {
       this._texture.dispose();

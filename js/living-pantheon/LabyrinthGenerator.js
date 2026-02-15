@@ -66,10 +66,14 @@ class LabyrinthGenerator {
       enabled: configFromGlobal.enabled !== false,
       fragmentSources:
         options.fragmentSources ?? configFromGlobal.fragmentSources ?? [],
-      fragmentCount: options.fragmentCount ?? configFromGlobal.fragmentCount ?? 100,
-      loopholeCount: options.loopholeCount ?? configFromGlobal.loopholeCount ?? 10,
+      fragmentCount:
+        options.fragmentCount ?? configFromGlobal.fragmentCount ?? 100,
+      loopholeCount:
+        options.loopholeCount ?? configFromGlobal.loopholeCount ?? 10,
       loopholeProbability:
-        options.loopholeProbability ?? configFromGlobal.loopholeProbability ?? 0.05,
+        options.loopholeProbability ??
+        configFromGlobal.loopholeProbability ??
+        0.05,
     };
 
     // Fragment and entry management
@@ -150,16 +154,19 @@ class LabyrinthGenerator {
         }
 
         const data = await response.json();
-        const loadedFragments = Array.isArray(data) ? data : data.fragments || [];
+        const loadedFragments = Array.isArray(data)
+          ? data
+          : data.fragments || [];
 
         // Filter and validate fragments
         const validFragments = loadedFragments
           .filter(
-            (frag) =>
-              typeof frag === 'string' && frag.trim().length > 0 &&
+            frag =>
+              typeof frag === 'string' &&
+              frag.trim().length > 0 &&
               frag.length < 1000 // Reasonable length limit
           )
-          .map((frag) => frag.trim());
+          .map(frag => frag.trim());
 
         this.fragments.push(...validFragments);
 
@@ -167,7 +174,10 @@ class LabyrinthGenerator {
           `LabyrinthGenerator: Loaded ${validFragments.length} fragments from ${source}`
         );
       } catch (error) {
-        console.warn(`LabyrinthGenerator: Failed to load fragments from ${source}:`, error);
+        console.warn(
+          `LabyrinthGenerator: Failed to load fragments from ${source}:`,
+          error
+        );
         // Continue with other sources
       }
     }
@@ -401,12 +411,16 @@ class LabyrinthGenerator {
     this.entries.set(entry.dateStr, entry);
 
     // Randomly assign loopholes to new entries
-    if (Math.random() < this.config.loopholeProbability && this.entries.size > 1) {
+    if (
+      Math.random() < this.config.loopholeProbability &&
+      this.entries.size > 1
+    ) {
       const otherEntries = Array.from(this.entries.values()).filter(
-        (e) => e.id !== entry.id
+        e => e.id !== entry.id
       );
       if (otherEntries.length > 0) {
-        const target = otherEntries[Math.floor(Math.random() * otherEntries.length)];
+        const target =
+          otherEntries[Math.floor(Math.random() * otherEntries.length)];
         this._addLoophole(entry, target);
       }
     }
@@ -483,7 +497,7 @@ class LabyrinthGenerator {
       return null;
     }
 
-    const triggerable = loopholes.filter((l) => l.trigger);
+    const triggerable = loopholes.filter(l => l.trigger);
 
     if (triggerable.length === 0) {
       return null;

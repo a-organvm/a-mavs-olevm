@@ -40,7 +40,8 @@ class EnhancedAudioPlayer {
 
     // Volume state
     this.volume = options.volume ?? this.config.defaultVolume;
-    this.crossfadeDuration = options.crossfadeDuration ?? this.config.crossfadeDuration;
+    this.crossfadeDuration =
+      options.crossfadeDuration ?? this.config.crossfadeDuration;
 
     // Howler.js sound instance
     this.sound = null;
@@ -117,7 +118,7 @@ class EnhancedAudioPlayer {
       onload: () => {
         this.emit('loaded', { track: this.getCurrentTrack() });
       },
-      onerror: (err) => {
+      onerror: err => {
         this.emit('error', { error: err, track: this.getCurrentTrack() });
       },
     });
@@ -311,7 +312,10 @@ class EnhancedAudioPlayer {
    * @returns {Object|null} Current track or null if no tracks loaded
    */
   getCurrentTrack() {
-    if (this.currentTrackIndex >= 0 && this.currentTrackIndex < this.tracks.length) {
+    if (
+      this.currentTrackIndex >= 0 &&
+      this.currentTrackIndex < this.tracks.length
+    ) {
       return this.tracks[this.currentTrackIndex];
     }
     return null;
@@ -428,7 +432,7 @@ class EnhancedAudioPlayer {
    */
   emit(event, data) {
     if (this.listeners.has(event)) {
-      this.listeners.get(event).forEach((callback) => {
+      this.listeners.get(event).forEach(callback => {
         try {
           callback(data);
         } catch (err) {

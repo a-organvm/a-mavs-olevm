@@ -55,9 +55,10 @@ class DiscoveryController {
    */
   constructor() {
     // Configuration
-    this.config = typeof ETCETER4_CONFIG !== 'undefined'
-      ? ETCETER4_CONFIG.discovery || {}
-      : {};
+    this.config =
+      typeof ETCETER4_CONFIG !== 'undefined'
+        ? ETCETER4_CONFIG.discovery || {}
+        : {};
 
     // Subsystem references
     this.registry = null;
@@ -127,7 +128,6 @@ class DiscoveryController {
 
       this.isInitialized = true;
       console.info('DiscoveryController: Initialized');
-
     } catch (error) {
       console.error('DiscoveryController: Initialization failed:', error);
     }
@@ -184,7 +184,10 @@ class DiscoveryController {
 
     // Global search modal input
     if (this.elements.globalSearchInput) {
-      this.elements.globalSearchInput.addEventListener('input', this._onGlobalSearchInput);
+      this.elements.globalSearchInput.addEventListener(
+        'input',
+        this._onGlobalSearchInput
+      );
     }
 
     // Clear filters button
@@ -321,7 +324,9 @@ class DiscoveryController {
     const query = e.target.value.trim();
 
     if (query.length >= (this.config.search?.minQueryLength || 2)) {
-      const results = await this.searchEngine.searchDebounced(query, { limit: 8 });
+      const results = await this.searchEngine.searchDebounced(query, {
+        limit: 8,
+      });
       this._renderGlobalSearchResults(results);
     } else {
       this._renderGlobalSearchResults([]);
@@ -469,13 +474,14 @@ class DiscoveryController {
     const minCount = Math.min(...tags.map(t => t.count));
     const range = maxCount - minCount || 1;
 
-    container.innerHTML = tags.map(({ tag, count }) => {
-      // Scale font size based on frequency (1rem to 1.5rem)
-      const scale = (count - minCount) / range;
-      const fontSize = 1 + (scale * 0.5);
-      const isActive = this.filterSystem.getState().tags.includes(tag);
+    container.innerHTML = tags
+      .map(({ tag, count }) => {
+        // Scale font size based on frequency (1rem to 1.5rem)
+        const scale = (count - minCount) / range;
+        const fontSize = 1 + scale * 0.5;
+        const isActive = this.filterSystem.getState().tags.includes(tag);
 
-      return `
+        return `
         <button
           class="tag-btn ${isActive ? 'tag-btn--active' : ''}"
           data-tag="${this._escapeHtml(tag)}"
@@ -486,14 +492,18 @@ class DiscoveryController {
           <span class="tag-count">${count}</span>
         </button>
       `;
-    }).join('');
+      })
+      .join('');
 
     // Add click handlers
     container.querySelectorAll('.tag-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         this.filterSystem.toggleTag(btn.dataset.tag);
         btn.classList.toggle('tag-btn--active');
-        btn.setAttribute('aria-pressed', btn.classList.contains('tag-btn--active'));
+        btn.setAttribute(
+          'aria-pressed',
+          btn.classList.contains('tag-btn--active')
+        );
       });
     });
   }
@@ -515,14 +525,18 @@ class DiscoveryController {
       { id: 'text', label: 'Writing', criteria: { types: ['text'] } },
     ];
 
-    container.innerHTML = presets.map(preset => `
+    container.innerHTML = presets
+      .map(
+        preset => `
       <button
         class="quick-filter-btn ${preset.id === 'all' ? 'quick-filter-btn--active' : ''}"
         data-filter-id="${preset.id}"
       >
         ${this._escapeHtml(preset.label)}
       </button>
-    `).join('');
+    `
+      )
+      .join('');
 
     // Add click handlers
     container.querySelectorAll('.quick-filter-btn').forEach(btn => {
@@ -585,7 +599,9 @@ class DiscoveryController {
     }
 
     // Render result cards
-    container.innerHTML = paginatedResults.map(item => this._renderResultCard(item)).join('');
+    container.innerHTML = paginatedResults
+      .map(item => this._renderResultCard(item))
+      .join('');
 
     // Add click handlers
     container.querySelectorAll('.result-card').forEach(card => {
@@ -633,7 +649,13 @@ class DiscoveryController {
         </div>
         <div class="result-card__footer">
           <div class="result-card__tags">
-            ${item.tags.slice(0, 3).map(tag => `<span class="result-tag">${this._escapeHtml(tag)}</span>`).join('')}
+            ${item.tags
+              .slice(0, 3)
+              .map(
+                tag =>
+                  `<span class="result-tag">${this._escapeHtml(tag)}</span>`
+              )
+              .join('')}
           </div>
           <button class="share-btn" aria-label="Share this item">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -658,15 +680,17 @@ class DiscoveryController {
     }
 
     if (results.length === 0) {
-      container.innerHTML = '<p class="search-empty tc pa3 dark-gray">Type to search...</p>';
+      container.innerHTML =
+        '<p class="search-empty tc pa3 dark-gray">Type to search...</p>';
       return;
     }
 
-    container.innerHTML = results.map((result, i) => {
-      const item = result.item;
-      const highlights = result.highlights || {};
+    container.innerHTML = results
+      .map((result, i) => {
+        const item = result.item;
+        const highlights = result.highlights || {};
 
-      return `
+        return `
         <div class="search-result-item ${i === this.selectedResultIndex ? 'selected' : ''}" data-item-id="${this._escapeHtml(item.id)}" tabindex="0">
           <div class="search-result-chamber" style="background-color: ${item.chamberColor || '#000'}">
             ${this._escapeHtml(item.chamberName || item.chamber)}
@@ -677,7 +701,8 @@ class DiscoveryController {
           </div>
         </div>
       `;
-    }).join('');
+      })
+      .join('');
 
     // Add click handlers
     container.querySelectorAll('.search-result-item').forEach((el, i) => {
@@ -701,22 +726,28 @@ class DiscoveryController {
     }
 
     const maxButtons = this.config.pagination?.maxPageButtons || 7;
-    const pages = this._getPaginationRange(this.currentPage, totalPages, maxButtons);
+    const pages = this._getPaginationRange(
+      this.currentPage,
+      totalPages,
+      maxButtons
+    );
 
     container.innerHTML = `
       <button class="page-btn" ${this.currentPage <= 1 ? 'disabled' : ''} data-page="${this.currentPage - 1}">
         ← Prev
       </button>
-      ${pages.map(page => {
-        if (page === '...') {
-          return '<span class="page-ellipsis">...</span>';
-        }
-        return `
+      ${pages
+        .map(page => {
+          if (page === '...') {
+            return '<span class="page-ellipsis">...</span>';
+          }
+          return `
           <button class="page-btn ${page === this.currentPage ? 'page-btn--active' : ''}" data-page="${page}">
             ${page}
           </button>
         `;
-      }).join('')}
+        })
+        .join('')}
       <button class="page-btn" ${this.currentPage >= totalPages ? 'disabled' : ''} data-page="${this.currentPage + 1}">
         Next →
       </button>
@@ -783,7 +814,8 @@ class DiscoveryController {
   _updateFilterUI(state) {
     // Update filter summary
     if (this.elements.filterSummary) {
-      this.elements.filterSummary.textContent = this.filterSystem.getSummaryText();
+      this.elements.filterSummary.textContent =
+        this.filterSystem.getSummaryText();
     }
 
     // Update tag cloud active states
@@ -883,10 +915,16 @@ class DiscoveryController {
     document.removeEventListener('keydown', this._onKeyDown);
 
     if (this.elements.searchInput) {
-      this.elements.searchInput.removeEventListener('input', this._onSearchInput);
+      this.elements.searchInput.removeEventListener(
+        'input',
+        this._onSearchInput
+      );
     }
     if (this.elements.globalSearchInput) {
-      this.elements.globalSearchInput.removeEventListener('input', this._onGlobalSearchInput);
+      this.elements.globalSearchInput.removeEventListener(
+        'input',
+        this._onGlobalSearchInput
+      );
     }
 
     this.filterSystem.offChange(this._onFilterChange);

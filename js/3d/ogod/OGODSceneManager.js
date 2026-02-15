@@ -262,7 +262,10 @@ class OGODSceneManager {
         camera: sceneManager.camera,
         intensity: config.motionBlur.intensity || 1.0,
       });
-      sceneManager.addEffect('motionBlur', motionBlurPass, { order: 20, enabled: true });
+      sceneManager.addEffect('motionBlur', motionBlurPass, {
+        order: 20,
+        enabled: true,
+      });
     }
 
     // Bloom (order 30) - existing implementation
@@ -897,7 +900,9 @@ class OGODSceneManager {
 
     // Update local color zones
     this.colorZones = zones.map((zone, i) => ({
-      color: zone.color || this.trackConfig.palette[i % this.trackConfig.palette.length],
+      color:
+        zone.color ||
+        this.trackConfig.palette[i % this.trackConfig.palette.length],
       position: zone.position || { x: 0, y: 0, z: 0 },
       stem: zone.stem || ['drums', 'bass', 'vocals', 'other'][i % 4],
       radius: zone.radius || 15,
@@ -963,10 +968,16 @@ class OGODSceneManager {
     if (config.enabled !== undefined && this.audioEngine.setSpatialEnabled) {
       this.audioEngine.setSpatialEnabled(config.enabled);
     }
-    if (config.dopplerEnabled !== undefined && this.audioEngine.setDopplerEnabled) {
+    if (
+      config.dopplerEnabled !== undefined &&
+      this.audioEngine.setDopplerEnabled
+    ) {
       this.audioEngine.setDopplerEnabled(config.dopplerEnabled);
     }
-    if (config.dopplerIntensity !== undefined && this.audioEngine.setDopplerIntensity) {
+    if (
+      config.dopplerIntensity !== undefined &&
+      this.audioEngine.setDopplerIntensity
+    ) {
       this.audioEngine.setDopplerIntensity(config.dopplerIntensity);
     }
     if (config.windEnabled !== undefined && this.audioEngine.setWindEnabled) {

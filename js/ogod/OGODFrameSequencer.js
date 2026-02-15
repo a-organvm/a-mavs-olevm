@@ -5,7 +5,7 @@
  * Supports multiple playback orders and loop modes.
  */
 
-"use strict";
+'use strict';
 
 /**
  * OGODFrameSequencer - Frame progression controller
@@ -21,7 +21,7 @@ class OGODFrameSequencer {
    */
   constructor(options = {}) {
     const config =
-      typeof ETCETER4_CONFIG !== "undefined"
+      typeof ETCETER4_CONFIG !== 'undefined'
         ? ETCETER4_CONFIG.ogodAnimation || {}
         : {};
 
@@ -30,8 +30,8 @@ class OGODFrameSequencer {
 
     this.gridSize = options.gridSize || faithful.gridSize || 21;
     this.totalFrames = options.totalFrames || faithful.totalFrames || 410;
-    this.order = options.order || playback.defaultOrder || "sequential";
-    this.loopMode = options.loopMode || playback.loopMode || "loop";
+    this.order = options.order || playback.defaultOrder || 'sequential';
+    this.loopMode = options.loopMode || playback.loopMode || 'loop';
 
     this._frame = 0;
     this._direction = 1; // 1 = forward, -1 = reverse (for bounce mode)
@@ -39,7 +39,7 @@ class OGODFrameSequencer {
     this._isComplete = false;
 
     // Build sequence for non-sequential orders
-    if (this.order !== "sequential") {
+    if (this.order !== 'sequential') {
       this._buildSequence();
     }
   }
@@ -89,15 +89,15 @@ class OGODFrameSequencer {
 
     if (this._frame >= this.totalFrames) {
       switch (this.loopMode) {
-        case "bounce":
+        case 'bounce':
           this._direction = -1;
           this._frame = this.totalFrames - 2;
           break;
-        case "once":
+        case 'once':
           this._frame = this.totalFrames - 1;
           this._isComplete = true;
           break;
-        case "loop":
+        case 'loop':
         default:
           this._frame = 0;
           break;
@@ -137,7 +137,7 @@ class OGODFrameSequencer {
     this.order = order;
     this._frame = 0;
     this._isComplete = false;
-    if (order === "sequential") {
+    if (order === 'sequential') {
       this._sequence = null;
     } else {
       this._buildSequence();
@@ -152,13 +152,13 @@ class OGODFrameSequencer {
     const g = this.gridSize;
 
     switch (this.order) {
-      case "spiral":
+      case 'spiral':
         this._sequence = this._buildSpiral(g);
         break;
-      case "diagonal":
+      case 'diagonal':
         this._sequence = this._buildDiagonal(g);
         break;
-      case "random":
+      case 'random':
         this._sequence = this._buildRandom(g);
         break;
       default:

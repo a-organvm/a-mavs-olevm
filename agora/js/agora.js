@@ -43,7 +43,7 @@ const AgoraUI = (() => {
   /**
    * Handle section navigation
    */
-  const handleSectionChange = (e) => {
+  const handleSectionChange = e => {
     const section = e.target.closest('.section-btn').dataset.section;
     if (!section) return;
 
@@ -63,7 +63,7 @@ const AgoraUI = (() => {
   /**
    * Update section button active states
    */
-  const updateSectionButtons = (activeSection) => {
+  const updateSectionButtons = activeSection => {
     const buttons = document.querySelectorAll('.section-btn');
     buttons.forEach(btn => {
       if (btn.dataset.section === activeSection) {
@@ -77,7 +77,7 @@ const AgoraUI = (() => {
   /**
    * Update section content visibility
    */
-  const updateSectionContent = (section) => {
+  const updateSectionContent = section => {
     const contents = document.querySelectorAll('.section-content');
     contents.forEach(content => {
       if (content.id === `${section}-section`) {
@@ -93,7 +93,7 @@ const AgoraUI = (() => {
   /**
    * Handle tag filtering
    */
-  const handleTagFilter = (e) => {
+  const handleTagFilter = e => {
     const tag = e.target.closest('.agora-tag-filter').dataset.tag;
     if (!tag) return;
 
@@ -109,7 +109,7 @@ const AgoraUI = (() => {
   /**
    * Update filter button active states
    */
-  const updateFilterButtons = (activeTag) => {
+  const updateFilterButtons = activeTag => {
     const buttons = document.querySelectorAll('.agora-tag-filter');
     buttons.forEach(btn => {
       if (btn.dataset.tag === activeTag) {
@@ -123,7 +123,7 @@ const AgoraUI = (() => {
   /**
    * Filter chamber cards by tag
    */
-  const filterContentByTag = (tag) => {
+  const filterContentByTag = tag => {
     const cards = document.querySelectorAll('.chamber-card.agora');
 
     cards.forEach(card => {
@@ -184,7 +184,7 @@ const AgoraUI = (() => {
    * Keyboard navigation support
    */
   const setupKeyboardNavigation = () => {
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', e => {
       // Ctrl/Cmd + F to focus filter
       if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
         e.preventDefault();
@@ -209,14 +209,20 @@ const AgoraUI = (() => {
     sectionBtns.forEach(btn => {
       const section = btn.dataset.section;
       btn.setAttribute('role', 'tab');
-      btn.setAttribute('aria-selected', section === currentSection ? 'true' : 'false');
+      btn.setAttribute(
+        'aria-selected',
+        section === currentSection ? 'true' : 'false'
+      );
       btn.setAttribute('aria-controls', `${section}-section`);
     });
 
     const filterBtns = document.querySelectorAll('.agora-tag-filter');
     filterBtns.forEach(btn => {
       btn.setAttribute('role', 'option');
-      btn.setAttribute('aria-selected', btn.classList.contains('active') ? 'true' : 'false');
+      btn.setAttribute(
+        'aria-selected',
+        btn.classList.contains('active') ? 'true' : 'false'
+      );
     });
 
     const cards = document.querySelectorAll('.chamber-card.agora');
@@ -231,7 +237,7 @@ const AgoraUI = (() => {
   const setupSkipLinks = () => {
     const skipLink = document.querySelector('.skip-link');
     if (skipLink) {
-      skipLink.addEventListener('click', (e) => {
+      skipLink.addEventListener('click', e => {
         e.preventDefault();
         const target = document.querySelector('#chamber-content');
         if (target) {
@@ -244,10 +250,10 @@ const AgoraUI = (() => {
   /**
    * Announce filter changes to screen readers
    */
-  const announceFilterChange = (tag) => {
+  const announceFilterChange = tag => {
     const announcement = `Filtering by ${tag === 'all' ? 'all topics' : tag}`;
-    const ariaLive = document.querySelector('[aria-live="polite"]') ||
-                     createAriaLiveRegion();
+    const ariaLive =
+      document.querySelector('[aria-live="polite"]') || createAriaLiveRegion();
     ariaLive.textContent = announcement;
   };
 
@@ -272,7 +278,7 @@ const AgoraUI = (() => {
     getCurrentSection: () => currentSection,
     getCurrentFilter: () => currentFilter,
     setSection: handleSectionChange,
-    setFilter: handleTagFilter
+    setFilter: handleTagFilter,
   };
 })();
 

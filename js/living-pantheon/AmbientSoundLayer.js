@@ -59,11 +59,16 @@ class AmbientSoundLayer {
     this.config = {
       enabled: configFromGlobal.enabled !== false,
       baseVolume: options.baseVolume ?? configFromGlobal.baseVolume ?? 0.05,
-      chamberSpecific: options.chamberSpecific ?? configFromGlobal.chamberSpecific ?? true,
+      chamberSpecific:
+        options.chamberSpecific ?? configFromGlobal.chamberSpecific ?? true,
       crossfadeDuration:
         options.crossfadeDuration ?? configFromGlobal.crossfadeDuration ?? 2000,
-      defaultTrack: options.defaultTrack ?? configFromGlobal.defaultTrack ?? 'audio/ambient/temple-drone.mp3',
-      chamberTracks: options.chamberTracks ?? configFromGlobal.chamberTracks ?? {},
+      defaultTrack:
+        options.defaultTrack ??
+        configFromGlobal.defaultTrack ??
+        'audio/ambient/temple-drone.mp3',
+      chamberTracks:
+        options.chamberTracks ?? configFromGlobal.chamberTracks ?? {},
     };
 
     // State tracking
@@ -217,7 +222,9 @@ class AmbientSoundLayer {
     const trackPath = this.config.chamberTracks[chamberId];
 
     if (!trackPath) {
-      console.warn(`AmbientSoundLayer: No track found for chamber "${chamberId}"`);
+      console.warn(
+        `AmbientSoundLayer: No track found for chamber "${chamberId}"`
+      );
       return this;
     }
 
@@ -306,10 +313,16 @@ class AmbientSoundLayer {
         newSound.on('end', this._onSoundEnd);
       },
       onloaderror: (id, err) => {
-        console.warn(`AmbientSoundLayer: Failed to load new track "${newTrackPath}":`, err);
+        console.warn(
+          `AmbientSoundLayer: Failed to load new track "${newTrackPath}":`,
+          err
+        );
       },
       onfail: (id, err) => {
-        console.warn(`AmbientSoundLayer: Sound error for new track "${newTrackPath}":`, err);
+        console.warn(
+          `AmbientSoundLayer: Sound error for new track "${newTrackPath}":`,
+          err
+        );
       },
     });
 
@@ -329,7 +342,7 @@ class AmbientSoundLayer {
     const oldVolume = this.currentVolume;
 
     // Fade function using requestAnimationFrame
-    const fadeFn = (currentTime) => {
+    const fadeFn = currentTime => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / fadeDuration, 1);
 
@@ -374,7 +387,7 @@ class AmbientSoundLayer {
     const startTime = performance.now();
     const targetVolume = this.isMuted ? 0 : this.currentVolume;
 
-    const fadeFn = (currentTime) => {
+    const fadeFn = currentTime => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / fadeDuration, 1);
 

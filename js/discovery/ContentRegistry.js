@@ -50,14 +50,16 @@ class ContentRegistry {
    */
   constructor() {
     // Configuration from global config
-    this.config = typeof ETCETER4_CONFIG !== 'undefined'
-      ? ETCETER4_CONFIG.discovery || {}
-      : {};
+    this.config =
+      typeof ETCETER4_CONFIG !== 'undefined'
+        ? ETCETER4_CONFIG.discovery || {}
+        : {};
 
     // Chamber definitions
-    this.chambers = typeof ETCETER4_CONFIG !== 'undefined'
-      ? ETCETER4_CONFIG.chambers || {}
-      : {};
+    this.chambers =
+      typeof ETCETER4_CONFIG !== 'undefined'
+        ? ETCETER4_CONFIG.chambers || {}
+        : {};
 
     // Core state
     this.isInitialized = false;
@@ -115,13 +117,16 @@ class ContentRegistry {
       this._buildIndexes();
 
       this.isInitialized = true;
-      console.info(`ContentRegistry: Initialized with ${this.items.length} items`);
+      console.info(
+        `ContentRegistry: Initialized with ${this.items.length} items`
+      );
 
       // Emit initialization event
-      window.dispatchEvent(new CustomEvent('content-registry-ready', {
-        detail: { itemCount: this.items.length },
-      }));
-
+      window.dispatchEvent(
+        new CustomEvent('content-registry-ready', {
+          detail: { itemCount: this.items.length },
+        })
+      );
     } catch (error) {
       console.error('ContentRegistry: Initialization failed:', error);
     }
@@ -147,15 +152,17 @@ class ContentRegistry {
       Object.entries(config.sections).forEach(([sectionKey, section]) => {
         if (section.items && Array.isArray(section.items)) {
           section.items.forEach(item => {
-            this.items.push(this._normalizeItem(item, {
-              chamber: chamberId,
-              chamberName: config.chamberName || 'AKADEMIA',
-              chamberColor: config.primaryColor || chamberMeta.color,
-              section: sectionKey,
-              sectionTitle: section.title,
-              wing: chamberMeta.wing || 'east',
-              type: this._inferType(sectionKey, item),
-            }));
+            this.items.push(
+              this._normalizeItem(item, {
+                chamber: chamberId,
+                chamberName: config.chamberName || 'AKADEMIA',
+                chamberColor: config.primaryColor || chamberMeta.color,
+                section: sectionKey,
+                sectionTitle: section.title,
+                wing: chamberMeta.wing || 'east',
+                type: this._inferType(sectionKey, item),
+              })
+            );
           });
         }
       });
@@ -179,15 +186,17 @@ class ContentRegistry {
       Object.entries(config.sections).forEach(([sectionKey, section]) => {
         if (section.items && Array.isArray(section.items)) {
           section.items.forEach(item => {
-            this.items.push(this._normalizeItem(item, {
-              chamber: chamberId,
-              chamberName: config.chamberName || 'BIBLIOTHEKE',
-              chamberColor: config.primaryColor || chamberMeta.color,
-              section: sectionKey,
-              sectionTitle: section.title,
-              wing: chamberMeta.wing || 'east',
-              type: this._inferType(sectionKey, item),
-            }));
+            this.items.push(
+              this._normalizeItem(item, {
+                chamber: chamberId,
+                chamberName: config.chamberName || 'BIBLIOTHEKE',
+                chamberColor: config.primaryColor || chamberMeta.color,
+                section: sectionKey,
+                sectionTitle: section.title,
+                wing: chamberMeta.wing || 'east',
+                type: this._inferType(sectionKey, item),
+              })
+            );
           });
         }
       });
@@ -209,14 +218,16 @@ class ContentRegistry {
 
     if (config.items && Array.isArray(config.items)) {
       config.items.forEach(item => {
-        this.items.push(this._normalizeItem(item, {
-          chamber: chamberId,
-          chamberName: config.name || 'PINAKOTHEKE',
-          chamberColor: config.primaryColor || chamberMeta.color,
-          section: item.section || item.category?.toLowerCase() || 'gallery',
-          wing: config.wing || chamberMeta.wing || 'east',
-          type: 'visual',
-        }));
+        this.items.push(
+          this._normalizeItem(item, {
+            chamber: chamberId,
+            chamberName: config.name || 'PINAKOTHEKE',
+            chamberColor: config.primaryColor || chamberMeta.color,
+            section: item.section || item.category?.toLowerCase() || 'gallery',
+            wing: config.wing || chamberMeta.wing || 'east',
+            type: 'visual',
+          })
+        );
       });
     }
   }
@@ -242,14 +253,16 @@ class ContentRegistry {
     categories.forEach(category => {
       if (config[category] && Array.isArray(config[category])) {
         config[category].forEach(item => {
-          this.items.push(this._normalizeItem(item, {
-            chamber: chamberId,
-            chamberName,
-            chamberColor,
-            section: category,
-            wing,
-            type: 'audio',
-          }));
+          this.items.push(
+            this._normalizeItem(item, {
+              chamber: chamberId,
+              chamberName,
+              chamberColor,
+              section: category,
+              wing,
+              type: 'audio',
+            })
+          );
         });
       }
     });
@@ -269,18 +282,21 @@ class ContentRegistry {
     const chamberMeta = this.chambers[chamberId] || {};
     const chamberColor = config.theme?.primary || chamberMeta.color;
     const chamberName = config.chamber?.name || 'AGORA';
-    const wing = config.chamber?.wing?.toLowerCase() || chamberMeta.wing || 'west';
+    const wing =
+      config.chamber?.wing?.toLowerCase() || chamberMeta.wing || 'west';
 
     if (config.content?.items && Array.isArray(config.content.items)) {
       config.content.items.forEach(item => {
-        this.items.push(this._normalizeItem(item, {
-          chamber: chamberId,
-          chamberName,
-          chamberColor,
-          section: item.section || 'feed',
-          wing,
-          type: 'text',
-        }));
+        this.items.push(
+          this._normalizeItem(item, {
+            chamber: chamberId,
+            chamberName,
+            chamberColor,
+            section: item.section || 'feed',
+            wing,
+            type: 'text',
+          })
+        );
       });
     }
   }
@@ -322,7 +338,8 @@ class ContentRegistry {
    * @private
    */
   _collectGenericConfig(config, defaultChamberId, defaultType) {
-    const chamberId = config.chamber?.id || config.chamberId || defaultChamberId;
+    const chamberId =
+      config.chamber?.id || config.chamberId || defaultChamberId;
     const chamberMeta = this.chambers[chamberId] || {};
 
     // Try sections pattern
@@ -331,14 +348,26 @@ class ContentRegistry {
         const items = section.items || section.content?.items || [];
         if (Array.isArray(items)) {
           items.forEach(item => {
-            this.items.push(this._normalizeItem(item, {
-              chamber: chamberId,
-              chamberName: config.chamberName || config.chamber?.name || chamberId.toUpperCase(),
-              chamberColor: config.primaryColor || config.chamber?.color || config.theme?.primary || chamberMeta.color,
-              section: sectionKey,
-              wing: config.wing || config.chamber?.wing?.toLowerCase() || chamberMeta.wing,
-              type: defaultType,
-            }));
+            this.items.push(
+              this._normalizeItem(item, {
+                chamber: chamberId,
+                chamberName:
+                  config.chamberName ||
+                  config.chamber?.name ||
+                  chamberId.toUpperCase(),
+                chamberColor:
+                  config.primaryColor ||
+                  config.chamber?.color ||
+                  config.theme?.primary ||
+                  chamberMeta.color,
+                section: sectionKey,
+                wing:
+                  config.wing ||
+                  config.chamber?.wing?.toLowerCase() ||
+                  chamberMeta.wing,
+                type: defaultType,
+              })
+            );
           });
         }
       });
@@ -347,28 +376,53 @@ class ContentRegistry {
     // Try flat items pattern
     if (config.items && Array.isArray(config.items)) {
       config.items.forEach(item => {
-        this.items.push(this._normalizeItem(item, {
-          chamber: chamberId,
-          chamberName: config.chamberName || config.chamber?.name || config.name || chamberId.toUpperCase(),
-          chamberColor: config.primaryColor || config.chamber?.color || config.theme?.primary || chamberMeta.color,
-          section: item.section || 'general',
-          wing: config.wing || config.chamber?.wing?.toLowerCase() || chamberMeta.wing,
-          type: defaultType,
-        }));
+        this.items.push(
+          this._normalizeItem(item, {
+            chamber: chamberId,
+            chamberName:
+              config.chamberName ||
+              config.chamber?.name ||
+              config.name ||
+              chamberId.toUpperCase(),
+            chamberColor:
+              config.primaryColor ||
+              config.chamber?.color ||
+              config.theme?.primary ||
+              chamberMeta.color,
+            section: item.section || 'general',
+            wing:
+              config.wing ||
+              config.chamber?.wing?.toLowerCase() ||
+              chamberMeta.wing,
+            type: defaultType,
+          })
+        );
       });
     }
 
     // Try content.items pattern (Agora-style)
     if (config.content?.items && Array.isArray(config.content.items)) {
       config.content.items.forEach(item => {
-        this.items.push(this._normalizeItem(item, {
-          chamber: chamberId,
-          chamberName: config.chamberName || config.chamber?.name || chamberId.toUpperCase(),
-          chamberColor: config.primaryColor || config.chamber?.color || config.theme?.primary || chamberMeta.color,
-          section: item.section || 'general',
-          wing: config.wing || config.chamber?.wing?.toLowerCase() || chamberMeta.wing,
-          type: defaultType,
-        }));
+        this.items.push(
+          this._normalizeItem(item, {
+            chamber: chamberId,
+            chamberName:
+              config.chamberName ||
+              config.chamber?.name ||
+              chamberId.toUpperCase(),
+            chamberColor:
+              config.primaryColor ||
+              config.chamber?.color ||
+              config.theme?.primary ||
+              chamberMeta.color,
+            section: item.section || 'general',
+            wing:
+              config.wing ||
+              config.chamber?.wing?.toLowerCase() ||
+              chamberMeta.wing,
+            type: defaultType,
+          })
+        );
       });
     }
   }
@@ -438,7 +492,8 @@ class ContentRegistry {
       tags,
 
       // Media references
-      image: item.image || item.coverArt?.medium || item.coverArt?.small || null,
+      image:
+        item.image || item.coverArt?.medium || item.coverArt?.small || null,
       content: item.content || null,
       wordCount: item.wordCount || null,
       readTime: item.readTime || null,
@@ -458,12 +513,25 @@ class ContentRegistry {
     const sectionLower = (section || '').toLowerCase();
 
     // Audio types
-    if (['albums', 'singles', 'demos', 'experimental', 'music'].includes(sectionLower)) {
+    if (
+      ['albums', 'singles', 'demos', 'experimental', 'music'].includes(
+        sectionLower
+      )
+    ) {
       return 'audio';
     }
 
     // Visual types
-    if (['photography', 'digital', 'glitch', 'generative', 'gallery', 'stills'].includes(sectionLower)) {
+    if (
+      [
+        'photography',
+        'digital',
+        'glitch',
+        'generative',
+        'gallery',
+        'stills',
+      ].includes(sectionLower)
+    ) {
       return 'visual';
     }
 
@@ -677,10 +745,14 @@ class ContentRegistry {
 
     // Filter by year range
     if (criteria.fromYear) {
-      results = results.filter(item => item.year && item.year >= criteria.fromYear);
+      results = results.filter(
+        item => item.year && item.year >= criteria.fromYear
+      );
     }
     if (criteria.toYear) {
-      results = results.filter(item => item.year && item.year <= criteria.toYear);
+      results = results.filter(
+        item => item.year && item.year <= criteria.toYear
+      );
     }
 
     return results;

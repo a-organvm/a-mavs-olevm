@@ -76,7 +76,10 @@ class MediaURLResolver {
     // Determine preferred format from config
     const preferredFormat = MediaURLResolver.getPreferredAudioFormat(format);
     const paddedTrack = String(trackNumber).padStart(2, '0');
-    return MediaURLResolver.resolve(`albums/${albumId}/${paddedTrack}.${preferredFormat}`, 'audio');
+    return MediaURLResolver.resolve(
+      `albums/${albumId}/${paddedTrack}.${preferredFormat}`,
+      'audio'
+    );
   }
 
   /**
@@ -134,7 +137,10 @@ class MediaURLResolver {
    */
   static resolveWaveform(albumId, trackNumber) {
     const paddedTrack = String(trackNumber).padStart(2, '0');
-    return MediaURLResolver.resolve(`albums/${albumId}/${paddedTrack}-waveform.json`, 'audio');
+    return MediaURLResolver.resolve(
+      `albums/${albumId}/${paddedTrack}-waveform.json`,
+      'audio'
+    );
   }
 
   /**
@@ -145,7 +151,10 @@ class MediaURLResolver {
    */
   static resolveLyrics(albumId, trackNumber) {
     const paddedTrack = String(trackNumber).padStart(2, '0');
-    return MediaURLResolver.resolve(`albums/${albumId}/${paddedTrack}.lrc`, 'audio');
+    return MediaURLResolver.resolve(
+      `albums/${albumId}/${paddedTrack}.lrc`,
+      'audio'
+    );
   }
 
   /**
@@ -155,7 +164,8 @@ class MediaURLResolver {
    * @returns {string} Video URL (HLS manifest or direct file)
    */
   static resolveVideo(videoId, quality = 'auto') {
-    const preferAdaptive = window.ETCETER4_CONFIG?.media?.video?.preferAdaptive !== false;
+    const preferAdaptive =
+      window.ETCETER4_CONFIG?.media?.video?.preferAdaptive !== false;
 
     if (preferAdaptive && quality === 'auto') {
       // Return master HLS manifest for adaptive streaming
@@ -286,10 +296,14 @@ class MediaURLResolver {
         medium: MediaURLResolver.resolveCoverArt(albumId, 'medium'),
         small: MediaURLResolver.resolveCoverArt(albumId, 'small'),
       },
-      tracks: MediaURLResolver.resolveAlbumTracks(albumId, albumConfig.trackCount, {
-        includeWaveforms: true,
-        includeLyrics: albumConfig.hasLyrics || false,
-      }),
+      tracks: MediaURLResolver.resolveAlbumTracks(
+        albumId,
+        albumConfig.trackCount,
+        {
+          includeWaveforms: true,
+          includeLyrics: albumConfig.hasLyrics || false,
+        }
+      ),
     };
   }
 }

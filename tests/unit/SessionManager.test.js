@@ -8,9 +8,8 @@ import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import '../unit/setup.js';
 
 // Import module by evaluating the source
-const SessionManagerSource = await import(
-  '../../js/3d/ui/SessionManager.js?raw'
-).then(m => m.default);
+const SessionManagerSource =
+  await import('../../js/3d/ui/SessionManager.js?raw').then(m => m.default);
 eval(SessionManagerSource);
 
 describe('SessionManager', () => {

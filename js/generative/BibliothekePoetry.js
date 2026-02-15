@@ -26,41 +26,130 @@ class BibliothekePoetry {
     // Word pools — seeded from sketch.js emotionGroups, extended for literary use
     this.words = {
       solace: [
-        'forgiveness', 'growth', 'life', 'love', 'trust', 'hope',
-        'return', 'rain', 'clouds', 'forever', 'light', 'warmth',
-        'breath', 'bloom', 'gentle', 'dawn', 'river', 'peace',
-        'tenderness', 'grace', 'horizon', 'shelter', 'ember',
+        'forgiveness',
+        'growth',
+        'life',
+        'love',
+        'trust',
+        'hope',
+        'return',
+        'rain',
+        'clouds',
+        'forever',
+        'light',
+        'warmth',
+        'breath',
+        'bloom',
+        'gentle',
+        'dawn',
+        'river',
+        'peace',
+        'tenderness',
+        'grace',
+        'horizon',
+        'shelter',
+        'ember',
       ],
       discord: [
-        'death', 'empty', 'fear', 'remorse', 'pain', 'depression',
-        'hate', 'repetition', 'gone', 'end', 'fist', 'silence',
-        'fracture', 'erosion', 'hollow', 'void', 'ash', 'static',
-        'severance', 'collapse', 'drift', 'absence', 'wound',
+        'death',
+        'empty',
+        'fear',
+        'remorse',
+        'pain',
+        'depression',
+        'hate',
+        'repetition',
+        'gone',
+        'end',
+        'fist',
+        'silence',
+        'fracture',
+        'erosion',
+        'hollow',
+        'void',
+        'ash',
+        'static',
+        'severance',
+        'collapse',
+        'drift',
+        'absence',
+        'wound',
       ],
       sensory: [
-        'velvet', 'crystalline', 'amber', 'obsidian', 'mercury',
-        'copper', 'smoke', 'salt', 'silk', 'rust', 'glass',
-        'bone', 'stone', 'flame', 'frost', 'moss', 'dust',
+        'velvet',
+        'crystalline',
+        'amber',
+        'obsidian',
+        'mercury',
+        'copper',
+        'smoke',
+        'salt',
+        'silk',
+        'rust',
+        'glass',
+        'bone',
+        'stone',
+        'flame',
+        'frost',
+        'moss',
+        'dust',
       ],
       verbs: [
-        'dissolves', 'emerges', 'shatters', 'whispers', 'burns',
-        'unfolds', 'collapses', 'breathes', 'fractures', 'spirals',
-        'echoes', 'bleeds', 'trembles', 'radiates', 'erodes',
-        'surrenders', 'awakens', 'descends', 'transforms', 'lingers',
+        'dissolves',
+        'emerges',
+        'shatters',
+        'whispers',
+        'burns',
+        'unfolds',
+        'collapses',
+        'breathes',
+        'fractures',
+        'spirals',
+        'echoes',
+        'bleeds',
+        'trembles',
+        'radiates',
+        'erodes',
+        'surrenders',
+        'awakens',
+        'descends',
+        'transforms',
+        'lingers',
       ],
       abstract: [
-        'memory', 'distance', 'threshold', 'archive', 'frequency',
-        'resonance', 'entropy', 'syntax', 'geometry', 'algorithm',
-        'paradox', 'meridian', 'spectrum', 'labyrinth', 'cipher',
-        'testimony', 'inheritance', 'architecture', 'cartography',
+        'memory',
+        'distance',
+        'threshold',
+        'archive',
+        'frequency',
+        'resonance',
+        'entropy',
+        'syntax',
+        'geometry',
+        'algorithm',
+        'paradox',
+        'meridian',
+        'spectrum',
+        'labyrinth',
+        'cipher',
+        'testimony',
+        'inheritance',
+        'architecture',
+        'cartography',
       ],
       connectors: [
-        'beneath', 'through', 'against', 'within', 'beyond',
-        'among', 'across', 'between', 'inside', 'toward',
+        'beneath',
+        'through',
+        'against',
+        'within',
+        'beyond',
+        'among',
+        'across',
+        'between',
+        'inside',
+        'toward',
       ],
-      articles: [
-        'the', 'a', 'this', 'that', 'every', 'no', 'each',
-      ],
+      articles: ['the', 'a', 'this', 'that', 'every', 'no', 'each'],
     };
 
     // Line templates for poetry generation
@@ -164,12 +253,20 @@ class BibliothekePoetry {
 
     // Record interaction
     if (typeof JourneyTracker !== 'undefined') {
-      JourneyTracker.getInstance().recordInteraction('bibliotheke', 'poem_generated', { mode });
+      JourneyTracker.getInstance().recordInteraction(
+        'bibliotheke',
+        'poem_generated',
+        { mode }
+      );
     }
 
     // Record interaction
     if (typeof JourneyTracker !== 'undefined') {
-      JourneyTracker.getInstance().recordInteraction('bibliotheke', 'poem_generated', { mode });
+      JourneyTracker.getInstance().recordInteraction(
+        'bibliotheke',
+        'poem_generated',
+        { mode }
+      );
     }
 
     // Bind regenerate button
@@ -193,7 +290,10 @@ class BibliothekePoetry {
       'Fragment: {sensory}',
     ];
     const pattern = this._pick(patterns);
-    return this._fillTemplate(pattern).replace('{num}', String(Math.floor(Math.random() * 99) + 1));
+    return this._fillTemplate(pattern).replace(
+      '{num}',
+      String(Math.floor(Math.random() * 99) + 1)
+    );
   }
 
   /**
@@ -211,7 +311,9 @@ class BibliothekePoetry {
         lines.push('');
       }
     }
-    return lines.map(l => (l === '' ? '<br>' : `<p class="mv1">${l}</p>`)).join('');
+    return lines
+      .map(l => (l === '' ? '<br>' : `<p class="mv1">${l}</p>`))
+      .join('');
   }
 
   /**
@@ -244,10 +346,13 @@ class BibliothekePoetry {
         const template = this._pick(templates);
         lines.push(this._fillTemplate(template));
       }
-      const label = section === 'chorus'
-        ? '<span class="f7 o-40 db mb1">[chorus]</span>'
-        : '';
-      parts.push(`<div class="mv2">${label}${lines.map(l => `<p class="mv1">${l}</p>`).join('')}</div>`);
+      const label =
+        section === 'chorus'
+          ? '<span class="f7 o-40 db mb1">[chorus]</span>'
+          : '';
+      parts.push(
+        `<div class="mv2">${label}${lines.map(l => `<p class="mv1">${l}</p>`).join('')}</div>`
+      );
     });
 
     return parts.join('');

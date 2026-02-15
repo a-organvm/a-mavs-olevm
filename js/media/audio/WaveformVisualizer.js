@@ -85,7 +85,11 @@ class WaveformVisualizer {
 
     // Attach event listeners
     this.canvas.addEventListener('click', this.boundHandleClick);
-    this.canvas.addEventListener('touchstart', this.boundHandleTouchStart, false);
+    this.canvas.addEventListener(
+      'touchstart',
+      this.boundHandleTouchStart,
+      false
+    );
     this.canvas.addEventListener('touchmove', this.boundHandleTouchMove, false);
     this.canvas.addEventListener('touchend', this.boundHandleTouchEnd, false);
     window.addEventListener('resize', this.boundHandleResize);
@@ -191,10 +195,10 @@ class WaveformVisualizer {
       if (typeof this.player.on === 'function') {
         this.player.on('play', () => this.updateFromPlayer());
         this.player.on('pause', () => this.updateFromPlayer());
-        this.player.on('seek', (time) => {
+        this.player.on('seek', time => {
           this.setProgress(time / (this.player.getDuration() || 1));
         });
-        this.player.on('timeupdate', (time) => {
+        this.player.on('timeupdate', time => {
           this.setProgress(time / (this.player.getDuration() || 1));
         });
         this.player.on('loadstart', () => {
@@ -422,11 +426,14 @@ class WaveformVisualizer {
    */
   emit(eventName, data) {
     const listeners = this.eventListeners.get(eventName) || [];
-    listeners.forEach((callback) => {
+    listeners.forEach(callback => {
       try {
         callback(data);
       } catch (error) {
-        console.error(`WaveformVisualizer event listener error (${eventName}):`, error);
+        console.error(
+          `WaveformVisualizer event listener error (${eventName}):`,
+          error
+        );
       }
     });
   }

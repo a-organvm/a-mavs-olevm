@@ -62,6 +62,7 @@ The 3D system is built on Three.js for rendering and Tone.js for audio, designed
 #### SceneManager (`js/3d/core/SceneManager.js`)
 
 The base Three.js lifecycle manager that handles:
+
 - WebGL renderer setup with optimized settings
 - Scene and camera management
 - Animation loop with delta time
@@ -72,6 +73,7 @@ The base Three.js lifecycle manager that handles:
 #### OGODSceneManager (`js/3d/ogod/OGODSceneManager.js`)
 
 OGOD-specific scene manager that extends SceneManager functionality:
+
 - Track configuration loading
 - Environment archetype selection
 - Color zones for audio mapping
@@ -81,6 +83,7 @@ OGOD-specific scene manager that extends SceneManager functionality:
 #### EnvironmentBase (`js/3d/ogod/environments/EnvironmentBase.js`)
 
 Abstract base class for all environment archetypes providing:
+
 - Color palette conversion
 - Object lifecycle management
 - Particle system creation
@@ -90,6 +93,7 @@ Abstract base class for all environment archetypes providing:
 #### FirstPersonController (`js/3d/ogod/controls/FirstPersonController.js`)
 
 Cross-platform camera controls supporting:
+
 - WASD/Arrow key movement
 - Mouse look (pointer lock)
 - Touch drag to look
@@ -100,6 +104,7 @@ Cross-platform camera controls supporting:
 #### OGODAudioEngine (`js/3d/ogod/OGODAudioEngine.js`)
 
 Audio system using Tone.js for:
+
 - Multi-stem audio playback (drums, bass, vocals, other)
 - Position-based stem volume mixing
 - Effect chains (reverb, delay)
@@ -192,7 +197,11 @@ class MyNewEnvironment extends EnvironmentBase {
     ];
 
     positions.forEach((pos, i) => {
-      const zone = this._createColorZone(this.colors[i % this.colors.length], pos, 15);
+      const zone = this._createColorZone(
+        this.colors[i % this.colors.length],
+        pos,
+        15
+      );
       this._addObject(zone);
     });
   }
@@ -248,14 +257,14 @@ ogodTracks: {
 
 ### Environment Archetype Reference
 
-| Archetype | Description | Key Visual Elements |
-|-----------|-------------|---------------------|
-| `gradient-fog` | Volumetric color fog zones | FogExp2, colored planes, ambient particles |
-| `stripe-bar` | Vertical parallax bars | Instanced bars, parallax movement |
-| `bokeh-grid` | Neon glowing spheres | Point lights, sphere grid, bloom |
-| `high-contrast` | Black/white shadow world | Harsh shadows, minimal color |
-| `layered-colors` | Stacked transparent planes | Multiple semi-transparent layers |
-| `glitch-digital` | RGB split, scanlines | Custom shaders, noise textures |
+| Archetype        | Description                | Key Visual Elements                        |
+| ---------------- | -------------------------- | ------------------------------------------ |
+| `gradient-fog`   | Volumetric color fog zones | FogExp2, colored planes, ambient particles |
+| `stripe-bar`     | Vertical parallax bars     | Instanced bars, parallax movement          |
+| `bokeh-grid`     | Neon glowing spheres       | Point lights, sphere grid, bloom           |
+| `high-contrast`  | Black/white shadow world   | Harsh shadows, minimal color               |
+| `layered-colors` | Stacked transparent planes | Multiple semi-transparent layers           |
+| `glitch-digital` | RGB split, scanlines       | Custom shaders, noise textures             |
 
 ---
 
@@ -356,14 +365,14 @@ audioEngine.dispose();
 
 ### Target Performance Metrics
 
-| Metric | Target | Acceptable | Poor |
-|--------|--------|------------|------|
-| FPS | 60+ | 30-59 | <30 |
-| Frame Time | <16.67ms | 16.67-33ms | >33ms |
-| P99 Frame Time | <25ms | 25-50ms | >50ms |
-| Memory | <200MB | 200-500MB | >500MB |
-| Memory Growth | <0.1MB/s | 0.1-0.5MB/s | >0.5MB/s |
-| Draw Calls | <100 | 100-500 | >500 |
+| Metric         | Target   | Acceptable  | Poor     |
+| -------------- | -------- | ----------- | -------- |
+| FPS            | 60+      | 30-59       | <30      |
+| Frame Time     | <16.67ms | 16.67-33ms  | >33ms    |
+| P99 Frame Time | <25ms    | 25-50ms     | >50ms    |
+| Memory         | <200MB   | 200-500MB   | >500MB   |
+| Memory Growth  | <0.1MB/s | 0.1-0.5MB/s | >0.5MB/s |
+| Draw Calls     | <100     | 100-500     | >500     |
 
 ### Optimization Techniques
 
@@ -420,9 +429,9 @@ Bloom adds GPU cost. Adjust parameters:
 
 ```javascript
 sceneManager.enableBloom({
-  strength: 0.3,    // Lower = faster
-  threshold: 0.85,  // Higher = fewer pixels processed
-  radius: 0.3,      // Lower = faster blur
+  strength: 0.3, // Lower = faster
+  threshold: 0.85, // Higher = fewer pixels processed
+  radius: 0.3, // Lower = faster blur
 });
 ```
 
@@ -454,9 +463,17 @@ class SceneManager {
   });
 
   // Post-processing
-  enableBloom(options?: { strength?: number; threshold?: number; radius?: number }): void;
+  enableBloom(options?: {
+    strength?: number;
+    threshold?: number;
+    radius?: number;
+  }): void;
   disableBloom(): void;
-  setBloomParams(params: { strength?: number; threshold?: number; radius?: number }): void;
+  setBloomParams(params: {
+    strength?: number;
+    threshold?: number;
+    radius?: number;
+  }): void;
 
   // Scene configuration
   setBackground(background: THREE.Color | THREE.Texture | string): void;
@@ -467,7 +484,9 @@ class SceneManager {
   remove(object: THREE.Object3D): void;
 
   // Animation
-  onAnimate(callback: (deltaTime: number, elapsedTime: number) => void): () => void;
+  onAnimate(
+    callback: (deltaTime: number, elapsedTime: number) => void
+  ): () => void;
 
   // Lifecycle
   start(): void;
@@ -527,12 +546,22 @@ class OGODAudioEngine {
   dispose(): void;
 
   // Volume control
-  setStemVolumes(volumes: { drums?: number; bass?: number; vocals?: number; other?: number }): void;
+  setStemVolumes(volumes: {
+    drums?: number;
+    bass?: number;
+    vocals?: number;
+    other?: number;
+  }): void;
   setMasterVolume(volume: number): void;
   setReverbMix(mix: number): void;
 
   // State
-  getStemVolumes(): { drums: number; bass: number; vocals: number; other: number };
+  getStemVolumes(): {
+    drums: number;
+    bass: number;
+    vocals: number;
+    other: number;
+  };
   getPosition(): number;
 
   // Update (call each frame)
@@ -574,18 +603,21 @@ class FirstPersonController {
 
 ```typescript
 abstract class EnvironmentBase {
-  constructor(options: {
-    sceneManager: SceneManager;
-    palette: string[];
-  });
+  constructor(options: { sceneManager: SceneManager; palette: string[] });
 
   // Must implement in subclass
   abstract initialize(): Promise<void>;
 
   // Protected helpers
   protected _addObject(object: THREE.Object3D): void;
-  protected _onAnimate(callback: (delta: number, elapsed: number) => void): void;
-  protected _createColorZone(color: THREE.Color, position: object, radius?: number): THREE.Mesh;
+  protected _onAnimate(
+    callback: (delta: number, elapsed: number) => void
+  ): void;
+  protected _createColorZone(
+    color: THREE.Color,
+    position: object,
+    radius?: number
+  ): THREE.Mesh;
   protected _createParticles(options: object): THREE.Points;
   protected _createGround(options?: object): THREE.Mesh;
   protected _createAmbientLight(intensity?: number): THREE.AmbientLight;
@@ -614,9 +646,29 @@ class EnvironmentData {
   // Data access
   getData(): {
     location: { lat: number; lng: number; available: boolean };
-    time: { hours: number; minutes: number; seconds: number; timeOfDay: number; sunPosition: number; period: string; colorTemperature: number };
-    weather: { condition: string; temperature: number; humidity: number; cloudCover: number; windSpeed: number; available: boolean };
-    astronomy: { moonPhase: number; moonIllumination: number; sunAltitude: number; available: boolean };
+    time: {
+      hours: number;
+      minutes: number;
+      seconds: number;
+      timeOfDay: number;
+      sunPosition: number;
+      period: string;
+      colorTemperature: number;
+    };
+    weather: {
+      condition: string;
+      temperature: number;
+      humidity: number;
+      cloudCover: number;
+      windSpeed: number;
+      available: boolean;
+    };
+    astronomy: {
+      moonPhase: number;
+      moonIllumination: number;
+      sunAltitude: number;
+      available: boolean;
+    };
   };
 
   getVisualParams(): {
@@ -682,22 +734,26 @@ npm run test:ui
 ### Common Issues
 
 **WebGL Context Lost**
+
 - Reduce texture sizes
 - Lower particle counts
 - Check for memory leaks
 
 **Audio Not Playing**
+
 - Ensure user interaction before calling `audioEngine.start()`
 - Check browser audio context state
 - Verify audio file paths
 
 **Low FPS**
+
 - Disable post-processing
 - Reduce particle counts
 - Use simpler environment archetype
 - Check for expensive animation callbacks
 
 **Memory Leaks**
+
 - Ensure `dispose()` is called on all objects
 - Use PerformanceMonitor to track memory growth
 - Check for detached DOM elements

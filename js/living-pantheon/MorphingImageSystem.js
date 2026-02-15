@@ -61,11 +61,25 @@ class MorphingImageSystem {
     // Merge options with config and defaults
     this.config = {
       enabled: configFromGlobal.enabled !== false,
-      transitionDuration: options.transitionDuration ?? configFromGlobal.transitionDuration ?? 60000,
-      pauseBetween: options.pauseBetween ?? configFromGlobal.pauseBetween ?? 30000,
-      targetSelectors:
-        options.targetSelectors ?? configFromGlobal.targetSelectors ?? ['.morph-image', '.morphing-target'],
-      blendModes: options.blendModes ?? configFromGlobal.blendModes ?? ['normal', 'multiply', 'screen', 'overlay', 'difference'],
+      transitionDuration:
+        options.transitionDuration ??
+        configFromGlobal.transitionDuration ??
+        60000,
+      pauseBetween:
+        options.pauseBetween ?? configFromGlobal.pauseBetween ?? 30000,
+      targetSelectors: options.targetSelectors ??
+        configFromGlobal.targetSelectors ?? [
+          '.morph-image',
+          '.morphing-target',
+        ],
+      blendModes: options.blendModes ??
+        configFromGlobal.blendModes ?? [
+          'normal',
+          'multiply',
+          'screen',
+          'overlay',
+          'difference',
+        ],
     };
 
     // State tracking
@@ -91,7 +105,9 @@ class MorphingImageSystem {
 
     // Check for prefers-reduced-motion
     if (this._prefersReducedMotion()) {
-      console.info('MorphingImageSystem: Disabled due to prefers-reduced-motion');
+      console.info(
+        'MorphingImageSystem: Disabled due to prefers-reduced-motion'
+      );
       return this;
     }
 
@@ -234,7 +250,11 @@ class MorphingImageSystem {
     const style = window.getComputedStyle(element);
 
     // Check basic visibility properties
-    if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') {
+    if (
+      style.display === 'none' ||
+      style.visibility === 'hidden' ||
+      style.opacity === '0'
+    ) {
       return false;
     }
 
@@ -246,7 +266,10 @@ class MorphingImageSystem {
 
     // Check if element is in viewport
     const inViewport =
-      rect.top < window.innerHeight && rect.bottom > 0 && rect.left < window.innerWidth && rect.right > 0;
+      rect.top < window.innerHeight &&
+      rect.bottom > 0 &&
+      rect.left < window.innerWidth &&
+      rect.right > 0;
 
     return inViewport;
   }
@@ -257,7 +280,9 @@ class MorphingImageSystem {
    * @returns {boolean}
    */
   _prefersReducedMotion() {
-    return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+    return (
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
+    );
   }
 
   /**
@@ -313,7 +338,9 @@ class MorphingImageSystem {
       this._applyMorphing(element, progress);
 
       // Schedule next frame
-      const frameId = requestAnimationFrame(() => this._performMorphFrame(element));
+      const frameId = requestAnimationFrame(() =>
+        this._performMorphFrame(element)
+      );
       this.pendingAnimationFrames.add(frameId);
     } else {
       // Morph cycle complete - reset and schedule pause
@@ -323,12 +350,9 @@ class MorphingImageSystem {
       state.phase = 0;
 
       // Schedule pause before next cycle
-      const timeoutId = setTimeout(
-        () => {
-          this._startMorphCycle(element);
-        },
-        this.config.pauseBetween
-      );
+      const timeoutId = setTimeout(() => {
+        this._startMorphCycle(element);
+      }, this.config.pauseBetween);
 
       this.pauseTimeouts.add(timeoutId);
     }
@@ -360,8 +384,13 @@ class MorphingImageSystem {
       const phaseProgress = (progress - 0.333) / 0.334;
 
       // Cycle through blend modes
-      const blendModeCount = Math.floor(phaseProgress * this.config.blendModes.length);
-      const nextIndex = Math.min(blendModeCount, this.config.blendModes.length - 1);
+      const blendModeCount = Math.floor(
+        phaseProgress * this.config.blendModes.length
+      );
+      const nextIndex = Math.min(
+        blendModeCount,
+        this.config.blendModes.length - 1
+      );
       blendMode = this.config.blendModes[nextIndex];
 
       const blur = 8 - Math.ceil(phaseProgress * 2); // 8 to 6px blur

@@ -56,15 +56,21 @@ class GlobalGlitchSystem {
     this.config = {
       enabled: configFromGlobal.enabled !== false,
       frequency: options.frequency ?? configFromGlobal.frequency ?? 0.02,
-      checkInterval: options.checkInterval ?? configFromGlobal.checkInterval ?? 5000,
-      types: options.types ?? configFromGlobal.types ?? ['text', 'color', 'position', 'image'],
+      checkInterval:
+        options.checkInterval ?? configFromGlobal.checkInterval ?? 5000,
+      types: options.types ??
+        configFromGlobal.types ?? ['text', 'color', 'position', 'image'],
       duration: {
         min: options.duration?.min ?? configFromGlobal.duration?.min ?? 50,
         max: options.duration?.max ?? configFromGlobal.duration?.max ?? 200,
       },
-      excludeSelectors:
-        options.excludeSelectors ??
-        configFromGlobal.excludeSelectors ?? ['.no-glitch', 'input', 'button', 'a'],
+      excludeSelectors: options.excludeSelectors ??
+        configFromGlobal.excludeSelectors ?? [
+          '.no-glitch',
+          'input',
+          'button',
+          'a',
+        ],
     };
 
     // State tracking
@@ -74,7 +80,8 @@ class GlobalGlitchSystem {
     this.pendingAnimationFrames = new Set();
 
     // Glitch characters for text scramble effect
-    this.glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?/~`ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    this.glitchChars =
+      '!@#$%^&*()_+-=[]{}|;:,.<>?/~`ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     // Color inversion maximum duration for seizure safety
     this.maxColorInversionDuration = 50;
@@ -95,14 +102,19 @@ class GlobalGlitchSystem {
 
     // Check for prefers-reduced-motion
     if (this._prefersReducedMotion()) {
-      console.info('GlobalGlitchSystem: Disabled due to prefers-reduced-motion');
+      console.info(
+        'GlobalGlitchSystem: Disabled due to prefers-reduced-motion'
+      );
       return this;
     }
 
     this.isRunning = true;
 
     // Start periodic checks
-    this.checkIntervalId = setInterval(this._performCheck, this.config.checkInterval);
+    this.checkIntervalId = setInterval(
+      this._performCheck,
+      this.config.checkInterval
+    );
 
     // Listen for visibility changes to pause when hidden
     document.addEventListener('visibilitychange', this._onVisibilityChange);
@@ -156,9 +168,10 @@ class GlobalGlitchSystem {
       return false;
     }
 
-    const glitchType = type && this.config.types.includes(type)
-      ? type
-      : this._selectRandomType();
+    const glitchType =
+      type && this.config.types.includes(type)
+        ? type
+        : this._selectRandomType();
 
     this._applyGlitch(element, glitchType);
     return true;
@@ -170,7 +183,9 @@ class GlobalGlitchSystem {
    * @returns {boolean}
    */
   _prefersReducedMotion() {
-    return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+    return (
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
+    );
   }
 
   /**
@@ -186,7 +201,10 @@ class GlobalGlitchSystem {
       }
     } else if (this.isRunning && this.checkIntervalId === null) {
       // Resume checks when page becomes visible
-      this.checkIntervalId = setInterval(this._performCheck, this.config.checkInterval);
+      this.checkIntervalId = setInterval(
+        this._performCheck,
+        this.config.checkInterval
+      );
     }
   }
 
@@ -277,7 +295,11 @@ class GlobalGlitchSystem {
     const style = window.getComputedStyle(element);
 
     // Check basic visibility properties
-    if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') {
+    if (
+      style.display === 'none' ||
+      style.visibility === 'hidden' ||
+      style.opacity === '0'
+    ) {
       return false;
     }
 
@@ -350,19 +372,15 @@ class GlobalGlitchSystem {
   _applyTextGlitch(element, duration) {
     // Find direct text nodes within this element
     const textNodes = [];
-    const walker = document.createTreeWalker(
-      element,
-      NodeFilter.SHOW_TEXT,
-      {
-        acceptNode: (node) => {
-          // Only accept nodes with actual text content
-          if (node.textContent.trim().length > 0) {
-            return NodeFilter.FILTER_ACCEPT;
-          }
-          return NodeFilter.FILTER_REJECT;
-        },
-      }
-    );
+    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, {
+      acceptNode: node => {
+        // Only accept nodes with actual text content
+        if (node.textContent.trim().length > 0) {
+          return NodeFilter.FILTER_ACCEPT;
+        }
+        return NodeFilter.FILTER_REJECT;
+      },
+    });
 
     let node;
     while ((node = walker.nextNode())) {
@@ -384,7 +402,7 @@ class GlobalGlitchSystem {
 
     // Schedule restoration using requestAnimationFrame for smoothness
     const startTime = performance.now();
-    const restoreText = (currentTime) => {
+    const restoreText = currentTime => {
       if (currentTime - startTime >= duration) {
         targetNode.textContent = originalText;
         this.activeGlitches.delete(element);
@@ -412,7 +430,8 @@ class GlobalGlitchSystem {
       const idx = Math.floor(Math.random() * chars.length);
       // Don't scramble whitespace
       if (chars[idx].trim()) {
-        chars[idx] = this.glitchChars[Math.floor(Math.random() * this.glitchChars.length)];
+        chars[idx] =
+          this.glitchChars[Math.floor(Math.random() * this.glitchChars.length)];
       }
     }
 
@@ -452,7 +471,7 @@ class GlobalGlitchSystem {
 
     // Schedule removal
     const startTime = performance.now();
-    const removeOverlay = (currentTime) => {
+    const removeOverlay = currentTime => {
       if (currentTime - startTime >= duration) {
         if (overlay.parentNode) {
           overlay.remove();
@@ -495,7 +514,7 @@ class GlobalGlitchSystem {
 
     // Schedule restoration
     const startTime = performance.now();
-    const restorePosition = (currentTime) => {
+    const restorePosition = currentTime => {
       if (currentTime - startTime >= duration) {
         element.style.transform = originalTransform;
         this.activeGlitches.delete(element);
@@ -529,7 +548,8 @@ class GlobalGlitchSystem {
       `hue-rotate(${Math.floor(Math.random() * 180)}deg) saturate(${200 + Math.floor(Math.random() * 200)}%)`,
     ];
 
-    const selectedFilter = filterEffects[Math.floor(Math.random() * filterEffects.length)];
+    const selectedFilter =
+      filterEffects[Math.floor(Math.random() * filterEffects.length)];
 
     // Apply filter
     element.style.filter = originalFilter
@@ -538,7 +558,7 @@ class GlobalGlitchSystem {
 
     // Schedule restoration
     const startTime = performance.now();
-    const restoreFilter = (currentTime) => {
+    const restoreFilter = currentTime => {
       if (currentTime - startTime >= duration) {
         element.style.filter = originalFilter;
         this.activeGlitches.delete(element);
@@ -579,7 +599,10 @@ class GlobalGlitchSystem {
       // Restart interval with new timing if running
       if (this.isRunning && this.checkIntervalId !== null) {
         clearInterval(this.checkIntervalId);
-        this.checkIntervalId = setInterval(this._performCheck, this.config.checkInterval);
+        this.checkIntervalId = setInterval(
+          this._performCheck,
+          this.config.checkInterval
+        );
       }
     }
     if (newConfig.types !== undefined) {

@@ -49,7 +49,7 @@ const SymposionChamber = (() => {
   function attachEventListeners() {
     if (!dom.navButtons) return;
 
-    dom.navButtons.forEach((button) => {
+    dom.navButtons.forEach(button => {
       button.addEventListener('click', handleNavClick);
     });
 
@@ -72,20 +72,20 @@ const SymposionChamber = (() => {
    * @param {KeyboardEvent} event - Keyboard event
    */
   function handleKeyboardNav(event) {
-    const sections = Array.from(dom.navButtons).map((btn) => btn.dataset.section);
+    const sections = Array.from(dom.navButtons).map(btn => btn.dataset.section);
     const currentIndex = sections.indexOf(currentSection);
 
     if (event.key === 'ArrowRight' && currentIndex < sections.length - 1) {
       const nextSection = sections[currentIndex + 1];
       filterBySection(nextSection);
       updateActiveButton(
-        document.querySelector(`[data-section="${nextSection}"]`),
+        document.querySelector(`[data-section="${nextSection}"]`)
       );
     } else if (event.key === 'ArrowLeft' && currentIndex > 0) {
       const prevSection = sections[currentIndex - 1];
       filterBySection(prevSection);
       updateActiveButton(
-        document.querySelector(`[data-section="${prevSection}"]`),
+        document.querySelector(`[data-section="${prevSection}"]`)
       );
     }
   }
@@ -100,13 +100,13 @@ const SymposionChamber = (() => {
     if (!dom.dialogueCards) return;
 
     const cards = Array.from(dom.dialogueCards);
-    const visibleCards = cards.filter((card) => {
+    const visibleCards = cards.filter(card => {
       if (section === 'all') return true;
       return card.dataset.section === section;
     });
 
     // Fade out all cards
-    cards.forEach((card) => {
+    cards.forEach(card => {
       card.style.opacity = '0';
       card.style.pointerEvents = 'none';
       card.setAttribute('aria-hidden', 'true');
@@ -126,7 +126,7 @@ const SymposionChamber = (() => {
       });
 
       // Hide non-visible cards
-      cards.forEach((card) => {
+      cards.forEach(card => {
         if (!visibleCards.includes(card)) {
           setTimeout(() => {
             card.style.display = 'none';
@@ -146,7 +146,7 @@ const SymposionChamber = (() => {
   function updateActiveButton(button) {
     if (!dom.navButtons) return;
 
-    dom.navButtons.forEach((btn) => {
+    dom.navButtons.forEach(btn => {
       btn.classList.remove('active');
       btn.setAttribute('aria-pressed', 'false');
     });
@@ -195,7 +195,7 @@ const SymposionChamber = (() => {
   function enhanceSpeakerInteraction() {
     const speakers = document.querySelectorAll('.speaker-badge');
 
-    speakers.forEach((badge) => {
+    speakers.forEach(badge => {
       badge.addEventListener('mouseenter', function () {
         this.style.transform = 'scale(1.05)';
       });
@@ -212,7 +212,7 @@ const SymposionChamber = (() => {
   function initializeLinkNavigation() {
     const dialogueLinks = document.querySelectorAll('.symposion-link');
 
-    dialogueLinks.forEach((link) => {
+    dialogueLinks.forEach(link => {
       link.addEventListener('click', function (event) {
         // Smooth scroll and optional modal/expand behavior
         // event.preventDefault();

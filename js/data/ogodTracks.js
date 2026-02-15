@@ -196,8 +196,7 @@ ETCETER4_CONFIG.ogodTracks = {
     archetype: 'layered-colors',
     palette: ['#2F4F4F', '#8B4513', '#DAA520', '#556B2F'],
     artwork: 'img/photos/artwork/ogod/ogod27.jpg',
-    sourceImage:
-      'ogod/bgimages/sin_city_style_rain_by_flashgunner-d3069a7.jpg',
+    sourceImage: 'ogod/bgimages/sin_city_style_rain_by_flashgunner-d3069a7.jpg',
   },
   28: {
     game: 'Wind Waker',

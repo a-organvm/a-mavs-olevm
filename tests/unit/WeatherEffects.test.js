@@ -8,9 +8,10 @@ import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import '../unit/setup.js';
 
 // Import module by evaluating the source
-const WeatherEffectsSource = await import(
-  '../../js/3d/effects/WeatherEffects.js?raw'
-).then(m => m.default);
+const WeatherEffectsSource =
+  await import('../../js/3d/effects/WeatherEffects.js?raw').then(
+    m => m.default
+  );
 eval(WeatherEffectsSource);
 
 describe('WeatherEffects', () => {

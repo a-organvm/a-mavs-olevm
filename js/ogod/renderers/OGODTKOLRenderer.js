@@ -17,7 +17,7 @@
  * post-processing effects run at 60fps with audio reactivity.
  */
 
-"use strict";
+'use strict';
 
 /**
  * OGODTKOLRenderer - TKOL pixel-sort glitch renderer
@@ -33,10 +33,10 @@ class OGODTKOLRenderer {
    */
   constructor(options = {}) {
     if (!options.canvas) {
-      throw new Error("OGODTKOLRenderer requires a canvas element");
+      throw new Error('OGODTKOLRenderer requires a canvas element');
     }
-    if (typeof THREE === "undefined") {
-      throw new Error("OGODTKOLRenderer requires Three.js");
+    if (typeof THREE === 'undefined') {
+      throw new Error('OGODTKOLRenderer requires Three.js');
     }
 
     this.canvas = options.canvas;
@@ -47,7 +47,7 @@ class OGODTKOLRenderer {
     const cfg = options.config || {};
     this._sortThresholdLow = cfg.sortThresholdLow || 0.05;
     this._sortThresholdHigh = cfg.sortThresholdHigh || 0.95;
-    this._sortDirection = cfg.sortDirection || "vertical";
+    this._sortDirection = cfg.sortDirection || 'vertical';
     this._scanlineCount = cfg.scanlineCount || 40;
     this._displacementAmount = cfg.displacementAmount || 0.04;
     this._channelSeparation = cfg.channelSeparation || 0.012;
@@ -73,8 +73,8 @@ class OGODTKOLRenderer {
     this._currentBuffer = 0;
 
     // Offscreen canvas for full-image pixel sorting
-    this._sortCanvas = document.createElement("canvas");
-    this._sortCtx = this._sortCanvas.getContext("2d", {
+    this._sortCanvas = document.createElement('canvas');
+    this._sortCtx = this._sortCanvas.getContext('2d', {
       willReadFrequently: true,
     });
 
@@ -84,7 +84,7 @@ class OGODTKOLRenderer {
 
     // Resize handler
     this._onResize = this._onResize.bind(this);
-    window.addEventListener("resize", this._onResize);
+    window.addEventListener('resize', this._onResize);
 
     this._initThree();
   }
@@ -318,7 +318,7 @@ class OGODTKOLRenderer {
     const data = imageData.data;
 
     // Pixel sort the entire image — creates long continuous vertical streaks
-    if (this._sortDirection === "vertical") {
+    if (this._sortDirection === 'vertical') {
       this._sortColumns(data, imgW, imgH);
     } else {
       this._sortRows(data, imgW, imgH);
@@ -393,13 +393,13 @@ class OGODTKOLRenderer {
             const origIdx = column[spanStart + j].idx;
             const sorted = span[j];
             data[origIdx] = Math.round(
-              data[origIdx] * (1 - interp) + sorted.r * interp,
+              data[origIdx] * (1 - interp) + sorted.r * interp
             );
             data[origIdx + 1] = Math.round(
-              data[origIdx + 1] * (1 - interp) + sorted.g * interp,
+              data[origIdx + 1] * (1 - interp) + sorted.g * interp
             );
             data[origIdx + 2] = Math.round(
-              data[origIdx + 2] * (1 - interp) + sorted.b * interp,
+              data[origIdx + 2] * (1 - interp) + sorted.b * interp
             );
           }
           spanStart = -1;
@@ -452,13 +452,13 @@ class OGODTKOLRenderer {
             const origIdx = row[spanStart + j].idx;
             const sorted = span[j];
             data[origIdx] = Math.round(
-              data[origIdx] * (1 - interp) + sorted.r * interp,
+              data[origIdx] * (1 - interp) + sorted.r * interp
             );
             data[origIdx + 1] = Math.round(
-              data[origIdx + 1] * (1 - interp) + sorted.g * interp,
+              data[origIdx + 1] * (1 - interp) + sorted.g * interp
             );
             data[origIdx + 2] = Math.round(
-              data[origIdx + 2] * (1 - interp) + sorted.b * interp,
+              data[origIdx + 2] * (1 - interp) + sorted.b * interp
             );
           }
           spanStart = -1;
@@ -583,14 +583,14 @@ class OGODTKOLRenderer {
    * @returns {string}
    */
   get type() {
-    return "tkol";
+    return 'tkol';
   }
 
   /**
    * Dispose all resources
    */
   dispose() {
-    window.removeEventListener("resize", this._onResize);
+    window.removeEventListener('resize', this._onResize);
 
     if (this._sortedTexture) {
       this._sortedTexture.dispose();

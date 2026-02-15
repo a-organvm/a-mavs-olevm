@@ -9,16 +9,16 @@ import {
   ETCETERNamingPatterns,
   NamingQuality,
   NamingStrategy,
-} from "../namingStrategies.js";
+} from '../namingStrategies.js';
 
 import {
   UserPreferences,
   ContextDetector,
   FuzzyMatcher,
   NameSearchEngine,
-} from "../nameSearch.js";
+} from '../nameSearch.js';
 
-import { ETCETERNaming } from "../namingAPI.js";
+import { ETCETERNaming } from '../namingAPI.js';
 
 // Test framework for browser environment
 export const TestFramework = {
@@ -26,7 +26,7 @@ export const TestFramework = {
   results: [],
 
   describe(name, fn) {
-    console.group("Testing: " + name);
+    console.group('Testing: ' + name);
     fn();
     console.groupEnd();
   },
@@ -34,15 +34,15 @@ export const TestFramework = {
   it(description, fn) {
     try {
       fn();
-      this.results.push({ description, status: "PASS" });
-      console.log("✓ " + description);
+      this.results.push({ description, status: 'PASS' });
+      console.log('✓ ' + description);
     } catch (error) {
       this.results.push({
         description,
-        status: "FAIL",
+        status: 'FAIL',
         error: error.message,
       });
-      console.error("✗ " + description + " - " + error.message);
+      console.error('✗ ' + description + ' - ' + error.message);
     }
   },
 
@@ -50,42 +50,42 @@ export const TestFramework = {
     return {
       toBe(expected) {
         if (actual !== expected) {
-          throw new Error("Expected " + expected + " but got " + actual);
+          throw new Error('Expected ' + expected + ' but got ' + actual);
         }
       },
       toEqual(expected) {
         if (JSON.stringify(actual) !== JSON.stringify(expected)) {
           throw new Error(
-            "Expected " +
+            'Expected ' +
               JSON.stringify(expected) +
-              " but got " +
-              JSON.stringify(actual),
+              ' but got ' +
+              JSON.stringify(actual)
           );
         }
       },
       toContain(expected) {
         if (actual.indexOf(expected) === -1) {
-          throw new Error("Expected " + actual + " to contain " + expected);
+          throw new Error('Expected ' + actual + ' to contain ' + expected);
         }
       },
       toBeGreaterThan(expected) {
         if (actual <= expected) {
           throw new Error(
-            "Expected " + actual + " to be greater than " + expected,
+            'Expected ' + actual + ' to be greater than ' + expected
           );
         }
       },
       toBeLessThan(expected) {
         if (actual >= expected) {
           throw new Error(
-            "Expected " + actual + " to be less than " + expected,
+            'Expected ' + actual + ' to be less than ' + expected
           );
         }
       },
       toMatch(pattern) {
         if (!pattern.test(actual)) {
           throw new Error(
-            "Expected " + actual + " to match pattern " + pattern,
+            'Expected ' + actual + ' to match pattern ' + pattern
           );
         }
       },
@@ -93,8 +93,8 @@ export const TestFramework = {
   },
 
   getSummary() {
-    const passed = this.results.filter((r) => r.status === "PASS").length;
-    const failed = this.results.filter((r) => r.status === "FAIL").length;
+    const passed = this.results.filter(r => r.status === 'PASS').length;
+    const failed = this.results.filter(r => r.status === 'FAIL').length;
 
     return {
       total: this.results.length,
@@ -109,42 +109,42 @@ export const TestFramework = {
  * Test the naming conventions
  */
 export function testNamingConventions() {
-  TestFramework.describe("Naming Conventions", () => {
-    TestFramework.it("should transform to camelCase correctly", () => {
-      const result = NamingConventions.CAMEL_CASE.transform("show new section");
-      TestFramework.expect(result).toBe("showNewSection");
+  TestFramework.describe('Naming Conventions', () => {
+    TestFramework.it('should transform to camelCase correctly', () => {
+      const result = NamingConventions.CAMEL_CASE.transform('show new section');
+      TestFramework.expect(result).toBe('showNewSection');
     });
 
-    TestFramework.it("should transform to PascalCase correctly", () => {
-      const result = NamingConventions.PASCAL_CASE.transform("page data");
-      TestFramework.expect(result).toBe("PageData");
+    TestFramework.it('should transform to PascalCase correctly', () => {
+      const result = NamingConventions.PASCAL_CASE.transform('page data');
+      TestFramework.expect(result).toBe('PageData');
     });
 
-    TestFramework.it("should transform to snake_case correctly", () => {
-      const result = NamingConventions.SNAKE_CASE.transform("showNewSection");
-      TestFramework.expect(result).toBe("show_new_section");
+    TestFramework.it('should transform to snake_case correctly', () => {
+      const result = NamingConventions.SNAKE_CASE.transform('showNewSection');
+      TestFramework.expect(result).toBe('show_new_section');
     });
 
-    TestFramework.it("should transform to kebab-case correctly", () => {
-      const result = NamingConventions.KEBAB_CASE.transform("showNewSection");
-      TestFramework.expect(result).toBe("show-new-section");
+    TestFramework.it('should transform to kebab-case correctly', () => {
+      const result = NamingConventions.KEBAB_CASE.transform('showNewSection');
+      TestFramework.expect(result).toBe('show-new-section');
     });
 
-    TestFramework.it("should validate patterns correctly", () => {
+    TestFramework.it('should validate patterns correctly', () => {
       TestFramework.expect(
-        NamingConventions.CAMEL_CASE.pattern.test("showNewSection"),
+        NamingConventions.CAMEL_CASE.pattern.test('showNewSection')
       ).toBe(true);
       TestFramework.expect(
-        NamingConventions.CAMEL_CASE.pattern.test("ShowNewSection"),
+        NamingConventions.CAMEL_CASE.pattern.test('ShowNewSection')
       ).toBe(false);
       TestFramework.expect(
-        NamingConventions.PASCAL_CASE.pattern.test("PageData"),
+        NamingConventions.PASCAL_CASE.pattern.test('PageData')
       ).toBe(true);
       TestFramework.expect(
-        NamingConventions.SNAKE_CASE.pattern.test("show_new_section"),
+        NamingConventions.SNAKE_CASE.pattern.test('show_new_section')
       ).toBe(true);
       TestFramework.expect(
-        NamingConventions.KEBAB_CASE.pattern.test("show-new-section"),
+        NamingConventions.KEBAB_CASE.pattern.test('show-new-section')
       ).toBe(true);
     });
   });
@@ -154,12 +154,12 @@ export function testNamingConventions() {
  * Test the naming quality metrics
  */
 export function testNamingQuality() {
-  TestFramework.describe("Naming Quality", () => {
-    TestFramework.it("should calculate readability score", () => {
-      const score1 = NamingQuality.calculateReadability("showNewSection");
-      const score2 = NamingQuality.calculateReadability("x");
+  TestFramework.describe('Naming Quality', () => {
+    TestFramework.it('should calculate readability score', () => {
+      const score1 = NamingQuality.calculateReadability('showNewSection');
+      const score2 = NamingQuality.calculateReadability('x');
       const score3 = NamingQuality.calculateReadability(
-        "thisIsAnExtremelyLongVariableNameThatShouldBeDiscouraged",
+        'thisIsAnExtremelyLongVariableNameThatShouldBeDiscouraged'
       );
 
       TestFramework.expect(score1).toBeGreaterThan(70);
@@ -167,33 +167,33 @@ export function testNamingQuality() {
       TestFramework.expect(score3).toBeLessThan(score1);
     });
 
-    TestFramework.it("should check context appropriateness", () => {
+    TestFramework.it('should check context appropriateness', () => {
       const score1 = NamingQuality.checkContext(
-        "showNewSection",
-        NamingContexts.FUNCTION,
+        'showNewSection',
+        NamingContexts.FUNCTION
       );
       const score2 = NamingQuality.checkContext(
-        "show-new-section",
-        NamingContexts.FUNCTION,
+        'show-new-section',
+        NamingContexts.FUNCTION
       );
 
       TestFramework.expect(score1).toBe(100);
       TestFramework.expect(score2).toBe(0);
     });
 
-    TestFramework.it("should calculate semantic score", () => {
-      const score1 = NamingQuality.calculateSemantic("showPage", "show page");
-      const score2 = NamingQuality.calculateSemantic("x", "show page");
+    TestFramework.it('should calculate semantic score', () => {
+      const score1 = NamingQuality.calculateSemantic('showPage', 'show page');
+      const score2 = NamingQuality.calculateSemantic('x', 'show page');
 
       TestFramework.expect(score1).toBeGreaterThan(80);
       TestFramework.expect(score2).toBeLessThan(30);
     });
 
-    TestFramework.it("should calculate overall score", () => {
+    TestFramework.it('should calculate overall score', () => {
       const result = NamingQuality.calculateOverallScore(
-        "showNewSection",
+        'showNewSection',
         NamingContexts.FUNCTION,
-        "show new section",
+        'show new section'
       );
 
       TestFramework.expect(result.overall).toBeGreaterThan(70);
@@ -208,40 +208,40 @@ export function testNamingQuality() {
  * Test the naming strategy engine
  */
 export function testNamingStrategy() {
-  TestFramework.describe("Naming Strategy", () => {
-    TestFramework.it("should generate suggestions", () => {
+  TestFramework.describe('Naming Strategy', () => {
+    TestFramework.it('should generate suggestions', () => {
       const suggestions = NamingStrategy.generateSuggestions(
-        "show page",
+        'show page',
         NamingContexts.FUNCTION,
-        { maxResults: 5 },
+        { maxResults: 5 }
       );
 
       TestFramework.expect(suggestions.length).toBeGreaterThan(0);
-      TestFramework.expect(suggestions[0]).toContain("name");
-      TestFramework.expect(suggestions[0]).toContain("score");
+      TestFramework.expect(suggestions[0]).toContain('name');
+      TestFramework.expect(suggestions[0]).toContain('score');
     });
 
-    TestFramework.it("should extract words correctly", () => {
-      const words = NamingStrategy._extractWords("show-new_section page");
-      TestFramework.expect(words).toEqual(["show", "new", "section", "page"]);
+    TestFramework.it('should extract words correctly', () => {
+      const words = NamingStrategy._extractWords('show-new_section page');
+      TestFramework.expect(words).toEqual(['show', 'new', 'section', 'page']);
     });
 
-    TestFramework.it("should remove duplicates", () => {
+    TestFramework.it('should remove duplicates', () => {
       const suggestions = [
-        { name: "test", score: { overall: 80 } },
-        { name: "test", score: { overall: 70 } },
-        { name: "other", score: { overall: 60 } },
+        { name: 'test', score: { overall: 80 } },
+        { name: 'test', score: { overall: 70 } },
+        { name: 'other', score: { overall: 60 } },
       ];
       const result = NamingStrategy._removeDuplicates(suggestions);
 
       TestFramework.expect(result.length).toBe(2);
     });
 
-    TestFramework.it("should validate existing names", () => {
+    TestFramework.it('should validate existing names', () => {
       const result = NamingStrategy.validateName(
-        "showNewSection",
+        'showNewSection',
         NamingContexts.FUNCTION,
-        "show new section",
+        'show new section'
       );
 
       TestFramework.expect(result.overall).toBeGreaterThan(50);
@@ -253,33 +253,33 @@ export function testNamingStrategy() {
  * Test the fuzzy matcher
  */
 export function testFuzzyMatcher() {
-  TestFramework.describe("Fuzzy Matcher", () => {
-    TestFramework.it("should calculate Levenshtein distance", () => {
-      const distance1 = FuzzyMatcher.levenshteinDistance("test", "test");
-      const distance2 = FuzzyMatcher.levenshteinDistance("test", "tast");
-      const distance3 = FuzzyMatcher.levenshteinDistance("test", "best");
+  TestFramework.describe('Fuzzy Matcher', () => {
+    TestFramework.it('should calculate Levenshtein distance', () => {
+      const distance1 = FuzzyMatcher.levenshteinDistance('test', 'test');
+      const distance2 = FuzzyMatcher.levenshteinDistance('test', 'tast');
+      const distance3 = FuzzyMatcher.levenshteinDistance('test', 'best');
 
       TestFramework.expect(distance1).toBe(0);
       TestFramework.expect(distance2).toBe(1);
       TestFramework.expect(distance3).toBe(1);
     });
 
-    TestFramework.it("should calculate similarity score", () => {
-      const similarity1 = FuzzyMatcher.similarity("test", "test");
-      const similarity2 = FuzzyMatcher.similarity("test", "tast");
-      const similarity3 = FuzzyMatcher.similarity("test", "xyz");
+    TestFramework.it('should calculate similarity score', () => {
+      const similarity1 = FuzzyMatcher.similarity('test', 'test');
+      const similarity2 = FuzzyMatcher.similarity('test', 'tast');
+      const similarity3 = FuzzyMatcher.similarity('test', 'xyz');
 
       TestFramework.expect(similarity1).toBe(100);
       TestFramework.expect(similarity2).toBeGreaterThan(50);
       TestFramework.expect(similarity3).toBeLessThan(50);
     });
 
-    TestFramework.it("should find similar names", () => {
-      const existingNames = ["showPage", "hidePage", "togglePage", "loadData"];
-      const similar = FuzzyMatcher.findSimilar("showPages", existingNames, 60);
+    TestFramework.it('should find similar names', () => {
+      const existingNames = ['showPage', 'hidePage', 'togglePage', 'loadData'];
+      const similar = FuzzyMatcher.findSimilar('showPages', existingNames, 60);
 
       TestFramework.expect(similar.length).toBeGreaterThan(0);
-      TestFramework.expect(similar[0].name).toBe("showPage");
+      TestFramework.expect(similar[0].name).toBe('showPage');
     });
   });
 }
@@ -288,29 +288,29 @@ export function testFuzzyMatcher() {
  * Test the context detector
  */
 export function testContextDetector() {
-  TestFramework.describe("Context Detector", () => {
-    TestFramework.it("should detect function context", () => {
-      const context = ContextDetector.detectContext("show new page");
+  TestFramework.describe('Context Detector', () => {
+    TestFramework.it('should detect function context', () => {
+      const context = ContextDetector.detectContext('show new page');
       TestFramework.expect(context).toBe(NamingContexts.FUNCTION);
     });
 
-    TestFramework.it("should detect page ID context", () => {
-      const context = ContextDetector.detectContext("diary page");
+    TestFramework.it('should detect page ID context', () => {
+      const context = ContextDetector.detectContext('diary page');
       TestFramework.expect(context).toBe(NamingContexts.PAGE_ID);
     });
 
-    TestFramework.it("should detect class name context", () => {
-      const context = ContextDetector.detectContext("button style");
+    TestFramework.it('should detect class name context', () => {
+      const context = ContextDetector.detectContext('button style');
       TestFramework.expect(context).toBe(NamingContexts.CLASS_NAME);
     });
 
-    TestFramework.it("should categorize patterns", () => {
+    TestFramework.it('should categorize patterns', () => {
       const analysis = {
         caseDistribution: {},
         commonPrefixes: {},
         commonSuffixes: {},
       };
-      ContextDetector._categorizePattern("showNewSection", analysis);
+      ContextDetector._categorizePattern('showNewSection', analysis);
 
       TestFramework.expect(analysis.caseDistribution.camelCase).toBe(1);
     });
@@ -321,76 +321,76 @@ export function testContextDetector() {
  * Test the name search engine
  */
 export function testNameSearchEngine() {
-  TestFramework.describe("Name Search Engine", () => {
-    TestFramework.it("should initialize with default preferences", () => {
+  TestFramework.describe('Name Search Engine', () => {
+    TestFramework.it('should initialize with default preferences', () => {
       const engine = NameSearchEngine.initialize();
       TestFramework.expect(engine.userPreferences.casePreference).toBe(
-        "camelCase",
+        'camelCase'
       );
     });
 
-    TestFramework.it("should set user profile", () => {
-      const engine = NameSearchEngine.initialize().setUserProfile("DEVELOPER");
-      TestFramework.expect(engine.userPreferences.verbosity).toBe("terse");
+    TestFramework.it('should set user profile', () => {
+      const engine = NameSearchEngine.initialize().setUserProfile('DEVELOPER');
+      TestFramework.expect(engine.userPreferences.verbosity).toBe('terse');
     });
 
-    TestFramework.it("should update preferences", () => {
+    TestFramework.it('should update preferences', () => {
       const engine = NameSearchEngine.initialize().updatePreferences({
-        verbosity: "verbose",
+        verbosity: 'verbose',
       });
-      TestFramework.expect(engine.userPreferences.verbosity).toBe("verbose");
+      TestFramework.expect(engine.userPreferences.verbosity).toBe('verbose');
     });
 
-    TestFramework.it("should search for suggestions", () => {
+    TestFramework.it('should search for suggestions', () => {
       const engine = NameSearchEngine.initialize();
-      const result = engine.search("show page", { maxResults: 5 });
+      const result = engine.search('show page', { maxResults: 5 });
 
-      TestFramework.expect(result.suggestions).toContain("length");
-      TestFramework.expect(result.context).toContain("convention");
+      TestFramework.expect(result.suggestions).toContain('length');
+      TestFramework.expect(result.context).toContain('convention');
       TestFramework.expect(result.suggestions.length).toBeGreaterThan(0);
     });
 
-    TestFramework.it("should validate names", () => {
+    TestFramework.it('should validate names', () => {
       const engine = NameSearchEngine.initialize();
-      const result = engine.validateName("showNewSection", "show new section");
+      const result = engine.validateName('showNewSection', 'show new section');
 
       TestFramework.expect(result.score.overall).toBeGreaterThan(50);
-      TestFramework.expect(result.context).toContain("convention");
+      TestFramework.expect(result.context).toContain('convention');
     });
 
-    TestFramework.it("should provide improvement suggestions", () => {
+    TestFramework.it('should provide improvement suggestions', () => {
       const engine = NameSearchEngine.initialize();
-      const result = engine.getImprovementSuggestions("x", "show new section");
+      const result = engine.getImprovementSuggestions('x', 'show new section');
 
       TestFramework.expect(result.suggestions.length).toBeGreaterThan(0);
-      TestFramework.expect(result.message).toContain("Consider");
+      TestFramework.expect(result.message).toContain('Consider');
     });
 
-    TestFramework.it("should detect case style", () => {
+    TestFramework.it('should detect case style', () => {
       const engine = NameSearchEngine.initialize();
 
-      TestFramework.expect(engine._detectCase("showNewSection")).toBe(
-        "camelCase",
+      TestFramework.expect(engine._detectCase('showNewSection')).toBe(
+        'camelCase'
       );
-      TestFramework.expect(engine._detectCase("ShowNewSection")).toBe(
-        "PascalCase",
+      TestFramework.expect(engine._detectCase('ShowNewSection')).toBe(
+        'PascalCase'
       );
-      TestFramework.expect(engine._detectCase("show_new_section")).toBe(
-        "snake_case",
+      TestFramework.expect(engine._detectCase('show_new_section')).toBe(
+        'snake_case'
       );
-      TestFramework.expect(engine._detectCase("show-new-section")).toBe(
-        "kebab-case",
+      TestFramework.expect(engine._detectCase('show-new-section')).toBe(
+        'kebab-case'
       );
     });
 
-    TestFramework.it("should apply user preferences to context", () => {
+    TestFramework.it('should apply user preferences to context', () => {
       const engine = NameSearchEngine.initialize().updatePreferences({
-        casePreference: "snake_case",
+        casePreference: 'snake_case',
       });
       const context = engine._applyUserPreferences(NamingContexts.FUNCTION);
 
       TestFramework.expect(context.convention).toBe(
-        NamingConventions.SNAKE_CASE,
+        NamingConventions.SNAKE_CASE
       );
     });
   });
@@ -400,33 +400,33 @@ export function testNameSearchEngine() {
  * Test ET CETER4 specific naming patterns
  */
 export function testETCETERPatterns() {
-  TestFramework.describe("ET CETER4 Naming Patterns", () => {
-    TestFramework.it("should recognize audio patterns", () => {
+  TestFramework.describe('ET CETER4 Naming Patterns', () => {
+    TestFramework.it('should recognize audio patterns', () => {
       const audioPattern = ETCETERNamingPatterns.AUDIO_ELEMENTS;
-      TestFramework.expect(audioPattern.prefixes).toContain("sound");
-      TestFramework.expect(audioPattern.prefixes).toContain("music");
-      TestFramework.expect(audioPattern.suffixes).toContain("Player");
+      TestFramework.expect(audioPattern.prefixes).toContain('sound');
+      TestFramework.expect(audioPattern.prefixes).toContain('music');
+      TestFramework.expect(audioPattern.suffixes).toContain('Player');
     });
 
-    TestFramework.it("should recognize visual patterns", () => {
+    TestFramework.it('should recognize visual patterns', () => {
       const visualPattern = ETCETERNamingPatterns.VISUAL_ELEMENTS;
-      TestFramework.expect(visualPattern.prefixes).toContain("vision");
-      TestFramework.expect(visualPattern.prefixes).toContain("image");
-      TestFramework.expect(visualPattern.suffixes).toContain("Gallery");
+      TestFramework.expect(visualPattern.prefixes).toContain('vision');
+      TestFramework.expect(visualPattern.prefixes).toContain('image');
+      TestFramework.expect(visualPattern.suffixes).toContain('Gallery');
     });
 
-    TestFramework.it("should recognize text patterns", () => {
+    TestFramework.it('should recognize text patterns', () => {
       const textPattern = ETCETERNamingPatterns.TEXT_ELEMENTS;
-      TestFramework.expect(textPattern.prefixes).toContain("word");
-      TestFramework.expect(textPattern.prefixes).toContain("diary");
-      TestFramework.expect(textPattern.suffixes).toContain("Editor");
+      TestFramework.expect(textPattern.prefixes).toContain('word');
+      TestFramework.expect(textPattern.prefixes).toContain('diary');
+      TestFramework.expect(textPattern.suffixes).toContain('Editor');
     });
 
-    TestFramework.it("should recognize navigation patterns", () => {
+    TestFramework.it('should recognize navigation patterns', () => {
       const navPattern = ETCETERNamingPatterns.NAVIGATION;
-      TestFramework.expect(navPattern.prefixes).toContain("nav");
-      TestFramework.expect(navPattern.prefixes).toContain("menu");
-      TestFramework.expect(navPattern.suffixes).toContain("Navigation");
+      TestFramework.expect(navPattern.prefixes).toContain('nav');
+      TestFramework.expect(navPattern.prefixes).toContain('menu');
+      TestFramework.expect(navPattern.suffixes).toContain('Navigation');
     });
   });
 }
@@ -435,35 +435,35 @@ export function testETCETERPatterns() {
  * Test user preferences functionality
  */
 export function testUserPreferences() {
-  TestFramework.describe("User Preferences", () => {
-    TestFramework.it("should have default preferences", () => {
+  TestFramework.describe('User Preferences', () => {
+    TestFramework.it('should have default preferences', () => {
       const defaults = UserPreferences.DEFAULT;
-      TestFramework.expect(defaults.casePreference).toBe("camelCase");
-      TestFramework.expect(defaults.verbosity).toBe("medium");
+      TestFramework.expect(defaults.casePreference).toBe('camelCase');
+      TestFramework.expect(defaults.verbosity).toBe('medium');
     });
 
-    TestFramework.it("should have developer profile", () => {
+    TestFramework.it('should have developer profile', () => {
       const dev = UserPreferences.DEVELOPER;
-      TestFramework.expect(dev.verbosity).toBe("terse");
-      TestFramework.expect(dev.creativityLevel).toBe("conservative");
+      TestFramework.expect(dev.verbosity).toBe('terse');
+      TestFramework.expect(dev.creativityLevel).toBe('conservative');
     });
 
-    TestFramework.it("should have artist profile", () => {
+    TestFramework.it('should have artist profile', () => {
       const artist = UserPreferences.ARTIST;
-      TestFramework.expect(artist.domainFocus).toBe("visual");
-      TestFramework.expect(artist.creativityLevel).toBe("creative");
+      TestFramework.expect(artist.domainFocus).toBe('visual');
+      TestFramework.expect(artist.creativityLevel).toBe('creative');
     });
 
-    TestFramework.it("should have musician profile", () => {
+    TestFramework.it('should have musician profile', () => {
       const musician = UserPreferences.MUSICIAN;
-      TestFramework.expect(musician.domainFocus).toBe("audio");
-      TestFramework.expect(musician.creativityLevel).toBe("creative");
+      TestFramework.expect(musician.domainFocus).toBe('audio');
+      TestFramework.expect(musician.creativityLevel).toBe('creative');
     });
 
-    TestFramework.it("should have writer profile", () => {
+    TestFramework.it('should have writer profile', () => {
       const writer = UserPreferences.WRITER;
-      TestFramework.expect(writer.domainFocus).toBe("text");
-      TestFramework.expect(writer.abbreviationTolerance).toBe("none");
+      TestFramework.expect(writer.domainFocus).toBe('text');
+      TestFramework.expect(writer.abbreviationTolerance).toBe('none');
     });
   });
 }
@@ -472,44 +472,44 @@ export function testUserPreferences() {
  * Integration tests for the complete system
  */
 export function testIntegration() {
-  TestFramework.describe("Integration Tests", () => {
-    TestFramework.it("should work end-to-end for audio context", () => {
-      const engine = NameSearchEngine.initialize().setUserProfile("MUSICIAN");
-      const result = engine.search("sound control volume", { maxResults: 3 });
+  TestFramework.describe('Integration Tests', () => {
+    TestFramework.it('should work end-to-end for audio context', () => {
+      const engine = NameSearchEngine.initialize().setUserProfile('MUSICIAN');
+      const result = engine.search('sound control volume', { maxResults: 3 });
 
       TestFramework.expect(result.suggestions.length).toBeGreaterThan(0);
 
       // Should contain audio-related suggestions
       const hasAudioSuggestion = result.suggestions.some(
-        (s) =>
-          s.name.toLowerCase().includes("sound") ||
-          s.name.toLowerCase().includes("audio") ||
-          s.name.toLowerCase().includes("volume"),
+        s =>
+          s.name.toLowerCase().includes('sound') ||
+          s.name.toLowerCase().includes('audio') ||
+          s.name.toLowerCase().includes('volume')
       );
       TestFramework.expect(hasAudioSuggestion).toBe(true);
     });
 
-    TestFramework.it("should work end-to-end for visual context", () => {
-      const engine = NameSearchEngine.initialize().setUserProfile("ARTIST");
-      const result = engine.search("image gallery display", { maxResults: 3 });
+    TestFramework.it('should work end-to-end for visual context', () => {
+      const engine = NameSearchEngine.initialize().setUserProfile('ARTIST');
+      const result = engine.search('image gallery display', { maxResults: 3 });
 
       TestFramework.expect(result.suggestions.length).toBeGreaterThan(0);
 
       // Should use kebab-case for artist profile
-      const hasKebabCase = result.suggestions.some((s) => s.name.includes("-"));
+      const hasKebabCase = result.suggestions.some(s => s.name.includes('-'));
       TestFramework.expect(hasKebabCase).toBe(true);
     });
 
-    TestFramework.it("should provide consistent results across calls", () => {
+    TestFramework.it('should provide consistent results across calls', () => {
       const engine = NameSearchEngine.initialize();
-      const result1 = engine.search("show page");
-      const result2 = engine.search("show page");
+      const result1 = engine.search('show page');
+      const result2 = engine.search('show page');
 
       TestFramework.expect(result1.suggestions.length).toBe(
-        result2.suggestions.length,
+        result2.suggestions.length
       );
       TestFramework.expect(result1.suggestions[0].name).toBe(
-        result2.suggestions[0].name,
+        result2.suggestions[0].name
       );
     });
   });
@@ -519,8 +519,8 @@ export function testIntegration() {
  * Run all tests
  */
 export function runAllTests() {
-  console.log("🧪 Running ET CETER4 Naming System Tests");
-  console.log("==========================================");
+  console.log('🧪 Running ET CETER4 Naming System Tests');
+  console.log('==========================================');
 
   testNamingConventions();
   testNamingQuality();
@@ -534,29 +534,29 @@ export function runAllTests() {
 
   const summary = TestFramework.getSummary();
 
-  console.log("\n📊 Test Summary");
-  console.log("===============");
-  console.log("Total tests: " + summary.total);
-  console.log("Passed: " + summary.passed + " ✓");
-  console.log("Failed: " + summary.failed + " ✗");
+  console.log('\n📊 Test Summary');
+  console.log('===============');
+  console.log('Total tests: ' + summary.total);
+  console.log('Passed: ' + summary.passed + ' ✓');
+  console.log('Failed: ' + summary.failed + ' ✗');
 
   if (summary.failed > 0) {
-    console.log("\n❌ Failed tests:");
+    console.log('\n❌ Failed tests:');
     summary.results
-      .filter((r) => r.status === "FAIL")
-      .forEach((result) => {
-        console.log("  - " + result.description + ": " + result.error);
+      .filter(r => r.status === 'FAIL')
+      .forEach(result => {
+        console.log('  - ' + result.description + ': ' + result.error);
       });
   } else {
-    console.log("\n🎉 All tests passed!");
+    console.log('\n🎉 All tests passed!');
   }
 
   return summary;
 }
 
 // Auto-run tests if this file is loaded directly
-if (typeof document !== "undefined") {
-  document.addEventListener("DOMContentLoaded", () => {
+if (typeof document !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', () => {
     runAllTests();
   });
 }

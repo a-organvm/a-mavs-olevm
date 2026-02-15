@@ -63,7 +63,8 @@ class HLSLoader {
     }
 
     // Check for native HLS support (Safari)
-    this.hasNativeSupport = this.videoElement.canPlayType('application/vnd.apple.mpegurl') !== '';
+    this.hasNativeSupport =
+      this.videoElement.canPlayType('application/vnd.apple.mpegurl') !== '';
   }
 
   /**
@@ -154,26 +155,42 @@ class HLSLoader {
         switch (data.type) {
           case Hls.ErrorTypes.NETWORK_ERROR:
             console.error('HLSLoader: Fatal network error');
-            this.emit('error', { type: 'network', fatal: true, details: data.details });
+            this.emit('error', {
+              type: 'network',
+              fatal: true,
+              details: data.details,
+            });
             // Try to recover
             this.hls.startLoad();
             break;
           case Hls.ErrorTypes.MEDIA_ERROR:
             console.error('HLSLoader: Fatal media error');
-            this.emit('error', { type: 'media', fatal: true, details: data.details });
+            this.emit('error', {
+              type: 'media',
+              fatal: true,
+              details: data.details,
+            });
             // Try to recover
             this.hls.recoverMediaError();
             break;
           default:
             console.error('HLSLoader: Fatal error, cannot recover');
-            this.emit('error', { type: 'unknown', fatal: true, details: data.details });
+            this.emit('error', {
+              type: 'unknown',
+              fatal: true,
+              details: data.details,
+            });
             reject(new Error(`HLS fatal error: ${data.details}`));
             this.destroy();
             break;
         }
       } else {
         // Non-fatal error
-        this.emit('error', { type: data.type, fatal: false, details: data.details });
+        this.emit('error', {
+          type: data.type,
+          fatal: false,
+          details: data.details,
+        });
       }
     });
 
@@ -202,9 +219,14 @@ class HLSLoader {
     const handleLoadedMetadata = () => {
       this.isLoaded = true;
       // Native HLS doesn't expose quality levels in the same way
-      this.availableQualities = [{ index: 0, name: 'Auto', height: null, bitrate: null }];
+      this.availableQualities = [
+        { index: 0, name: 'Auto', height: null, bitrate: null },
+      ];
       this.emit('qualitiesAvailable', this.availableQualities);
-      this.videoElement.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      this.videoElement.removeEventListener(
+        'loadedmetadata',
+        handleLoadedMetadata
+      );
       resolve();
     };
 
@@ -250,7 +272,7 @@ class HLSLoader {
     } else if (typeof level === 'string') {
       // Match by name (e.g., '720p')
       const levelIndex = this.hls.levels.findIndex(
-        (l) => `${l.height}p` === level
+        l => `${l.height}p` === level
       );
       if (levelIndex >= 0) {
         this.hls.currentLevel = levelIndex;
@@ -391,7 +413,7 @@ class HLSLoader {
       return;
     }
     this.eventListeners[event] = this.eventListeners[event].filter(
-      (cb) => cb !== callback
+      cb => cb !== callback
     );
   }
 
@@ -405,7 +427,7 @@ class HLSLoader {
     if (!this.eventListeners[event]) {
       return;
     }
-    this.eventListeners[event].forEach((callback) => {
+    this.eventListeners[event].forEach(callback => {
       try {
         callback(data);
       } catch (err) {

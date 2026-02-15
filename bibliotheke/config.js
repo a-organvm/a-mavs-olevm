@@ -37,7 +37,8 @@ const bibliothekeConfig = {
           id: 'untitled-verses',
           title: 'Untitled Verses',
           subtitle: 'Contemporary Poetry Collection',
-          description: 'A collection of lyrical explorations in contemporary form. Working with rhythm, silence, and the spaces between words.',
+          description:
+            'A collection of lyrical explorations in contemporary form. Working with rhythm, silence, and the spaces between words.',
           date: '2024',
           status: 'coming-soon',
           content: '/bibliotheke/poetry/',
@@ -55,7 +56,8 @@ const bibliothekeConfig = {
           id: 'narrative-fragments',
           title: 'Narrative Fragments',
           subtitle: 'Short-Form Prose Collection',
-          description: 'Short-form prose exploring themes of identity, memory, and transformation through narrative experimentation.',
+          description:
+            'Short-form prose exploring themes of identity, memory, and transformation through narrative experimentation.',
           date: '2024',
           status: 'coming-soon',
           content: '/bibliotheke/prose/',
@@ -73,7 +75,8 @@ const bibliothekeConfig = {
           id: 'song-texts',
           title: 'Song Texts',
           subtitle: 'Lyrics from Musical Works',
-          description: 'Lyrical content from musical works, exploring poetry in the context of composition and performance.',
+          description:
+            'Lyrical content from musical works, exploring poetry in the context of composition and performance.',
           date: '2024',
           status: 'coming-soon',
           content: '/bibliotheke/lyrics/',
@@ -91,7 +94,8 @@ const bibliothekeConfig = {
           id: 'critical-essays',
           title: 'Critical Essays',
           subtitle: 'Literary Analysis and Interpretation',
-          description: 'Analysis and interpretation of literary works, examining form, meaning, and cultural context.',
+          description:
+            'Analysis and interpretation of literary works, examining form, meaning, and cultural context.',
           date: '2024',
           status: 'coming-soon',
           content: '/bibliotheke/criticism/',
@@ -147,7 +151,8 @@ const bibliothekeConfig = {
     twitter: {
       card: 'summary_large_image',
       title: 'BIBLIOTHEKE | ET CETER4',
-      description: 'Literary chamber: poetry, prose, lyrics, and critical essays',
+      description:
+        'Literary chamber: poetry, prose, lyrics, and critical essays',
       image: '/img/og/bibliotheke-og.jpg',
     },
   },

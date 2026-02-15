@@ -44,9 +44,10 @@ class SearchEngine {
    */
   constructor() {
     // Configuration
-    this.config = typeof ETCETER4_CONFIG !== 'undefined'
-      ? ETCETER4_CONFIG.discovery?.search || {}
-      : {};
+    this.config =
+      typeof ETCETER4_CONFIG !== 'undefined'
+        ? ETCETER4_CONFIG.discovery?.search || {}
+        : {};
 
     // MiniSearch instance
     this.miniSearch = null;
@@ -96,7 +97,14 @@ class SearchEngine {
     };
 
     this.miniSearch = new MiniSearch({
-      fields: ['title', 'subtitle', 'description', 'tagsText', 'chamberName', 'sectionTitle'],
+      fields: [
+        'title',
+        'subtitle',
+        'description',
+        'tagsText',
+        'chamberName',
+        'sectionTitle',
+      ],
       storeFields: ['id'],
       searchOptions: {
         boost: {
@@ -169,19 +177,21 @@ class SearchEngine {
     const registry = ContentRegistry.getInstance();
 
     // Map results to items with highlights
-    let results = searchResults.map(result => {
-      const item = registry.getItem(result.id);
-      if (!item) {
-        return null;
-      }
+    let results = searchResults
+      .map(result => {
+        const item = registry.getItem(result.id);
+        if (!item) {
+          return null;
+        }
 
-      return {
-        item,
-        score: result.score,
-        highlights: this._generateHighlights(item, trimmedQuery),
-        matchedFields: result.match,
-      };
-    }).filter(Boolean);
+        return {
+          item,
+          score: result.score,
+          highlights: this._generateHighlights(item, trimmedQuery),
+          matchedFields: result.match,
+        };
+      })
+      .filter(Boolean);
 
     // Apply additional filter if provided
     if (options.filter) {
@@ -241,17 +251,24 @@ class SearchEngine {
 
     // Description highlight (truncated)
     if (item.description) {
-      const truncated = this._truncateToContext(item.description, queryTerms, 150);
+      const truncated = this._truncateToContext(
+        item.description,
+        queryTerms,
+        150
+      );
       highlights.description = this._highlightText(truncated, queryTerms);
     }
 
     // Tags highlight
     if (item.tags && item.tags.length > 0) {
       highlights.tags = item.tags.map(tag => {
-        const isMatch = queryTerms.some(term =>
-          tag.toLowerCase().includes(term) || term.includes(tag.toLowerCase())
+        const isMatch = queryTerms.some(
+          term =>
+            tag.toLowerCase().includes(term) || term.includes(tag.toLowerCase())
         );
-        return isMatch ? `<mark>${this._escapeHtml(tag)}</mark>` : this._escapeHtml(tag);
+        return isMatch
+          ? `<mark>${this._escapeHtml(tag)}</mark>`
+          : this._escapeHtml(tag);
       });
     }
 
@@ -441,9 +458,11 @@ class SearchEngine {
       }
     }
 
-    window.dispatchEvent(new CustomEvent('discovery-search', {
-      detail: eventDetail,
-    }));
+    window.dispatchEvent(
+      new CustomEvent('discovery-search', {
+        detail: eventDetail,
+      })
+    );
   }
 
   /**

@@ -77,11 +77,13 @@ const UISounds = {
       }
 
       // Build sprite array from config
-      const sprites = Object.entries(this.config.sprites).map(([id, config]) => ({
-        id,
-        startTime: config.startTime,
-        duration: config.duration,
-      }));
+      const sprites = Object.entries(this.config.sprites).map(
+        ([id, config]) => ({
+          id,
+          startTime: config.startTime,
+          duration: config.duration,
+        })
+      );
 
       // Register the audio sprite
       createjs.Sound.registerSounds(

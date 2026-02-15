@@ -532,6 +532,7 @@ pages.discovery = new Page({
   },
 });
 
+// eslint-disable-next-line no-useless-assignment -- pages is a global used by page.js navigation
 pages = [
   pages.menu,
   pages.sound,

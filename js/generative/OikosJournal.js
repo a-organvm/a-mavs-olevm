@@ -150,7 +150,11 @@ class OikosJournal {
 
     // Record interaction
     if (typeof JourneyTracker !== 'undefined') {
-      JourneyTracker.getInstance().recordInteraction('oikos', 'journal_written', { type });
+      JourneyTracker.getInstance().recordInteraction(
+        'oikos',
+        'journal_written',
+        { type }
+      );
     }
 
     // Evict oldest entries per type when cap is exceeded
@@ -169,7 +173,11 @@ class OikosJournal {
 
     // Record interaction
     if (typeof JourneyTracker !== 'undefined') {
-      JourneyTracker.getInstance().recordInteraction('oikos', 'journal_written', { type });
+      JourneyTracker.getInstance().recordInteraction(
+        'oikos',
+        'journal_written',
+        { type }
+      );
     }
   }
 
@@ -220,7 +228,10 @@ class OikosJournal {
           day: 'numeric',
           year: 'numeric',
         });
-        const preview = entry.text.length > 120 ? `${entry.text.slice(0, 120)}...` : entry.text;
+        const preview =
+          entry.text.length > 120
+            ? `${entry.text.slice(0, 120)}...`
+            : entry.text;
         return `
           <div class="oikos-entry pa2 mv1" data-entry-id="${entry.id}">
             <div class="flex justify-between items-start mb1">

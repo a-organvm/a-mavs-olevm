@@ -39,52 +39,88 @@ class KhronosTimeline {
         id: 'launch',
         date: '2022-01',
         label: 'Project Launch',
-        description: 'Official launch with initial chamber framework and SPA navigation.',
+        description:
+          'Official launch with initial chamber framework and SPA navigation.',
         era: 'genesis',
       },
       {
         id: 'pantheon',
         date: '2024-03',
         label: 'Living Pantheon',
-        description: 'Introduction of the Living Pantheon system — the temple begins to breathe.',
+        description:
+          'Introduction of the Living Pantheon system — the temple begins to breathe.',
         era: 'refinement',
       },
       {
         id: 'ogod3d',
         date: '2025-06',
         label: 'OGOD 3D',
-        description: '29-track immersive 3D experience with WebGL environments.',
+        description:
+          '29-track immersive 3D experience with WebGL environments.',
         era: 'integration',
       },
       {
         id: 'discovery',
         date: '2025-10',
         label: 'Discovery System',
-        description: 'Cross-chamber search, filtering, and related works engine.',
+        description:
+          'Cross-chamber search, filtering, and related works engine.',
         era: 'integration',
       },
       {
         id: 'activation',
         date: '2026-02',
         label: 'Full Temple Activation',
-        description: 'Breathing animations, exhibit portal, Odeion player — the temple lives.',
+        description:
+          'Breathing animations, exhibit portal, Odeion player — the temple lives.',
         era: 'integration',
       },
       {
         id: 'awakening',
         date: '2026-02',
         label: 'The Awakening',
-        description: 'Generative chambers activate — procedural art, poetry, and interaction.',
+        description:
+          'Generative chambers activate — procedural art, poetry, and interaction.',
         era: 'integration',
       },
     ];
 
     this.eras = [
-      { id: 'origin', label: 'Origin', startDate: '2016-11', endDate: '2021-12', color: '#1a1a3e' },
-      { id: 'genesis', label: 'Genesis', startDate: '2022-01', endDate: '2022-12', color: '#87ceeb' },
-      { id: 'expansion', label: 'Expansion', startDate: '2023-01', endDate: '2023-12', color: '#6495ed' },
-      { id: 'refinement', label: 'Refinement', startDate: '2024-01', endDate: '2024-12', color: '#6495ed' },
-      { id: 'integration', label: 'Integration', startDate: '2025-01', endDate: '2026-12', color: '#00008b' },
+      {
+        id: 'origin',
+        label: 'Origin',
+        startDate: '2016-11',
+        endDate: '2021-12',
+        color: '#1a1a3e',
+      },
+      {
+        id: 'genesis',
+        label: 'Genesis',
+        startDate: '2022-01',
+        endDate: '2022-12',
+        color: '#87ceeb',
+      },
+      {
+        id: 'expansion',
+        label: 'Expansion',
+        startDate: '2023-01',
+        endDate: '2023-12',
+        color: '#6495ed',
+      },
+      {
+        id: 'refinement',
+        label: 'Refinement',
+        startDate: '2024-01',
+        endDate: '2024-12',
+        color: '#6495ed',
+      },
+      {
+        id: 'integration',
+        label: 'Integration',
+        startDate: '2025-01',
+        endDate: '2026-12',
+        color: '#00008b',
+      },
     ];
 
     // Timeline dimensions
@@ -115,7 +151,10 @@ class KhronosTimeline {
 
     // Record interaction
     if (typeof JourneyTracker !== 'undefined') {
-      JourneyTracker.getInstance().recordInteraction('khronos', 'timeline_explored');
+      JourneyTracker.getInstance().recordInteraction(
+        'khronos',
+        'timeline_explored'
+      );
     }
   }
 
@@ -130,7 +169,10 @@ class KhronosTimeline {
     const minDate = 2016 + 10 / 12; // 2016-11
     const maxDate = 2026 + 11 / 12; // 2026-12
     const range = maxDate - minDate;
-    return this.padding + ((dateVal - minDate) / range) * (this.timelineWidth - 2 * this.padding);
+    return (
+      this.padding +
+      ((dateVal - minDate) / range) * (this.timelineWidth - 2 * this.padding)
+    );
   }
 
   /**
@@ -139,7 +181,10 @@ class KhronosTimeline {
   _render() {
     const ns = 'http://www.w3.org/2000/svg';
     const svg = document.createElementNS(ns, 'svg');
-    svg.setAttribute('viewBox', `0 0 ${this.timelineWidth} ${this.timelineHeight}`);
+    svg.setAttribute(
+      'viewBox',
+      `0 0 ${this.timelineWidth} ${this.timelineHeight}`
+    );
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
     svg.style.width = '100%';
     svg.style.height = 'auto';
@@ -378,7 +423,10 @@ class KhronosTimeline {
       const clientX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
       const dx = clientX - this.dragStartX;
       const maxOffset = this.timelineWidth * 0.3;
-      this.viewOffsetX = Math.max(-maxOffset, Math.min(maxOffset, this.dragStartOffset + dx));
+      this.viewOffsetX = Math.max(
+        -maxOffset,
+        Math.min(maxOffset, this.dragStartOffset + dx)
+      );
       this.svg.setAttribute(
         'viewBox',
         `${-this.viewOffsetX} 0 ${this.timelineWidth} ${this.timelineHeight}`
@@ -393,9 +441,13 @@ class KhronosTimeline {
     };
 
     this.svg.addEventListener('mousedown', this._boundHandlers.pointerDown);
-    this.svg.addEventListener('touchstart', this._boundHandlers.pointerDown, { passive: true });
+    this.svg.addEventListener('touchstart', this._boundHandlers.pointerDown, {
+      passive: true,
+    });
     document.addEventListener('mousemove', this._boundHandlers.pointerMove);
-    document.addEventListener('touchmove', this._boundHandlers.pointerMove, { passive: true });
+    document.addEventListener('touchmove', this._boundHandlers.pointerMove, {
+      passive: true,
+    });
     document.addEventListener('mouseup', this._boundHandlers.pointerUp);
     document.addEventListener('touchend', this._boundHandlers.pointerUp);
   }
@@ -407,7 +459,9 @@ class KhronosTimeline {
   _toggleDetail(milestoneId) {
     // Close any open detail
     if (this.activeDetail) {
-      const prev = this.svg.querySelector(`.khronos-detail[data-detail-id="${this.activeDetail}"]`);
+      const prev = this.svg.querySelector(
+        `.khronos-detail[data-detail-id="${this.activeDetail}"]`
+      );
       if (prev) {
         prev.classList.remove('active');
       }
@@ -418,7 +472,9 @@ class KhronosTimeline {
       return;
     }
 
-    const detail = this.svg.querySelector(`.khronos-detail[data-detail-id="${milestoneId}"]`);
+    const detail = this.svg.querySelector(
+      `.khronos-detail[data-detail-id="${milestoneId}"]`
+    );
     if (detail) {
       detail.classList.add('active');
       this.activeDetail = milestoneId;
@@ -431,8 +487,14 @@ class KhronosTimeline {
   destroy() {
     if (this.svg && this._boundHandlers.click) {
       this.svg.removeEventListener('click', this._boundHandlers.click);
-      this.svg.removeEventListener('mousedown', this._boundHandlers.pointerDown);
-      this.svg.removeEventListener('touchstart', this._boundHandlers.pointerDown);
+      this.svg.removeEventListener(
+        'mousedown',
+        this._boundHandlers.pointerDown
+      );
+      this.svg.removeEventListener(
+        'touchstart',
+        this._boundHandlers.pointerDown
+      );
     }
     document.removeEventListener('mousemove', this._boundHandlers.pointerMove);
     document.removeEventListener('touchmove', this._boundHandlers.pointerMove);

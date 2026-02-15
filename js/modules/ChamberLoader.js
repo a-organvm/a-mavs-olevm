@@ -133,7 +133,10 @@ class ChamberLoader {
         // Fragment fetched and cached by browser; actual injection happens in ensureLoaded
       })
       .catch(err => {
-        console.warn(`ChamberLoader preload warning for ${chamberId}:`, err.message);
+        console.warn(
+          `ChamberLoader preload warning for ${chamberId}:`,
+          err.message
+        );
         this._preloadPromises.delete(chamberId);
       });
 
@@ -251,7 +254,10 @@ class ChamberLoader {
    * @private
    */
   _shouldSkipPreload() {
-    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const conn =
+      navigator.connection ||
+      navigator.mozConnection ||
+      navigator.webkitConnection;
     if (!conn) {
       return false;
     }

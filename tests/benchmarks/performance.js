@@ -87,7 +87,9 @@ class PerformanceMonitor {
 
       // Keep last 5 minutes of readings
       const fiveMinutesAgo = now - 300000;
-      this.memoryReadings = this.memoryReadings.filter((r) => r.timestamp > fiveMinutesAgo);
+      this.memoryReadings = this.memoryReadings.filter(
+        r => r.timestamp > fiveMinutesAgo
+      );
     }
 
     this.frameCount++;
@@ -120,7 +122,8 @@ class PerformanceMonitor {
 
     // Calculate frame time stats
     const sortedTimes = [...this.frameTimes].sort((a, b) => a - b);
-    const p99FrameTime = sortedTimes[Math.floor(sortedTimes.length * 0.99)] || 0;
+    const p99FrameTime =
+      sortedTimes[Math.floor(sortedTimes.length * 0.99)] || 0;
     const minFrameTime = sortedTimes[0] || 0;
     const maxFrameTime = sortedTimes[sortedTimes.length - 1] || 0;
 
@@ -135,14 +138,15 @@ class PerformanceMonitor {
       if (this.memoryReadings.length > 1) {
         const oneMinuteAgo = performance.now() - 60000;
         const oldReadings = this.memoryReadings.filter(
-          (r) => r.timestamp < oneMinuteAgo
+          r => r.timestamp < oneMinuteAgo
         );
         if (oldReadings.length > 0) {
           const oldMemory = oldReadings[oldReadings.length - 1].usedJSHeapSize;
           const timeDiff =
-            (latest.timestamp - oldReadings[oldReadings.length - 1].timestamp) / 1000;
+            (latest.timestamp - oldReadings[oldReadings.length - 1].timestamp) /
+            1000;
           memoryGrowthRate =
-            ((latest.usedJSHeapSize - oldMemory) / (1024 * 1024)) / timeDiff;
+            (latest.usedJSHeapSize - oldMemory) / (1024 * 1024) / timeDiff;
         }
       }
     }
@@ -198,7 +202,9 @@ class PerformanceMonitor {
     }
 
     const sorted = [...this.audioLatencies].sort((a, b) => a - b);
-    const avg = this.audioLatencies.reduce((a, b) => a + b, 0) / this.audioLatencies.length;
+    const avg =
+      this.audioLatencies.reduce((a, b) => a + b, 0) /
+      this.audioLatencies.length;
 
     return {
       avg: Math.round(avg * 100) / 100,
@@ -254,9 +260,10 @@ class PerformanceMonitor {
       audioLatency: audioStats,
       issues,
       passed: issues.length === 0,
-      summary: issues.length === 0
-        ? 'All performance targets met'
-        : `${issues.length} issue(s) detected`,
+      summary:
+        issues.length === 0
+          ? 'All performance targets met'
+          : `${issues.length} issue(s) detected`,
     };
   }
 }
@@ -299,7 +306,7 @@ async function runBenchmark(options = {}) {
   const monitor = new PerformanceMonitor();
   let cleanup = null;
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     // Run setup
     if (setup) {
       cleanup = setup(monitor);

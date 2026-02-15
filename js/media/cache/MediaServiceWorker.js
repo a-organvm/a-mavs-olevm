@@ -17,7 +17,12 @@ const THUMBNAIL_CACHE = `${CACHE_VERSION}-thumbnails`;
 const WAVEFORM_CACHE = `${CACHE_VERSION}-waveforms`;
 const METADATA_CACHE = `${CACHE_VERSION}-metadata`;
 
-const ALL_CACHES = [AUDIO_CACHE, THUMBNAIL_CACHE, WAVEFORM_CACHE, METADATA_CACHE];
+const ALL_CACHES = [
+  AUDIO_CACHE,
+  THUMBNAIL_CACHE,
+  WAVEFORM_CACHE,
+  METADATA_CACHE,
+];
 
 // Default config (will be overridden by ETCETER4_CONFIG)
 const DEFAULT_CONFIG = {
@@ -33,11 +38,17 @@ let cacheConfig = DEFAULT_CONFIG;
  */
 function loadCacheConfig() {
   try {
-    if (typeof ETCETER4_CONFIG !== 'undefined' && ETCETER4_CONFIG.media?.cache) {
+    if (
+      typeof ETCETER4_CONFIG !== 'undefined' &&
+      ETCETER4_CONFIG.media?.cache
+    ) {
       cacheConfig = { ...DEFAULT_CONFIG, ...ETCETER4_CONFIG.media.cache };
     }
   } catch (error) {
-    console.warn('[MediaSW] Failed to load ETCETER4_CONFIG, using defaults', error);
+    console.warn(
+      '[MediaSW] Failed to load ETCETER4_CONFIG, using defaults',
+      error
+    );
   }
 }
 
@@ -50,7 +61,7 @@ function getCacheExpiry(request) {
   };
 
   const url = new URL(request.url);
-  
+
   if (isAudioFile(url)) {
     metadata.ttl = cacheConfig.audioTTL;
     metadata.type = 'audio';
@@ -148,7 +159,12 @@ function getMetadataFromResponse(response) {
 /**
  * Store response in cache with metadata
  */
-async function cacheResponseWithMetadata(cacheName, request, response, metadata) {
+async function cacheResponseWithMetadata(
+  cacheName,
+  request,
+  response,
+  metadata
+) {
   try {
     const clonedResponse = response.clone();
     const headers = new Headers(clonedResponse.headers);
@@ -226,7 +242,12 @@ async function networkFirstStrategy(request, cacheName) {
 
     if (networkResponse.ok) {
       const metadata = getCacheExpiry(request);
-      await cacheResponseWithMetadata(cacheName, request, networkResponse.clone(), metadata);
+      await cacheResponseWithMetadata(
+        cacheName,
+        request,
+        networkResponse.clone(),
+        metadata
+      );
       return networkResponse;
     }
 
@@ -287,13 +308,21 @@ async function cacheFirstStrategy(request, cacheName) {
 
     if (networkResponse.ok) {
       const metadata = getCacheExpiry(request);
-      await cacheResponseWithMetadata(cacheName, request, networkResponse.clone(), metadata);
+      await cacheResponseWithMetadata(
+        cacheName,
+        request,
+        networkResponse.clone(),
+        metadata
+      );
       return networkResponse;
     }
 
     // Network failed but have stale cache, serve it
     if (cachedResponse) {
-      console.log('[MediaSW] Serving stale cache (network failed):', request.url);
+      console.log(
+        '[MediaSW] Serving stale cache (network failed):',
+        request.url
+      );
       return cachedResponse;
     }
 
@@ -335,7 +364,7 @@ async function streamOnlyStrategy(request) {
 /**
  * Install event: pre-cache essential assets
  */
-self.addEventListener('install', (event) => {
+self.addEventListener('install', event => {
   console.log('[MediaSW] Installing...');
   event.waitUntil(self.skipWaiting());
 });
@@ -343,33 +372,42 @@ self.addEventListener('install', (event) => {
 /**
  * Activate event: clean up old caches
  */
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', event => {
   console.log('[MediaSW] Activating...');
 
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (!ALL_CACHES.includes(cacheName)) {
-            console.log('[MediaSW] Deleting old cache:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    }).then(() => self.clients.claim())
+    caches
+      .keys()
+      .then(cacheNames => {
+        return Promise.all(
+          cacheNames.map(cacheName => {
+            if (!ALL_CACHES.includes(cacheName)) {
+              console.log('[MediaSW] Deleting old cache:', cacheName);
+              return caches.delete(cacheName);
+            }
+          })
+        );
+      })
+      .then(() => self.clients.claim())
   );
 });
 
 /**
  * Fetch event: intercept media requests
  */
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
 
   // Only handle R2 media URLs and same-origin requests
-  const isMediaURL = url.hostname === 'media.etceter4.com' || url.origin === self.location.origin;
-  const isMediaRequest = isAudioFile(url) || isThumbnailFile(url) || isWaveformFile(url) || isMetadataFile(url);
+  const isMediaURL =
+    url.hostname === 'media.etceter4.com' ||
+    url.origin === self.location.origin;
+  const isMediaRequest =
+    isAudioFile(url) ||
+    isThumbnailFile(url) ||
+    isWaveformFile(url) ||
+    isMetadataFile(url);
 
   if (!isMediaURL || !isMediaRequest) {
     return;
@@ -400,7 +438,7 @@ self.addEventListener('fetch', (event) => {
 /**
  * Message event: handle cache management commands
  */
-self.addEventListener('message', (event) => {
+self.addEventListener('message', event => {
   const { type, payload } = event.data;
 
   switch (type) {
@@ -430,7 +468,8 @@ self.addEventListener('message', (event) => {
             for (const request of requests) {
               const response = await cache.match(request);
               if (response) {
-                totalSize += parseInt(response.headers.get('content-length')) || 0;
+                totalSize +=
+                  parseInt(response.headers.get('content-length')) || 0;
               }
             }
           }

@@ -7,7 +7,7 @@
  * recognizable as origin material but is continuously transformed.
  */
 
-"use strict";
+'use strict';
 
 /**
  * OGODGenerativeRenderer - Three.js generative feedback renderer
@@ -24,10 +24,10 @@ class OGODGenerativeRenderer {
    */
   constructor(options = {}) {
     if (!options.canvas) {
-      throw new Error("OGODGenerativeRenderer requires a canvas element");
+      throw new Error('OGODGenerativeRenderer requires a canvas element');
     }
-    if (typeof THREE === "undefined") {
-      throw new Error("OGODGenerativeRenderer requires Three.js");
+    if (typeof THREE === 'undefined') {
+      throw new Error('OGODGenerativeRenderer requires Three.js');
     }
 
     this.canvas = options.canvas;
@@ -59,7 +59,7 @@ class OGODGenerativeRenderer {
 
     // Resize handler
     this._onResize = this._onResize.bind(this);
-    window.addEventListener("resize", this._onResize);
+    window.addEventListener('resize', this._onResize);
 
     this._initThree();
   }
@@ -373,14 +373,14 @@ class OGODGenerativeRenderer {
    * @returns {string}
    */
   get type() {
-    return "generative";
+    return 'generative';
   }
 
   /**
    * Dispose all resources
    */
   dispose() {
-    window.removeEventListener("resize", this._onResize);
+    window.removeEventListener('resize', this._onResize);
 
     if (this._sourceTexture) {
       this._sourceTexture.dispose();

@@ -327,7 +327,15 @@ class Carousel {
 
     $(this.id).on(
       'carousel:slide',
-      (event, _index, _indexLoadLeft, _indexLoadRight, _images, _dir, _this) => {
+      (
+        event,
+        _index,
+        _indexLoadLeft,
+        _indexLoadRight,
+        _images,
+        _dir,
+        _this
+      ) => {
         try {
           const page = Page.findPage(self.id);
           if (page.hasAllData === true) {
@@ -338,7 +346,10 @@ class Carousel {
             _this.loadImages();
           }
         } catch (error) {
-          console.error(`Error in ${self.id} carousel slide handler:`, error.message);
+          console.error(
+            `Error in ${self.id} carousel slide handler:`,
+            error.message
+          );
         }
       }
     );

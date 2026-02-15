@@ -68,7 +68,7 @@ async function navigateToPage(page, pageHash, timeout = 10000) {
   await waitForJQueryReady(page);
 
   // Navigate using JavaScript - hide all pages, show target
-  await page.evaluate(targetPage => {
+  await page.evaluate(async targetPage => {
     // List of all known page sections
     const pageIds = [
       'landing',
@@ -117,11 +117,11 @@ async function navigateToPage(page, pageHash, timeout = 10000) {
       targetEl.style.opacity = '1';
     }
 
-    // Update currentPage and hash
+    // Update currentPage and hash, await fragment loading
     if (typeof Page !== 'undefined' && Page.findPage) {
       try {
         window.currentPage = Page.findPage(targetPage);
-        window.currentPage.initPage();
+        await window.currentPage.initPage();
       } catch {
         // Page not found in pages array
       }
@@ -222,9 +222,9 @@ test.describe('Wing Navigation - Chamber Links', () => {
     await ensureSearchModalClosed(page);
 
     // East Wing contains links to: Akademia, Bibliotheke, Pinakotheke
-    const akademiaLink = page.locator('a[href="#akademia"]');
-    const bibliothekeLink = page.locator('a[href="#bibliotheke"]');
-    const pinakothekeLink = page.locator('a[href="#pinakotheke"]');
+    const akademiaLink = page.locator('#east-wing a[href="#akademia"]');
+    const bibliothekeLink = page.locator('#east-wing a[href="#bibliotheke"]');
+    const pinakothekeLink = page.locator('#east-wing a[href="#pinakotheke"]');
 
     await expect(akademiaLink).toBeVisible();
     await expect(bibliothekeLink).toBeVisible();
@@ -238,9 +238,9 @@ test.describe('Wing Navigation - Chamber Links', () => {
     await ensureSearchModalClosed(page);
 
     // West Wing contains links to: Agora, Symposion, Oikos
-    const agoraLink = page.locator('a[href="#agora"]');
-    const symposionLink = page.locator('a[href="#symposion"]');
-    const oikosLink = page.locator('a[href="#oikos"]');
+    const agoraLink = page.locator('#west-wing a[href="#agora"]');
+    const symposionLink = page.locator('#west-wing a[href="#symposion"]');
+    const oikosLink = page.locator('#west-wing a[href="#oikos"]');
 
     await expect(agoraLink).toBeVisible();
     await expect(symposionLink).toBeVisible();
@@ -254,8 +254,8 @@ test.describe('Wing Navigation - Chamber Links', () => {
     await ensureSearchModalClosed(page);
 
     // South Wing contains links to: Odeion, Theatron
-    const odeionLink = page.locator('a[href="#odeion"]');
-    const theatronLink = page.locator('a[href="#theatron"]');
+    const odeionLink = page.locator('#south-wing a[href="#odeion"]');
+    const theatronLink = page.locator('#south-wing a[href="#theatron"]');
 
     await expect(odeionLink).toBeVisible();
     await expect(theatronLink).toBeVisible();
@@ -268,8 +268,8 @@ test.describe('Wing Navigation - Chamber Links', () => {
     await ensureSearchModalClosed(page);
 
     // North Wing contains links to: Ergasterion, Khronos
-    const ergasterionLink = page.locator('a[href="#ergasterion"]');
-    const khronosLink = page.locator('a[href="#khronos"]');
+    const ergasterionLink = page.locator('#north-wing a[href="#ergasterion"]');
+    const khronosLink = page.locator('#north-wing a[href="#khronos"]');
 
     await expect(ergasterionLink).toBeVisible();
     await expect(khronosLink).toBeVisible();

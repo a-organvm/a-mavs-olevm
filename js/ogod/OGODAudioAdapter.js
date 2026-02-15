@@ -6,7 +6,7 @@
  * Returns zero uniforms when no audio is available (visual-only mode).
  */
 
-"use strict";
+'use strict';
 
 /**
  * OGODAudioAdapter - Audio analysis bridge for OGOD animations
@@ -73,23 +73,24 @@ class OGODAudioAdapter {
    */
   _initWebAudioFallback() {
     try {
-      this._audioContext = new (window.AudioContext ||
-        window.webkitAudioContext)();
+      this._audioContext = new (
+        window.AudioContext || window.webkitAudioContext
+      )();
       this._analyserNode = this._audioContext.createAnalyser();
       this._analyserNode.fftSize = 1024;
       this._analyserNode.smoothingTimeConstant = 0.8;
       this._frequencyData = new Uint8Array(
-        this._analyserNode.frequencyBinCount,
+        this._analyserNode.frequencyBinCount
       );
 
       // Connect source
       if (this._audioElement) {
         this._sourceNode = this._audioContext.createMediaElementSource(
-          this._audioElement,
+          this._audioElement
         );
         this._sourceNode.connect(this._analyserNode);
         this._analyserNode.connect(this._audioContext.destination);
-      } else if (this._howlInstance && typeof Howler !== "undefined") {
+      } else if (this._howlInstance && typeof Howler !== 'undefined') {
         // Howler.js exposes the master gain node
         const ctx = Howler.ctx;
         if (ctx) {
@@ -98,14 +99,14 @@ class OGODAudioAdapter {
           this._analyserNode.fftSize = 1024;
           this._analyserNode.smoothingTimeConstant = 0.8;
           this._frequencyData = new Uint8Array(
-            this._analyserNode.frequencyBinCount,
+            this._analyserNode.frequencyBinCount
           );
           Howler.masterGain.connect(this._analyserNode);
           this._analyserNode.connect(ctx.destination);
         }
       }
     } catch (_err) {
-      console.warn("OGODAudioAdapter: Web Audio API initialization failed");
+      console.warn('OGODAudioAdapter: Web Audio API initialization failed');
     }
   }
 
@@ -282,7 +283,7 @@ class OGODAudioAdapter {
     }
     if (
       this._audioContext &&
-      this._audioContext.state !== "closed" &&
+      this._audioContext.state !== 'closed' &&
       !this._howlInstance
     ) {
       // Only close context if we created it (not if it's Howler's)

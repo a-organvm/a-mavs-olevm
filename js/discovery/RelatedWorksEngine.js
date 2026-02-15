@@ -52,15 +52,16 @@ class RelatedWorksEngine {
    */
   constructor() {
     // Configuration
-    this.config = typeof ETCETER4_CONFIG !== 'undefined'
-      ? ETCETER4_CONFIG.discovery?.relatedWorks || {}
-      : {};
+    this.config =
+      typeof ETCETER4_CONFIG !== 'undefined'
+        ? ETCETER4_CONFIG.discovery?.relatedWorks || {}
+        : {};
 
     // Default weights
     this.weights = {
-      tagOverlap: 0.40,
+      tagOverlap: 0.4,
       sameSection: 0.15,
-      sameChamber: 0.10,
+      sameChamber: 0.1,
       sameWing: 0.05,
       temporal: 0.15,
       typeMatch: 0.15,
@@ -174,7 +175,10 @@ class RelatedWorksEngine {
     }
 
     // Same section
-    if (source.section === target.section && source.chamber === target.chamber) {
+    if (
+      source.section === target.section &&
+      source.chamber === target.chamber
+    ) {
       totalScore += this.weights.sameSection;
       reasons.push({
         type: 'section',
@@ -204,15 +208,19 @@ class RelatedWorksEngine {
     }
 
     // Temporal proximity
-    const temporalScore = this._computeTemporalProximity(source.year, target.year);
+    const temporalScore = this._computeTemporalProximity(
+      source.year,
+      target.year
+    );
     if (temporalScore > 0) {
       totalScore += temporalScore * this.weights.temporal;
       reasons.push({
         type: 'temporal',
         score: temporalScore,
-        detail: temporalScore === 1
-          ? `Same year: ${source.year}`
-          : `Close in time: ${target.year}`,
+        detail:
+          temporalScore === 1
+            ? `Same year: ${source.year}`
+            : `Close in time: ${target.year}`,
       });
     }
 
@@ -315,9 +323,7 @@ class RelatedWorksEngine {
     const registry = ContentRegistry.getInstance();
 
     // Get source items
-    const sourceItems = itemIds
-      .map(id => registry.getItem(id))
-      .filter(Boolean);
+    const sourceItems = itemIds.map(id => registry.getItem(id)).filter(Boolean);
 
     if (sourceItems.length === 0) {
       return [];
@@ -325,7 +331,9 @@ class RelatedWorksEngine {
 
     // Exclude source items from results
     const excludeIds = new Set(itemIds);
-    const allItems = registry.getAllItems().filter(item => !excludeIds.has(item.id));
+    const allItems = registry
+      .getAllItems()
+      .filter(item => !excludeIds.has(item.id));
 
     // Score each item against all source items
     const scored = allItems.map(item => {
@@ -403,7 +411,9 @@ class RelatedWorksEngine {
     const registry = ContentRegistry.getInstance();
     const allItems = registry.getAllItems();
 
-    console.info(`RelatedWorksEngine: Precomputing for ${allItems.length} items...`);
+    console.info(
+      `RelatedWorksEngine: Precomputing for ${allItems.length} items...`
+    );
 
     allItems.forEach(item => {
       this.getRelated(item.id, this.maxItems);

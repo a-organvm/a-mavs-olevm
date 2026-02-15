@@ -4,7 +4,7 @@
  * Handles loading source images, format filtering, and track-to-image lookup.
  */
 
-"use strict";
+'use strict';
 
 /**
  * OGODImageLoader - Image loading and analysis for OGOD
@@ -18,7 +18,7 @@ class OGODImageLoader {
     this._currentSrc = null;
 
     // Non-web formats to filter out
-    this._excludedExtensions = [".psd", ".ai", ".eps", ".tiff", ".tif", ".bmp"];
+    this._excludedExtensions = ['.psd', '.ai', '.eps', '.tiff', '.tif', '.bmp'];
   }
 
   /**
@@ -28,7 +28,7 @@ class OGODImageLoader {
    */
   getTrackImagePath(trackNumber) {
     const config =
-      typeof ETCETER4_CONFIG !== "undefined" ? ETCETER4_CONFIG : {};
+      typeof ETCETER4_CONFIG !== 'undefined' ? ETCETER4_CONFIG : {};
     const tracks = config.ogodTracks || {};
     const track = tracks[trackNumber];
 
@@ -46,7 +46,7 @@ class OGODImageLoader {
    */
   isWebFormat(src) {
     const lower = src.toLowerCase();
-    return !this._excludedExtensions.some((ext) => lower.endsWith(ext));
+    return !this._excludedExtensions.some(ext => lower.endsWith(ext));
   }
 
   /**
@@ -66,7 +66,7 @@ class OGODImageLoader {
 
     return new Promise((resolve, reject) => {
       const img = new Image();
-      img.crossOrigin = "anonymous";
+      img.crossOrigin = 'anonymous';
 
       img.onload = () => {
         // Dispose previous image reference
@@ -93,7 +93,7 @@ class OGODImageLoader {
     const path = this.getTrackImagePath(trackNumber);
     if (!path) {
       return Promise.reject(
-        new Error(`No source image configured for track ${trackNumber}`),
+        new Error(`No source image configured for track ${trackNumber}`)
       );
     }
     return this.load(path);
@@ -153,10 +153,10 @@ class OGODImageLoader {
 
     // Downsample for performance
     const sampleSize = 64;
-    const canvas = document.createElement("canvas");
+    const canvas = document.createElement('canvas');
     canvas.width = sampleSize;
     canvas.height = sampleSize;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     ctx.drawImage(img, 0, 0, sampleSize, sampleSize);
     const imageData = ctx.getImageData(0, 0, sampleSize, sampleSize);
     const data = imageData.data;

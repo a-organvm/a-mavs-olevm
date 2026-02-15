@@ -178,9 +178,11 @@ class ShareLinks {
       }
 
       // Emit event
-      window.dispatchEvent(new CustomEvent('share-link-copied', {
-        detail: { url: text },
-      }));
+      window.dispatchEvent(
+        new CustomEvent('share-link-copied', {
+          detail: { url: text },
+        })
+      );
 
       return true;
     } catch (error) {

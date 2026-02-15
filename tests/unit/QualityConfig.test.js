@@ -8,9 +8,8 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import '../unit/setup.js';
 
 // Import module by evaluating the source
-const QualityConfigSource = await import(
-  '../../js/3d/core/QualityConfig.js?raw'
-).then(m => m.default);
+const QualityConfigSource =
+  await import('../../js/3d/core/QualityConfig.js?raw').then(m => m.default);
 eval(QualityConfigSource);
 
 describe('QualityPresets', () => {

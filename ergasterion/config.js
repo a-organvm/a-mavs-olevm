@@ -18,7 +18,8 @@ const ERGASTERION_CONFIG = {
     id: 'ergasterion',
     name: 'ERGASTERION',
     subtitle: 'Code experiments, prototypes, interactive demos',
-    description: 'The workshop and laboratory of ETCETER4: interactive code experiments, algorithmic explorations, and technical prototypes',
+    description:
+      'The workshop and laboratory of ETCETER4: interactive code experiments, algorithmic explorations, and technical prototypes',
     color: '#00FF00',
     secondaryColor: '#000000',
     darkColor: '#228B22',

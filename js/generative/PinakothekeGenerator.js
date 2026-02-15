@@ -100,10 +100,17 @@ class PinakothekeGenerator {
 
         // Record interaction
         if (typeof JourneyTracker !== 'undefined') {
-          JourneyTracker.getInstance().recordInteraction('pinakotheke', 'sketch_viewed', { sketch: sketchName });
+          JourneyTracker.getInstance().recordInteraction(
+            'pinakotheke',
+            'sketch_viewed',
+            { sketch: sketchName }
+          );
         }
       } catch (err) {
-        console.warn(`PinakothekeGenerator: sketch ${sketchName} failed:`, err.message);
+        console.warn(
+          `PinakothekeGenerator: sketch ${sketchName} failed:`,
+          err.message
+        );
         this.instances.push(null);
       }
     });
@@ -230,7 +237,12 @@ class PinakothekeGenerator {
 
           p.push();
           p.rotate(rotation);
-          p.stroke(pal.primary[0], pal.primary[1] + i * 30, pal.primary[2], alpha);
+          p.stroke(
+            pal.primary[0],
+            pal.primary[1] + i * 30,
+            pal.primary[2],
+            alpha
+          );
           p.strokeWeight(1.5);
           p.beginShape();
           for (let j = 0; j < sides; j++) {
@@ -283,14 +295,22 @@ class PinakothekeGenerator {
           const column = [];
           for (let y = 0; y < p.height; y++) {
             const idx = (y * p.width + x) * 4;
-            const brightness = p.pixels[idx] + p.pixels[idx + 1] + p.pixels[idx + 2];
-            column.push({ y, brightness, r: p.pixels[idx], g: p.pixels[idx + 1], b: p.pixels[idx + 2] });
+            const brightness =
+              p.pixels[idx] + p.pixels[idx + 1] + p.pixels[idx + 2];
+            column.push({
+              y,
+              brightness,
+              r: p.pixels[idx],
+              g: p.pixels[idx + 1],
+              b: p.pixels[idx + 2],
+            });
           }
 
           // Sort segments above threshold
           let segStart = -1;
           for (let y = 0; y <= column.length; y++) {
-            const above = y < column.length && column[y].brightness > sortThreshold;
+            const above =
+              y < column.length && column[y].brightness > sortThreshold;
             if (above && segStart === -1) {
               segStart = y;
             } else if (!above && segStart !== -1) {
@@ -354,7 +374,11 @@ class PinakothekeGenerator {
 
           // Curl noise approximation
           const n1 = p.noise(pt.x * noiseScale, pt.y * noiseScale, t);
-          const n2 = p.noise(pt.x * noiseScale + 100, pt.y * noiseScale + 100, t);
+          const n2 = p.noise(
+            pt.x * noiseScale + 100,
+            pt.y * noiseScale + 100,
+            t
+          );
           const angle = n1 * p.TWO_PI * 2;
           const magnitude = n2 * pt.speed;
 
@@ -362,10 +386,22 @@ class PinakothekeGenerator {
           pt.y += p.sin(angle) * magnitude;
 
           // Wrap edges
-          if (pt.x < 0) { pt.x = p.width; pt.prevX = pt.x; }
-          if (pt.x > p.width) { pt.x = 0; pt.prevX = pt.x; }
-          if (pt.y < 0) { pt.y = p.height; pt.prevY = pt.y; }
-          if (pt.y > p.height) { pt.y = 0; pt.prevY = pt.y; }
+          if (pt.x < 0) {
+            pt.x = p.width;
+            pt.prevX = pt.x;
+          }
+          if (pt.x > p.width) {
+            pt.x = 0;
+            pt.prevX = pt.x;
+          }
+          if (pt.y < 0) {
+            pt.y = p.height;
+            pt.prevY = pt.y;
+          }
+          if (pt.y > p.height) {
+            pt.y = 0;
+            pt.prevY = pt.y;
+          }
 
           p.stroke(
             pal.primary[0] * n1,

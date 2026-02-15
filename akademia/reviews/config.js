@@ -25,68 +25,67 @@ const reviewsConfig = {
     // }
   ],
   types: [
-    "book",
-    "album",
-    "film",
-    "artwork",
-    "idea",
-    "conference",
-    "exhibition",
+    'book',
+    'album',
+    'film',
+    'artwork',
+    'idea',
+    'conference',
+    'exhibition',
   ],
   categories: [
-    "Music Theory",
-    "Sound Studies",
-    "Digital Culture",
-    "Technology & Art",
-    "Creative Coding",
-    "Philosophy",
-    "Education",
-    "Cultural Criticism",
-    "Performance Studies",
-    "Interdisciplinary Research",
+    'Music Theory',
+    'Sound Studies',
+    'Digital Culture',
+    'Technology & Art',
+    'Creative Coding',
+    'Philosophy',
+    'Education',
+    'Cultural Criticism',
+    'Performance Studies',
+    'Interdisciplinary Research',
   ],
   // Get reviews by type
   getByType: function (type) {
     return this.reviews.filter(
-      (review) => review.type === type && review.published,
+      review => review.type === type && review.published
     );
   },
   // Get reviews by category
   getByCategory: function (category) {
     return this.reviews.filter(
-      (review) => review.category === category && review.published,
+      review => review.category === category && review.published
     );
   },
   // Get reviews by tag
   getByTag: function (tag) {
     return this.reviews.filter(
-      (review) => review.tags && review.tags.includes(tag) && review.published,
+      review => review.tags && review.tags.includes(tag) && review.published
     );
   },
   // Get published reviews
   getPublished: function () {
-    return this.reviews.filter((review) => review.published);
+    return this.reviews.filter(review => review.published);
   },
   // Get reviews above rating threshold
   getByRating: function (minRating = 7) {
     return this.reviews.filter(
-      (review) =>
-        review.rating && review.rating >= minRating && review.published,
+      review => review.rating && review.rating >= minRating && review.published
     );
   },
   // Get recent reviews
   getRecent: function (limit = 5) {
     return this.reviews
-      .filter((review) => review.published)
+      .filter(review => review.published)
       .sort((a, b) => new Date(b.date) - new Date(a.date))
       .slice(0, limit);
   },
   // Get review by slug
   getBySlug: function (slug) {
-    return this.reviews.find((review) => review.id === slug);
+    return this.reviews.find(review => review.id === slug);
   },
 };
 // Export for use in other modules
-if (typeof module !== "undefined" && module.exports) {
+if (typeof module !== 'undefined' && module.exports) {
   module.exports = reviewsConfig;
 }

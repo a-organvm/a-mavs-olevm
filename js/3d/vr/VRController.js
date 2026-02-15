@@ -94,9 +94,8 @@ class VRController {
   async _checkVRSupport() {
     if ('xr' in navigator) {
       try {
-        this.isSupported = await navigator.xr.isSessionSupported(
-          'immersive-vr'
-        );
+        this.isSupported =
+          await navigator.xr.isSessionSupported('immersive-vr');
         if (this.isSupported) {
           console.log('WebXR VR is supported');
           this._createVRButton();
@@ -281,7 +280,7 @@ class VRController {
       controller.addEventListener('selectend', this._onSelectEnd);
       controller.addEventListener('squeezestart', this._onSqueezeStart);
       controller.addEventListener('squeezeend', this._onSqueezeEnd);
-      controller.addEventListener('connected', (event) => {
+      controller.addEventListener('connected', event => {
         this._onControllerConnected(event, i);
       });
       controller.addEventListener('disconnected', () => {

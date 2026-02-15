@@ -22,7 +22,7 @@ class JourneyNarrative {
     theatron: 'Theatron',
     ergasterion: 'Ergasterion',
     khronos: 'Khronos',
-    'ogod3d': 'OGOD Immersive',
+    ogod3d: 'OGOD Immersive',
     'ogod-viewer': 'OGOD Animation',
     discovery: 'Discovery',
     stills: 'Stills Gallery',
@@ -72,14 +72,12 @@ class JourneyNarrative {
         summary.chambersVisited[0];
       parts.push(`You have visited ${name}.`);
     } else {
-      parts.push(
-        `You have walked through ${chamberCount} chambers.`
-      );
+      parts.push(`You have walked through ${chamberCount} chambers.`);
     }
 
     // Lingering — most-visited chamber
     const visitCounts = {};
-    for (const v of (summary.pathSequence || [])) {
+    for (const v of summary.pathSequence || []) {
       visitCounts[v] = (visitCounts[v] || 0) + 1;
     }
     const mostVisited = Object.entries(visitCounts).sort(
@@ -105,26 +103,26 @@ class JourneyNarrative {
       if (topInteraction) {
         const [key, count] = topInteraction;
         const [chamberId, type] = key.split(':');
-        const name =
-          JourneyNarrative.CHAMBER_NAMES[chamberId] || chamberId;
-        const verb =
-          JourneyNarrative.INTERACTION_VERBS[type] || type;
-        parts.push(`${count > 1 ? count + ' moments ' : 'A moment '}${verb} in ${name}.`);
+        const name = JourneyNarrative.CHAMBER_NAMES[chamberId] || chamberId;
+        const verb = JourneyNarrative.INTERACTION_VERBS[type] || type;
+        parts.push(
+          `${count > 1 ? count + ' moments ' : 'A moment '}${verb} in ${name}.`
+        );
       }
     }
 
     // Wings awaiting
     const unvisitedWings = [];
     for (const [wing, chambers] of Object.entries(JourneyNarrative.WINGS)) {
-      const visited = chambers.some(c =>
-        summary.chambersVisited.includes(c)
-      );
+      const visited = chambers.some(c => summary.chambersVisited.includes(c));
       if (!visited) {
         unvisitedWings.push(wing);
       }
     }
     if (unvisitedWings.length > 0 && unvisitedWings.length < 4) {
-      parts.push(`The ${unvisitedWings.join(' and ')} await${unvisitedWings.length === 1 ? 's' : ''}.`);
+      parts.push(
+        `The ${unvisitedWings.join(' and ')} await${unvisitedWings.length === 1 ? 's' : ''}.`
+      );
     }
 
     // Time span
@@ -133,9 +131,7 @@ class JourneyNarrative {
         (summary.lastVisit - summary.firstVisit) / (1000 * 60 * 60 * 24)
       );
       if (days > 0) {
-        parts.push(
-          `Your journey spans ${days} day${days === 1 ? '' : 's'}.`
-        );
+        parts.push(`Your journey spans ${days} day${days === 1 ? '' : 's'}.`);
       }
     }
 

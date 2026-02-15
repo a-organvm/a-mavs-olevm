@@ -104,7 +104,12 @@ test.describe('Mobile Menu', () => {
     await page.evaluate(() => {
       window.jQuery('.c-hamburger').trigger('click');
     });
-    await page.waitForTimeout(500);
+
+    // Wait for menu to have 'open' class
+    await page.waitForFunction(
+      () => document.querySelector('.mobileMenu')?.classList.contains('open'),
+      { timeout: 5000 }
+    );
 
     // Verify menu is open
     const mobileMenu = page.locator('.mobileMenu');
@@ -114,7 +119,12 @@ test.describe('Mobile Menu', () => {
     await page.evaluate(() => {
       window.jQuery('.c-hamburger').trigger('click');
     });
-    await page.waitForTimeout(500);
+
+    // Wait for menu to lose 'open' class
+    await page.waitForFunction(
+      () => !document.querySelector('.mobileMenu')?.classList.contains('open'),
+      { timeout: 5000 }
+    );
 
     // Verify closed state
     await expect(mobileMenu).not.toHaveClass(/open/);

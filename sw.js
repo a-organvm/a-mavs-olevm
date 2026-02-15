@@ -100,12 +100,17 @@ self.addEventListener('fetch', event => {
   }
 
   // Chamber fragments: network-first with cache fallback for offline
-  if (event.request.url.includes('/chambers/') && event.request.url.endsWith('/fragment.html')) {
+  if (
+    event.request.url.includes('/chambers/') &&
+    event.request.url.endsWith('/fragment.html')
+  ) {
     event.respondWith(
       fetch(event.request)
         .then(response => {
           const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+          caches
+            .open(CACHE_NAME)
+            .then(cache => cache.put(event.request, clone));
           return response;
         })
         .catch(() => caches.match(event.request))
