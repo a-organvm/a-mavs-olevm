@@ -3,9 +3,11 @@
 /**
  * @global {Object} currentPage - current page object
  * @global {string} transitionState - current transition state (IDLE, TRANSITIONING, READY)
+ * @global {boolean} livingPantheonInitialized - track if Living Pantheon has been initialized
  */
 
 let currentPage = {};
+let livingPantheonInitialized = false;
 
 /**
  * Transition State Machine
@@ -57,11 +59,26 @@ class Page {
   }
 
   /**
-   * Initializes the page
+   * Initializes the page. Loads chamber fragment via ChamberLoader if registered.
+   * @returns {Promise<void>}
    */
-  initPage() {
+  async initPage() {
     if (!this.isInitialized && !this.isInitializing) {
       this.isInitializing = true;
+
+      // Load fragment if registered with ChamberLoader
+      if (typeof ChamberLoader !== 'undefined') {
+        try {
+          const loader = ChamberLoader.getInstance();
+          const id = this.id.replace('#', '');
+          if (loader.isRegistered(id) && !loader.isLoaded(id)) {
+            await loader.ensureLoaded(id);
+          }
+        } catch (loaderError) {
+          console.warn('ChamberLoader error:', loaderError.message);
+        }
+      }
+
       this.initialize();
       this.isInitializing = false;
       this.isInitialized = true;
@@ -134,6 +151,27 @@ function showNewSection(_loadingSection) {
     // Set state to transitioning
     transitionState = TransitionState.TRANSITIONING;
 
+    // Prepare ambient audio crossfade before fadeOut
+    try {
+      if (typeof LivingPantheonCore !== 'undefined') {
+        const livingPantheon = LivingPantheonCore.getInstance();
+        if (livingPantheon && livingPantheon.subsystems.ambient) {
+          // Prepare ambient layer for crossfade on the new chamber
+          // This will be triggered after fadeInPage completes
+        }
+      }
+    } catch (pantheError) {
+      console.warn(
+        'Living Pantheon audio preparation warning:',
+        pantheError.message
+      );
+    }
+
+    // Play page exit sound
+    if (typeof UISounds !== 'undefined' && UISounds.isEnabled()) {
+      UISounds.pageExit(0.5);
+    }
+
     // Update URL hash for browser history (set flag to prevent double navigation)
     if (typeof isNavigating !== 'undefined') {
       isNavigating = true;
@@ -145,15 +183,49 @@ function showNewSection(_loadingSection) {
       }, ETCETER4_CONFIG.animations.navigationDebounce);
     }
 
-    loadingSection.initPage();
+    loadingSection.initPage().then(() => {
+      fadeOutPage(currentPage, () => {
+        fadeInPage(loadingSection, () => {
+          // Transition Living Pantheon to new chamber after page is visible
+          try {
+            if (typeof LivingPantheonCore !== 'undefined') {
+              const livingPantheon = LivingPantheonCore.getInstance();
+              if (livingPantheon && livingPantheon.isRunning) {
+                // Extract chamber ID from page ID (remove '#' prefix)
+                const chamberId = _loadingSection.replace('#', '');
+                // Get chamber color from config if available
+                const chamberConfig =
+                  typeof ETCETER4_CONFIG !== 'undefined'
+                    ? ETCETER4_CONFIG.livingPantheon?.chambers?.[chamberId]
+                    : null;
+                const chamberColor = chamberConfig?.color || null;
 
-    fadeOutPage(currentPage, () => {
-      fadeInPage(loadingSection, () => {
-        // Set state to ready when transition completes
-        transitionState = TransitionState.READY;
-        setTimeout(() => {
-          transitionState = TransitionState.IDLE;
-        }, ETCETER4_CONFIG.animations.transitionCooldown);
+                livingPantheon.transitionToNewChamber(chamberId, chamberColor);
+              }
+            }
+          } catch (pantheError) {
+            console.warn(
+              'Living Pantheon transition warning:',
+              pantheError.message
+            );
+          }
+
+          // Play page enter sound
+          if (typeof UISounds !== 'undefined' && UISounds.isEnabled()) {
+            UISounds.pageEnter(0.5);
+          }
+
+          // Manage 3D compositor lifecycle after navigation
+          if (typeof manageLandingCompositor === 'function') {
+            setTimeout(manageLandingCompositor, 100);
+          }
+
+          // Set state to ready when transition completes
+          transitionState = TransitionState.READY;
+          setTimeout(() => {
+            transitionState = TransitionState.IDLE;
+          }, ETCETER4_CONFIG.animations.transitionCooldown);
+        });
       });
     });
 
@@ -197,6 +269,20 @@ function fadeInPage(_Page, _cb) {
             _Page.isLoading = false;
             window.currentPage = _Page;
 
+            // Record visit in journey tracker
+            if (typeof JourneyTracker !== 'undefined') {
+              try {
+                JourneyTracker.getInstance().recordVisit(_Page.id);
+              } catch (_journeyErr) {
+                // Non-critical — silently continue
+              }
+            }
+
+            // Anticipatory preload: when landing on a wing, preload its chambers
+            if (typeof ChamberLoader !== 'undefined') {
+              _preloadWingChambers(_Page.id);
+            }
+
             // Manage focus for accessibility
             if (typeof manageFocus === 'function') {
               manageFocus(_Page.id);
@@ -230,6 +316,51 @@ function fadeInPage(_Page, _cb) {
   } else {
     // prevents fast clicking of the buttons from overloading the function
     return false;
+  }
+}
+
+/**
+ * Wing → chamber mappings for anticipatory preloading
+ * @type {Object<string, string[]>}
+ */
+const WING_CHAMBERS = {
+  '#east-wing': ['akademia', 'bibliotheke', 'pinakotheke'],
+  '#west-wing': ['agora', 'symposion', 'oikos'],
+  '#south-wing': ['odeion', 'theatron'],
+  '#north-wing': ['ergasterion', 'khronos'],
+};
+
+/**
+ * Preload child chamber fragments when visitor lands on a wing page.
+ * Uses requestIdleCallback to avoid blocking the main thread.
+ * Respects connection-aware loading via ChamberLoader._shouldSkipPreload().
+ * @param {string} pageId - e.g. '#east-wing'
+ */
+function _preloadWingChambers(pageId) {
+  const chambers = WING_CHAMBERS[pageId];
+  if (!chambers) {
+    return;
+  }
+
+  const loader = ChamberLoader.getInstance();
+
+  // Skip preloading on slow connections
+  if (loader._shouldSkipPreload && loader._shouldSkipPreload()) {
+    return;
+  }
+
+  const doPreload = () => {
+    for (const chamberId of chambers) {
+      if (loader.isRegistered(chamberId) && !loader.isLoaded(chamberId)) {
+        loader.preload(chamberId);
+      }
+    }
+  };
+
+  if (typeof requestIdleCallback === 'function') {
+    requestIdleCallback(doPreload, { timeout: 3000 });
+  } else {
+    setTimeout(doPreload, 200);
   }
 }
 
@@ -298,75 +429,31 @@ function fadeOutPage(_Page, _cb) {
  * Site navigation listeners
  */
 
-// these listen for when the page is meant to be loaded, trys to init then load, then fade out the current section
-// if any, then fade in the new section
-$('#backButton').on('click', () => {
-  showNewSection(currentPage.getBackElement().id);
-});
-$('#toLandingPage').on('click', () => {
-  showNewSection('#landing');
-});
-$('#toMenuPage').on('click', () => {
-  showNewSection('#menu');
-});
-$('#toWordsPage').on('click', () => {
-  showNewSection('#words');
-});
-$('#toSoundPage').on('click', () => {
-  showNewSection('#sound');
-});
-$('#toVisionPage').on('click', () => {
-  showNewSection('#vision');
-});
-$('#toInfoPage').on('click', () => {
-  showNewSection('#info');
-});
-$('#toVideoPage').on('click', () => {
-  showNewSection('#video');
-});
-$('#toStillsPage').on('click', () => {
-  showNewSection('#stills');
-});
-$('#toMapPage').on('click', () => {
-  showNewSection('#sitemap');
-});
-$('#toDiaryPage').on('click', () => {
-  showNewSection('#diary');
-});
-$('#toBlogPage').on('click', () => {
-  showNewSection('#blog');
-});
-$('#toLoopPage').on('click', () => {
-  showNewSection('#loop');
+// Delegated click handler for all internal hash links
+// Routes all a[href^="#"] clicks through showNewSection() uniformly
+$(document).on('click', 'a[href^="#"]', function (e) {
+  const hash = $(this).attr('href');
+  if (!hash || hash === '#' || hash === '#pages') {
+    return;
+  }
+  e.preventDefault();
+  showNewSection(hash);
+
+  // Close mobile menu if open
+  $('.c-hamburger.is-active')
+    .removeClass('is-active')
+    .attr('aria-expanded', 'false');
+  $('.mobileMenu.open').removeClass('open');
+  document.body.style.overflow = '';
 });
 
-$('#SoundBackButton').on('click', () => {
-  showNewSection('#menu');
-});
-$('#WordBackButton').on('click', () => {
-  showNewSection('#menu');
-});
-$('#VisionBackButton').on('click', () => {
-  showNewSection('#menu');
-});
-$('#InfoBackButton').on('click', () => {
-  showNewSection('#menu');
-});
-
-$('#VideoBackButton').on('click', () => {
-  showNewSection('#vision');
-});
-$('#VideoBackButton2').on('click', () => {
-  showNewSection('#vision');
-});
-$('#VideoBackButton3').on('click', () => {
-  showNewSection('#vision');
-});
-$('#VideoBackButton4').on('click', () => {
-  showNewSection('#vision');
-});
-$('#VideoBackButton5').on('click', () => {
-  showNewSection('#vision');
+// Back button uses getBackElement() logic, not a simple hash
+$('#backButton').on('click', e => {
+  e.preventDefault();
+  const back = currentPage.getBackElement();
+  if (back && back.id) {
+    showNewSection(back.id);
+  }
 });
 
 /*
@@ -398,9 +485,42 @@ $('.c-hamburger').on('click', function () {
  */
 
 document.addEventListener('keydown', event => {
-  // Skip if user is typing in an input field
+  // Check for Cmd/Ctrl+K to open global search (works even in input fields)
+  const isMetaOrCtrl = event.metaKey || event.ctrlKey;
+  if (isMetaOrCtrl && event.key === 'k') {
+    event.preventDefault();
+    // Open search modal via DiscoveryController (lazy-init if needed)
+    if (typeof DiscoveryController !== 'undefined') {
+      const controller = DiscoveryController.getInstance();
+      if (!controller.isInitialized) {
+        controller.initialize().then(() => {
+          controller.openSearchModal();
+        });
+      } else {
+        controller.openSearchModal();
+      }
+    }
+    return;
+  }
+
+  // Skip other shortcuts if user is typing in an input field
   if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
     return;
+  }
+
+  // Check for Living Pantheon toggle (Ctrl+Shift+L)
+  const isCtrl =
+    event.ctrlKey || (event.metaKey && navigator.platform.includes('Mac'));
+  const isShift = event.shiftKey;
+  const isL = event.key.toLowerCase() === 'l';
+
+  if (isCtrl && isShift && isL) {
+    // Living Pantheon toggle - allow LivingPantheonCore to handle it
+    // This will be processed by LivingPantheonCore's keydown listener
+    if (typeof LivingPantheonCore !== 'undefined') {
+      // The LivingPantheonCore will handle this event
+      return;
+    }
   }
 
   switch (event.key) {
@@ -456,6 +576,12 @@ document.addEventListener('keydown', event => {
         showNewSection('#menu');
       }
       break;
+
+    case '?':
+      // Show keyboard shortcuts help
+      // Note: Ctrl+Shift+L toggles Living Pantheon immersive effects
+      // (This could trigger a help modal if implemented)
+      break;
   }
 });
 
@@ -499,8 +625,83 @@ function announcePageTransition(pageId) {
     '#stills': 'Stills gallery',
     '#diary': 'Diary gallery',
     '#blog': 'Blog section',
+    '#ogod3d': 'OGOD 3D immersive experience',
+    '#ogod-viewer': 'OGOD Animation Viewer',
+    '#east-wing': 'East Wing - Scholarship',
+    '#west-wing': 'West Wing - Discourse',
+    '#south-wing': 'South Wing - Performance',
+    '#north-wing': 'North Wing - Process',
+    '#akademia': 'Akademia - Scholarship',
+    '#bibliotheke': 'Bibliotheke - Library',
+    '#pinakotheke': 'Pinakotheke - Art Gallery',
+    '#agora': 'Agora - Political Commentary',
+    '#symposion': 'Symposion - Dialogues',
+    '#oikos': 'Oikos - Personal Reflections',
+    '#odeion': 'Odeion - Music Hall',
+    '#theatron': 'Theatron - Theater',
+    '#ergasterion': 'Ergasterion - Workshop',
+    '#khronos': 'Khronos - Timeline',
+    '#discovery': 'Discovery - Search and Explore',
   };
 
   const pageName = pageNames[pageId] || `${pageId.replace('#', '')} page`;
   announcer.textContent = `Navigated to ${pageName}`;
+}
+
+/**
+ * Initialize Living Pantheon system on first page load
+ * Sets up the generative immersive effects with proper error handling
+ * @param {string} initialPageId - The initial page ID to set as first chamber
+ */
+function initializeLivingPantheon(initialPageId) {
+  if (livingPantheonInitialized) {
+    return; // Already initialized
+  }
+
+  try {
+    if (typeof LivingPantheonCore === 'undefined') {
+      console.info('Living Pantheon not available');
+      return;
+    }
+
+    const livingPantheon = LivingPantheonCore.getInstance();
+    if (!livingPantheon) {
+      console.warn('Failed to get Living Pantheon instance');
+      return;
+    }
+
+    // Extract chamber ID from page ID (remove '#' prefix)
+    const chamberId = initialPageId.replace('#', '');
+
+    // Get chamber color from config if available
+    let chamberColor = null;
+    if (
+      typeof ETCETER4_CONFIG !== 'undefined' &&
+      ETCETER4_CONFIG.livingPantheon?.chambers?.[chamberId]
+    ) {
+      chamberColor = ETCETER4_CONFIG.livingPantheon.chambers[chamberId].color;
+    }
+
+    // Initialize with first page
+    livingPantheon.initialize({
+      chamberId,
+      chamberColor,
+    });
+
+    // Start the system (respects user preference from localStorage)
+    livingPantheon.start();
+
+    // Listen for status changes for debugging/monitoring
+    livingPantheon.on(eventDetail => {
+      if (eventDetail.status.isRunning) {
+        console.debug('Living Pantheon active');
+      }
+    });
+
+    livingPantheonInitialized = true;
+    console.info('Living Pantheon initialized');
+  } catch (error) {
+    console.warn('Living Pantheon initialization error:', error.message);
+    // Don't throw - system is optional and shouldn't break page navigation
+  }
 }

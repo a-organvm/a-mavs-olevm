@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Particle System | ERGASTERION | ET CETER4</title>
+    <meta name="description" content="Interactive particle system with mouse attraction and repulsion using p5.js" />
+    <meta name="author" content="ET CETER4" />
+    <link rel="stylesheet" href="../../css/vendor/tachyons/css/tachyons.min.css" />
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link rel="stylesheet" href="../../css/chamber-colors.css" />
+    <link rel="stylesheet" href="../css/ergasterion.css" />
+    <style>
+      /* Experiment-specific styles */
+      .experiment-container {
+        background: #000000;
+        color: #00ff00;
+        font-family: 'Monaco', 'Courier New', monospace;
+        min-height: 100vh;
+        padding-top: 80px;
+        padding-bottom: 60px;
+      }
+      .experiment-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 5;
+        padding: 1rem;
+        background: rgba(0, 0, 0, 0.95);
+        border-bottom: 2px solid #00ff00;
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+      }
+      .back-link {
+        color: #bfff00;
+        text-decoration: none;
+        transition: all 0.2s ease;
+      }
+      .back-link:hover {
+        color: #00ff00;
+        text-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
+      }
+      .canvas-container {
+        position: relative;
+        width: 100%;
+        height: 500px;
+        background: linear-gradient(180deg, rgba(0, 255, 0, 0.1) 0%, rgba(0, 0, 0, 0.9) 100%);
+        border: 2px solid #00ff00;
+        margin: 2rem 0;
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+      }
+      .code-section {
+        background: rgba(0, 255, 0, 0.05);
+        border-left: 4px solid #00ff00;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        font-size: 0.85rem;
+        line-height: 1.6;
+        overflow-x: auto;
+      }
+      .code-label {
+        color: #bfff00;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        display: block;
+      }
+      .code-section code {
+        color: #00ff00;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 0.25rem 0.5rem;
+        border-radius: 2px;
+      }
+      .info-panel {
+        background: rgba(0, 255, 0, 0.05);
+        border: 1px solid #00ff00;
+        padding: 1rem;
+        margin: 1.5rem 0;
+        color: #bfff00;
+        font-size: 0.9rem;
+        line-height: 1.8;
+      }
+      .info-title {
+        color: #00ff00;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+      .footer-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.95);
+        border-top: 2px solid #00ff00;
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        z-index: 10;
+      }
+      .footer-nav a {
+        color: #bfff00;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        font-size: 0.85rem;
+      }
+      .footer-nav a:hover {
+        color: #00ff00;
+        text-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
+      }
+      pre {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 1rem;
+        overflow-x: auto;
+        border-radius: 4px;
+      }
+      .comment {
+        color: #228b22;
+      }
+      .keyword {
+        color: #bfff00;
+      }
+      .string {
+        color: #7fff00;
+      }
+    </style>
+  </head>
+  <body class="experiment-container">
+    <!-- Header with back navigation -->
+    <header class="experiment-header">
+      <div class="flex justify-between items-center mw9 center">
+        <a href="../index.html" class="back-link"> <span class="mr2">&larr;</span> <span>Back to Ergasterion</span> </a>
+        <h1 class="ma0 f4 tracked-mega" style="color: #00ff00; text-shadow: 0 0 10px rgba(0, 255, 0, 0.6)">
+          PARTICLE SYSTEM
+        </h1>
+        <div style="width: 200px"></div>
+      </div>
+    </header>
+    <!-- Main content -->
+    <main class="mw9 center ph4 pv4">
+      <!-- Description -->
+      <section class="mb4">
+        <h2 style="color: #00ff00; font-size: 1.5rem; margin-bottom: 1rem">$ particle_system.exe</h2>
+        <p style="color: #bfff00; line-height: 1.8">
+          An interactive particle system exploring emergent behavior through physics simulation. Each particle responds
+          to mouse position with attraction and repulsion forces, creating organic, flowing patterns in real-time.
+        </p>
+      </section>
+      <!-- Instructions -->
+      <div class="info-panel">
+        <div class="info-title">Interactive Controls</div>
+        <div>
+          Move your mouse over the canvas to control particle behavior. Particles accelerate towards or away from the
+          cursor based on proximity. Watch how simple attraction/repulsion rules create complex swarm dynamics.
+        </div>
+      </div>
+      <!-- Canvas Container -->
+      <div class="canvas-container" id="sketch-container"></div>
+      <!-- Algorithm Explanation -->
+      <section class="code-section">
+        <span class="code-label">$ Algorithm: Particle Physics</span>
+        <pre><code>Particle Motion Algorithm:
+  1. Initialize N particles with random positions and velocities
+  2. Each frame:
+     a. Calculate distance from particle to mouse cursor
+     b. If distance < attractionRadius: apply attraction force
+     c. If distance < repulsionRadius: apply repulsion force
+     d. Update velocity using F = ma (Newton's Second Law)
+     e. Apply drag/friction to velocity
+     f. Update position: position += velocity
+     g. Wrap particles around screen edges
+     h. Draw particle with age-based opacity
+Key Physics:
+  - Force magnitude decreases with distance squared (inverse square law)
+  - Drag coefficient dampens oscillations (natural friction)
+  - Color changes based on particle age (lifecycle visualization)
+  - Trail effect creates motion blur perception</code></pre>
+      </section>
+      <!-- Full Source Code -->
+      <section class="code-section">
+        <span class="code-label">$ cat particle-system.js</span>
+        <pre><code><span class="comment">// PARTICLE SYSTEM with p5.js
+// Demonstrates emergent behavior from simple physics rules</span>
+<span class="keyword">let</span> particles = [];
+<span class="keyword">const</span> PARTICLE_COUNT = 100;
+<span class="keyword">const</span> ATTRACTION_RADIUS = 150;
+<span class="keyword">const</span> REPULSION_RADIUS = 50;
+<span class="keyword">const</span> MAX_FORCE = 0.5;
+<span class="keyword">const</span> DRAG = 0.95;
+<span class="keyword">function</span> <span class="keyword">setup</span>() {
+  <span class="keyword">let</span> container = document.getElementById(<span class="string">'sketch-container'</span>);
+  <span class="keyword">let</span> w = container.offsetWidth;
+  <span class="keyword">let</span> h = 500;
+  <span class="keyword">let</span> sketchCanvas = <span class="keyword">createCanvas</span>(w, h);
+  sketchCanvas.parent(<span class="string">'sketch-container'</span>);
+  <span class="comment">// Initialize particles</span>
+  <span class="keyword">for</span> (<span class="keyword">let</span> i = 0; i &lt; PARTICLE_COUNT; i++) {
+    particles.push(<span class="keyword">new</span> Particle(
+      <span class="keyword">random</span>(w),
+      <span class="keyword">random</span>(h)
+    ));
+  }
+}
+<span class="keyword">function</span> <span class="keyword">draw</span>() {
+  <span class="keyword">background</span>(0, 0, 0, 25);
+  <span class="comment">// Update and draw particles</span>
+  <span class="keyword">for</span> (<span class="keyword">let</span> particle <span class="keyword">of</span> particles) {
+    particle.update(mouseX, mouseY);
+    particle.display();
+  }
+  <span class="comment">// Draw cursor indicator</span>
+  <span class="keyword">stroke</span>(191, 255, 0, 100);
+  <span class="keyword">strokeWeight</span>(2);
+  <span class="keyword">noFill</span>();
+  <span class="keyword">circle</span>(mouseX, mouseY, ATTRACTION_RADIUS * 2);
+  <span class="keyword">circle</span>(mouseX, mouseY, REPULSION_RADIUS * 2);
+}
+<span class="keyword">class</span> Particle {
+  <span class="keyword">constructor</span>(x, y) {
+    <span class="keyword">this</span>.pos = <span class="keyword">createVector</span>(x, y);
+    <span class="keyword">this</span>.vel = <span class="keyword">p5.Vector.random2D</span>().mult(2);
+    <span class="keyword">this</span>.acc = <span class="keyword">createVector</span>(0, 0);
+    <span class="keyword">this</span>.age = 0;
+  }
+  <span class="keyword">update</span>(targetX, targetY) {
+    <span class="keyword">let</span> target = <span class="keyword">createVector</span>(targetX, targetY);
+    <span class="keyword">let</span> distance = <span class="keyword">dist</span>(
+      <span class="keyword">this</span>.pos.x, <span class="keyword">this</span>.pos.y,
+      targetX, targetY
+    );
+    <span class="comment">// Attraction force</span>
+    <span class="keyword">if</span> (distance &lt; ATTRACTION_RADIUS &amp;&amp; distance &gt; REPULSION_RADIUS) {
+      <span class="keyword">let</span> direction = <span class="keyword">p5.Vector.sub</span>(target, <span class="keyword">this</span>.pos);
+      direction.normalize();
+      <span class="keyword">let</span> force = direction.mult(MAX_FORCE * 0.3);
+      <span class="keyword">this</span>.acc.add(force);
+    }
+    <span class="comment">// Repulsion force</span>
+    <span class="keyword">if</span> (distance &lt; REPULSION_RADIUS) {
+      <span class="keyword">let</span> direction = <span class="keyword">p5.Vector.sub</span>(<span class="keyword">this</span>.pos, target);
+      direction.normalize();
+      <span class="keyword">let</span> force = direction.mult(MAX_FORCE);
+      <span class="keyword">this</span>.acc.add(force);
+    }
+    <span class="comment">// Apply physics</span>
+    <span class="keyword">this</span>.vel.add(<span class="keyword">this</span>.acc);
+    <span class="keyword">this</span>.vel.mult(DRAG);
+    <span class="keyword">this</span>.pos.add(<span class="keyword">this</span>.vel);
+    <span class="keyword">this</span>.acc.mult(0);
+    <span class="comment">// Wrap around edges</span>
+    <span class="keyword">this</span>.pos.x = (<span class="keyword">this</span>.pos.x + width) % width;
+    <span class="keyword">this</span>.pos.y = (<span class="keyword">this</span>.pos.y + height) % height;
+    <span class="keyword">this</span>.age++;
+  }
+  <span class="keyword">display</span>() {
+    <span class="keyword">let</span> opacity = <span class="keyword">map</span>(<span class="keyword">this</span>.age, 0, 300, 255, 0);
+    <span class="keyword">let</span> speed = <span class="keyword">this</span>.vel.mag();
+    <span class="keyword">let</span> hueValue = <span class="keyword">map</span>(speed, 0, 5, 120, 50);
+    <span class="keyword">colorMode</span>(HSB);
+    <span class="keyword">stroke</span>(hueValue, 100, 100, opacity);
+    <span class="keyword">strokeWeight</span>(2);
+    <span class="keyword">point</span>(<span class="keyword">this</span>.pos.x, <span class="keyword">this</span>.pos.y);
+    <span class="keyword">colorMode</span>(RGB);
+  }
+}</code></pre>
+      </section>
+      <!-- Parameters Section -->
+      <section class="code-section">
+        <span class="code-label">$ Tunable Parameters</span>
+        <pre><code>PARTICLE_COUNT = 100
+  Increase for more visible swarms, decrease for cleaner animation
+ATTRACTION_RADIUS = 150
+  Distance at which particles begin accelerating toward cursor
+  Larger values = particles respond from further away
+REPULSION_RADIUS = 50
+  Inner radius where particles flee from cursor
+  Creates the "avoid" zone around cursor
+MAX_FORCE = 0.5
+  Maximum acceleration magnitude per frame
+  Higher values = snappier, more responsive movement
+DRAG = 0.95
+  Velocity dampening factor (0-1)
+  Lower = more friction, smoother motion
+  Higher = less friction, more momentum</code></pre>
+      </section>
+      <!-- Concept Section -->
+      <div class="info-panel">
+        <div class="info-title">Emergent Behavior</div>
+        <div>
+          This system demonstrates how complex, organic-looking behavior emerges from simple rules. No particle "knows"
+          about others—they only respond to the mouse cursor and physics. The collective swarm behavior appears
+          intelligent yet requires no explicit coordination. This is the basis of flocking algorithms used in games,
+          animation, and robotics.
+        </div>
+      </div>
+      <!-- Footer spacer -->
+      <div style="height: 100px"></div>
+    </main>
+    <!-- Footer Navigation -->
+    <nav class="footer-nav">
+      <a href="../index.html">ERGASTERION</a> <span style="color: #00ff00; opacity: 0.3">//</span>
+      <a href="../../index.html#menu">NAOS</a> <span style="color: #00ff00; opacity: 0.3">//</span>
+      <a href="../../sitemap.html">SITE MAP</a>
+    </nav>
+    <!-- p5.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <!-- Sketch Code (inline) -->
+    <script>
+      'use strict';
+      let particles = [];
+      const PARTICLE_COUNT = 100;
+      const ATTRACTION_RADIUS = 150;
+      const REPULSION_RADIUS = 50;
+      const MAX_FORCE = 0.5;
+      const DRAG = 0.95;
+      function setup() {
+        let container = document.getElementById('sketch-container');
+        let w = container.offsetWidth;
+        let h = 500;
+        let sketchCanvas = createCanvas(w, h);
+        sketchCanvas.parent('sketch-container');
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+          particles.push(new Particle(random(w), random(h)));
+        }
+      }
+      function draw() {
+        background(0, 0, 0, 25);
+        for (let particle of particles) {
+          particle.update(mouseX, mouseY);
+          particle.display();
+        }
+        stroke(191, 255, 0, 100);
+        strokeWeight(2);
+        noFill();
+        circle(mouseX, mouseY, ATTRACTION_RADIUS * 2);
+        circle(mouseX, mouseY, REPULSION_RADIUS * 2);
+      }
+      class Particle {
+        constructor(x, y) {
+          this.pos = createVector(x, y);
+          this.vel = p5.Vector.random2D().mult(2);
+          this.acc = createVector(0, 0);
+          this.age = 0;
+        }
+        update(targetX, targetY) {
+          let target = createVector(targetX, targetY);
+          let distance = dist(this.pos.x, this.pos.y, targetX, targetY);
+          if (distance < ATTRACTION_RADIUS && distance > REPULSION_RADIUS) {
+            let direction = p5.Vector.sub(target, this.pos);
+            direction.normalize();
+            let force = direction.mult(MAX_FORCE * 0.3);
+            this.acc.add(force);
+          }
+          if (distance < REPULSION_RADIUS) {
+            let direction = p5.Vector.sub(this.pos, target);
+            direction.normalize();
+            let force = direction.mult(MAX_FORCE);
+            this.acc.add(force);
+          }
+          this.vel.add(this.acc);
+          this.vel.mult(DRAG);
+          this.pos.add(this.vel);
+          this.acc.mult(0);
+          this.pos.x = (this.pos.x + width) % width;
+          this.pos.y = (this.pos.y + height) % height;
+          this.age++;
+        }
+        display() {
+          let opacity = map(this.age, 0, 300, 255, 0);
+          let speed = this.vel.mag();
+          let hueValue = map(speed, 0, 5, 120, 50);
+          colorMode(HSB);
+          stroke(hueValue, 100, 100, opacity);
+          strokeWeight(2);
+          point(this.pos.x, this.pos.y);
+          colorMode(RGB);
+        }
+      }
+      function windowResized() {
+        if (document.getElementById('sketch-container')) {
+          let container = document.getElementById('sketch-container');
+          let h = container.offsetHeight;
+          if (h > 0) {
+            resizeCanvas(container.offsetWidth, h);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

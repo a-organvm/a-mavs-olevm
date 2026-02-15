@@ -40,6 +40,23 @@ const _pID = {
   video: '#video',
   stills: '#stills',
   info: '#info',
+  ogod3d: '#ogod3d',
+  ogodViewer: '#ogod-viewer',
+  eastWing: '#east-wing',
+  westWing: '#west-wing',
+  southWing: '#south-wing',
+  northWing: '#north-wing',
+  bibliotheke: '#bibliotheke',
+  oikos: '#oikos',
+  pinakotheke: '#pinakotheke',
+  agora: '#agora',
+  symposion: '#symposion',
+  odeion: '#odeion',
+  theatron: '#theatron',
+  ergasterion: '#ergasterion',
+  akademia: '#akademia',
+  khronos: '#khronos',
+  discovery: '#discovery',
 };
 
 /**
@@ -67,7 +84,17 @@ let pages = [];
 pages.menu = new Page({
   id: _pID.menu,
   tier: 2,
-  downLinks: [_pID.words, _pID.sound, _pID.vision, _pID.info],
+  downLinks: [
+    _pID.words,
+    _pID.sound,
+    _pID.vision,
+    _pID.info,
+    _pID.eastWing,
+    _pID.westWing,
+    _pID.southWing,
+    _pID.northWing,
+    _pID.discovery,
+  ],
   upLinks: [_pID.landing],
   initialize() {
     // get the lib and sketch
@@ -86,7 +113,7 @@ pages.sound = new Page({
   tier: 3,
   upLinks: [_pID.menu],
   initialize() {
-    // add the iFrames
+    // Load Bandcamp embeds as fallback
     const _iFrames = [
       '<iframe style="border: 0; width: 300px; height: 300px;" src="https://bandcamp.com/EmbeddedPlayer/album=3780915385/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/"><a href="https://music.etceter4.com/album/ogod">OGOD by ET CETER4</a></iframe>',
       '<iframe style="border: 0; width: 300px; height: 300px;" src="https://bandcamp.com/EmbeddedPlayer/album=604244064/size=large/bgcol=ffffff/linkcol=333333/minimal=true/transparent=true/"><a href="https://music.etceter4.com/album/et-ceter4-rmxs">ET CETER4 RMXS by ET CETER4</a></iframe>',
@@ -94,9 +121,25 @@ pages.sound = new Page({
       '<iframe style="border: 10px; width: 300px; height: 300px;" src="https://bandcamp.com/EmbeddedPlayer/album=448587485/size=large/bgcol=ffffff/linkcol=de270f/minimal=true/transparent=true/"><a href="https://music.etceter4.com/album/etc">Etc by ET CETER4</a></iframe>',
     ];
 
-    $('#sound #BCContainer').each(function (index) {
+    $('#sound .BCContainer').each(function (index) {
       $(this).html(_iFrames[index]);
     });
+
+    // Add a link to the full Odeion player
+    const soundSection = document.querySelector(
+      '#sound .mw7, #sound .mw8, #sound .center'
+    );
+    if (soundSection && !document.getElementById('odeion-link')) {
+      const link = document.createElement('div');
+      link.id = 'odeion-link';
+      link.className = 'tc mt4 mb3';
+      link.innerHTML =
+        '<a href="#odeion" class="f5 link dib pa3 ph4 ba br3" ' +
+        'style="color: #ffd700; border-color: #ffd700" ' +
+        'onclick="showNewSection(\'#odeion\'); return false;">' +
+        'Open Full Player in ODEION &rarr;</a>';
+      soundSection.appendChild(link);
+    }
   },
 });
 
@@ -137,12 +180,382 @@ pages.info = new Page({
   upLinks: [_pID.menu],
 });
 
+/**
+ * OGOD 3D experience helper function
+ * Creates and initializes the 3D scene manager and audio engine
+ * @param {Object} options - Configuration options
+ * @param {HTMLElement} options.container - DOM element for the canvas
+ * @param {number} options.trackNumber - Track number (1-29)
+ * @returns {Promise<Object>} The experience object with sceneManager and audioEngine
+ */
+async function createOGODExperience(options) {
+  const { container, trackNumber } = options;
+
+  // Create audio engine
+  const audioEngine = new OGODAudioEngine({
+    trackNumber,
+    useFallback: true,
+  });
+
+  // Create scene manager
+  const sceneManager = new OGODSceneManager({
+    container,
+    trackNumber,
+    audioEngine,
+  });
+
+  // Initialize
+  await audioEngine.initialize();
+  await sceneManager.initialize();
+
+  return {
+    sceneManager,
+    audioEngine,
+    dispose() {
+      sceneManager.dispose();
+      audioEngine.dispose();
+    },
+  };
+}
+
+// Make available globally
+window.createOGODExperience = createOGODExperience;
+
+/**
+ * OGOD 3D page configuration
+ * Tier 4 - Immersive 3D audio-visual experience
+ * Logic extracted to js/ogod/OGOD3DController.js
+ */
+pages.ogod3d = new Page({
+  id: _pID.ogod3d,
+  tier: 4,
+  upLinks: [_pID.vision],
+  initialize() {
+    new OGOD3DController().init();
+  },
+});
+
+/**
+ * OGOD Animation Viewer page configuration
+ * Tier 4 - 2D animation viewer with mode switching
+ * Logic extracted to js/ogod/OGODViewerController.js
+ */
+pages.ogodViewer = new Page({
+  id: _pID.ogodViewer,
+  tier: 4,
+  upLinks: [_pID.vision],
+  initialize() {
+    new OGODViewerController().init();
+  },
+});
+
+/**
+ * Wing page configurations
+ * Tier 3 - Navigation hubs for chamber groupings
+ */
+pages.eastWing = new Page({
+  id: _pID.eastWing,
+  tier: 3,
+  upLinks: [_pID.menu],
+  downLinks: [_pID.akademia, _pID.bibliotheke, _pID.pinakotheke],
+});
+
+pages.westWing = new Page({
+  id: _pID.westWing,
+  tier: 3,
+  upLinks: [_pID.menu],
+  downLinks: [_pID.agora, _pID.symposion, _pID.oikos],
+});
+
+pages.southWing = new Page({
+  id: _pID.southWing,
+  tier: 3,
+  upLinks: [_pID.menu],
+  downLinks: [_pID.odeion, _pID.theatron],
+});
+
+pages.northWing = new Page({
+  id: _pID.northWing,
+  tier: 3,
+  upLinks: [_pID.menu],
+  downLinks: [_pID.ergasterion, _pID.khronos],
+});
+
+/**
+ * Initialize section navigation filtering for a chamber
+ * Binds click handlers to .section-btn elements that show/hide .chamber-card elements
+ * @param {string} sectionId - The chamber's section ID selector (e.g., '#akademia')
+ */
+function initChamberSectionNav(sectionId) {
+  const el = $(sectionId);
+  el.find('.section-btn').on('click', function () {
+    el.find('.section-btn').removeClass('active');
+    $(this).addClass('active');
+    const section = $(this).data('section');
+    el.find('.chamber-card').each(function () {
+      const show = section === 'all' || $(this).data('section') === section;
+      $(this).toggleClass('dn', !show);
+    });
+  });
+}
+
+/**
+ * Chamber page configurations
+ * Tier 4 - Individual chambers within each wing
+ */
+pages.akademia = new Page({
+  id: _pID.akademia,
+  tier: 4,
+  upLinks: [_pID.eastWing],
+  initialize() {
+    replacePlaceholders(this.id);
+    // Render cards from akademiaConfig data
+    if (typeof akademiaConfig !== 'undefined') {
+      new AkademiaRenderer(akademiaConfig).render('#akademia-cards');
+    }
+    initChamberSectionNav(this.id);
+  },
+});
+
+pages.bibliotheke = new Page({
+  id: _pID.bibliotheke,
+  tier: 4,
+  upLinks: [_pID.eastWing],
+  initialize() {
+    replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
+    // Initialize procedural poetry engine
+    if (typeof BibliothekePoetry !== 'undefined') {
+      window.bibliothekePoetry =
+        window.bibliothekePoetry || new BibliothekePoetry();
+      window.bibliothekePoetry.initialize('#bibliotheke .mw9');
+    }
+  },
+});
+
+pages.oikos = new Page({
+  id: _pID.oikos,
+  tier: 4,
+  upLinks: [_pID.westWing],
+  initialize() {
+    replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
+    // Initialize localStorage-backed journal
+    if (typeof OikosJournal !== 'undefined') {
+      window.oikosJournal = window.oikosJournal || new OikosJournal();
+      window.oikosJournal.initialize('#oikos .mw9');
+    }
+  },
+});
+
+pages.pinakotheke = new Page({
+  id: _pID.pinakotheke,
+  tier: 4,
+  upLinks: [_pID.eastWing],
+  initialize() {
+    replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
+    // Initialize generative gallery canvases
+    if (typeof PinakothekeGenerator !== 'undefined') {
+      window.pinakothekeGen =
+        window.pinakothekeGen || new PinakothekeGenerator();
+      window.pinakothekeGen.initialize('#pinakotheke-gallery');
+    }
+  },
+});
+
+pages.agora = new Page({
+  id: _pID.agora,
+  tier: 4,
+  upLinks: [_pID.westWing],
+  initialize() {
+    replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
+    // Wire click-to-expand on commentary cards
+    $(this.id)
+      .find('.chamber-card')
+      .on('click', function () {
+        const fullText = $(this).find('.agora-full-text');
+        const readMore = $(this).find('.agora-read-more');
+        if (fullText.length) {
+          fullText.toggleClass('expanded');
+          const isExpanded = fullText.hasClass('expanded');
+          readMore.html(isExpanded ? 'Collapse &uarr;' : 'Read more &darr;');
+        }
+      });
+  },
+});
+
+pages.symposion = new Page({
+  id: _pID.symposion,
+  tier: 4,
+  upLinks: [_pID.westWing],
+  initialize() {
+    replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
+    // Initialize generative dialogue system
+    if (typeof SymposionDialogues !== 'undefined') {
+      window.symposionDialogues =
+        window.symposionDialogues || new SymposionDialogues();
+      window.symposionDialogues.initialize('#symposion');
+    }
+  },
+});
+
+pages.odeion = new Page({
+  id: _pID.odeion,
+  tier: 4,
+  upLinks: [_pID.southWing],
+  initialize() {
+    replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
+    // Initialize enhanced audio player and playlist manager
+    try {
+      const playerContainer = document.getElementById(
+        'odeion-player-container'
+      );
+      const waveformCanvas = document.getElementById('odeion-waveform');
+
+      if (
+        typeof EnhancedAudioPlayer !== 'undefined' &&
+        playerContainer &&
+        waveformCanvas
+      ) {
+        window.odeionPlayer = new EnhancedAudioPlayer({
+          container: playerContainer,
+          waveformCanvas,
+        });
+        if (typeof WaveformVisualizer !== 'undefined') {
+          window.odeionWaveform = new WaveformVisualizer({
+            canvas: waveformCanvas,
+            primaryColor: '#FFD700',
+            secondaryColor: '#000000',
+          });
+        }
+      }
+
+      // Initialize PlaylistManager for album browsing
+      if (typeof PlaylistManager !== 'undefined') {
+        const odeionContent = document.querySelector('#odeion .mw9');
+        if (odeionContent) {
+          window.odeionPlaylist = new PlaylistManager({
+            container: odeionContent,
+            player: window.odeionPlayer,
+            waveform: window.odeionWaveform,
+          });
+          window.odeionPlaylist.initialize();
+        }
+      }
+    } catch (audioError) {
+      console.warn('Odeion audio init:', audioError.message);
+    }
+  },
+});
+
+pages.theatron = new Page({
+  id: _pID.theatron,
+  tier: 4,
+  upLinks: [_pID.southWing],
+  initialize() {
+    replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
+    // Initialize generative visual system
+    if (typeof TheatronVisuals !== 'undefined') {
+      window.theatronVisuals = window.theatronVisuals || new TheatronVisuals();
+      window.theatronVisuals.initialize('#theatron');
+    }
+    // Wire performance card clicks to load p5.js sketch
+    const theatronEl = $(this.id);
+    theatronEl.find('.chamber-card[data-sketch]').on('click', function () {
+      const sketchName = $(this).data('sketch');
+      if (!sketchName || !window.theatronVisuals) {
+        return;
+      }
+      // Remove active state from all cards
+      theatronEl.find('.chamber-card').removeClass('theatron-active');
+      $(this).addClass('theatron-active');
+      // Load sketch into player container
+      window.theatronVisuals.loadSketch(sketchName);
+    });
+  },
+});
+
+pages.ergasterion = new Page({
+  id: _pID.ergasterion,
+  tier: 4,
+  upLinks: [_pID.northWing],
+  initialize() {
+    replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
+    // Initialize Exhibit Portal for absorb-alchemize apps
+    if (typeof ExhibitPortal !== 'undefined') {
+      const portalContainer = document.getElementById(
+        'ergasterion-exhibit-portal'
+      );
+      if (portalContainer && !window.exhibitPortal) {
+        window.exhibitPortal = new ExhibitPortal();
+        window.exhibitPortal.initialize(portalContainer);
+      }
+    }
+  },
+});
+
+pages.khronos = new Page({
+  id: _pID.khronos,
+  tier: 4,
+  upLinks: [_pID.northWing],
+  initialize() {
+    replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
+    // Initialize interactive SVG timeline
+    if (typeof KhronosTimeline !== 'undefined') {
+      window.khronosTimeline = window.khronosTimeline || new KhronosTimeline();
+      window.khronosTimeline.initialize('#khronos-timeline');
+    }
+  },
+});
+
+/**
+ * Discovery page configuration
+ * Tier 2 - Same level as menu for quick access
+ * Unified search and filtering across all chambers
+ */
+pages.discovery = new Page({
+  id: _pID.discovery,
+  tier: 2,
+  upLinks: [_pID.menu],
+  initialize() {
+    // Initialize discovery controller
+    if (typeof DiscoveryController !== 'undefined') {
+      DiscoveryController.initialize();
+    }
+  },
+});
+
+// eslint-disable-next-line no-useless-assignment -- pages is a global used by page.js navigation
 pages = [
   pages.menu,
   pages.sound,
   pages.stills,
   pages.diary,
   pages.info,
+  pages.ogod3d,
+  pages.ogodViewer,
+  pages.eastWing,
+  pages.westWing,
+  pages.southWing,
+  pages.northWing,
+  pages.akademia,
+  pages.bibliotheke,
+  pages.oikos,
+  pages.pinakotheke,
+  pages.agora,
+  pages.symposion,
+  pages.odeion,
+  pages.theatron,
+  pages.ergasterion,
+  pages.khronos,
+  pages.discovery,
   new Page({
     id: _pID.landing,
     tier: 1,
@@ -152,6 +565,7 @@ pages = [
     id: _pID.vision,
     tier: 3,
     upLinks: [_pID.menu],
+    downLinks: [_pID.stills, _pID.video, _pID.ogod3d, _pID.ogodViewer],
   }),
   new Page({
     id: _pID.words,
@@ -168,6 +582,12 @@ pages = [
     id: _pID.video,
     tier: 4,
     upLinks: [_pID.vision],
+    initialize() {
+      // Lazy-load YouTube iframes on first visit
+      $('#video iframe[data-src]').each(function () {
+        $(this).attr('src', $(this).data('src')).removeAttr('data-src');
+      });
+    },
   }),
 ];
 

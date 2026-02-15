@@ -6,8 +6,15 @@ let isSketchTransitioning = false;
 const footerHeight = $('footer').css('height').replace('px', '');
 
 /**
+ * Flag to track if current sketch uses WebGL mode
+ * @type {boolean}
+ */
+let isWebGLSketch = false;
+
+/**
  * Safely removes the current p5 instance
  * Uses a flag to prevent race conditions during canvas transitions
+ * Handles WebGL context cleanup for proper resource release
  * @returns {Promise<void>}
  */
 function safeRemoveP5() {
@@ -15,11 +22,21 @@ function safeRemoveP5() {
     if (myp5 && !isSketchTransitioning) {
       isSketchTransitioning = true;
       try {
+        // Force WebGL context loss for clean handoff
+        // This prevents memory leaks and context limit issues
+        if (isWebGLSketch && myp5._renderer && myp5._renderer.GL) {
+          const gl = myp5._renderer.GL;
+          const ext = gl.getExtension('WEBGL_lose_context');
+          if (ext) {
+            ext.loseContext();
+          }
+        }
         myp5.remove();
       } catch (err) {
         console.warn('P5.js removal warning:', err.message);
       }
       myp5 = undefined;
+      isWebGLSketch = false;
       // Small delay to ensure DOM cleanup completes
       setTimeout(() => {
         isSketchTransitioning = false;
@@ -35,8 +52,9 @@ function safeRemoveP5() {
  * Switches to a new p5 canvas with safe cleanup
  * @param {Function} canvasFunc - The p5 sketch function
  * @param {string} canvasId - Identifier for the canvas type
+ * @param {boolean} [useWebGL=false] - Whether the sketch uses WebGL mode
  */
-function switchCanvas(canvasFunc, canvasId) {
+function switchCanvas(canvasFunc, canvasId, useWebGL = false) {
   if (isSketchTransitioning) {
     return;
   }
@@ -49,6 +67,7 @@ function switchCanvas(canvasFunc, canvasId) {
     try {
       myp5 = new p5(canvasFunc, 'menuPageCanvasWrapper');
       myp5.id = canvasId;
+      isWebGLSketch = useWebGL;
     } catch (err) {
       console.error('P5.js canvas creation error:', err.message);
     }
@@ -57,6 +76,7 @@ function switchCanvas(canvasFunc, canvasId) {
       try {
         myp5 = new p5(canvasFunc, 'menuPageCanvasWrapper');
         myp5.id = canvasId;
+        isWebGLSketch = useWebGL;
       } catch (err) {
         console.error('P5.js canvas creation error:', err.message);
       }
@@ -66,15 +86,25 @@ function switchCanvas(canvasFunc, canvasId) {
 
 /**
  * Cleanup all p5 resources - call on page exit
+ * Properly releases WebGL context if applicable
  */
 function cleanupSketch() {
   if (myp5) {
     try {
+      // Force WebGL context loss for clean resource release
+      if (isWebGLSketch && myp5._renderer && myp5._renderer.GL) {
+        const gl = myp5._renderer.GL;
+        const ext = gl.getExtension('WEBGL_lose_context');
+        if (ext) {
+          ext.loseContext();
+        }
+      }
       myp5.remove();
     } catch (err) {
       console.warn('P5.js cleanup warning:', err.message);
     }
     myp5 = undefined;
+    isWebGLSketch = false;
   }
   isSketchTransitioning = false;
 }
@@ -85,21 +115,53 @@ function cleanupSketch() {
  *
  */
 
-$('#menu #toWordsPage').mouseenter(function () {
+/**
+ * Play hover sound for menu items
+ * @private
+ */
+function playMenuHoverSound() {
+  if (typeof UISounds !== 'undefined' && UISounds.isEnabled()) {
+    UISounds.hover(0.3);
+  }
+}
+
+/**
+ * Play click sound for menu items
+ * @private
+ */
+function playMenuClickSound() {
+  if (typeof UISounds !== 'undefined' && UISounds.isEnabled()) {
+    UISounds.click(0.5);
+  }
+}
+
+$('#menu #toWordsPage').mouseenter(() => {
+  playMenuHoverSound();
   switchCanvas(wordsCanvas, 'words');
 });
 
-$('#menu #toSoundPage').mouseenter(function () {
-  switchCanvas(soundCanvas, 'sound');
+$('#menu #toSoundPage').mouseenter(() => {
+  playMenuHoverSound();
+  // Use WebGL audio-reactive shader if available, otherwise fall back to soundCanvas
+  if (typeof audioReactiveShaderSketch !== 'undefined') {
+    switchCanvas(audioReactiveShaderSketch, 'audioReactive', true);
+  } else {
+    switchCanvas(soundCanvas, 'sound');
+  }
 });
 
-$('#menu #toVisionPage').mouseenter(function () {
+$('#menu #toVisionPage').mouseenter(() => {
+  playMenuHoverSound();
   switchCanvas(visionCanvas, 'vision');
 });
 
-$('#menu #toInfoPage').mouseenter(function () {
+$('#menu #toInfoPage').mouseenter(() => {
+  playMenuHoverSound();
   switchCanvas(infoCanvas, 'words');
 });
+
+// Add click sounds to menu items
+$('#menu a').on('click', playMenuClickSound);
 
 // // for vision canvas
 // $(document).ready(function () {
@@ -141,7 +203,7 @@ const soundCanvas = function (p) {
   };
 
   function getCharacter() {
-    var weight = p.random();
+    const weight = p.random();
 
     if (weight < 0.5) {
       return '.';
@@ -151,7 +213,7 @@ const soundCanvas = function (p) {
   }
 
   function getColor() {
-    var weight = p.random();
+    const weight = p.random();
 
     if (weight < 0.1) {
       return color.cyan;
@@ -359,9 +421,9 @@ const wordsCanvas = function (p) {
   }
 
   Word.prototype._resetLocation = function () {
-    var offset = this.group.offset;
-    var localSpread = this.group.spread;
-    var randomOffset = p.createVector(
+    const offset = this.group.offset;
+    const localSpread = this.group.spread;
+    const randomOffset = p.createVector(
       p.random(-localSpread, localSpread),
       p.random(-localSpread, localSpread)
     );
@@ -369,12 +431,12 @@ const wordsCanvas = function (p) {
   };
 
   Word.prototype._2DRandomWalk = function () {
-    var _nx = p.noise(this.noiseTime.x);
-    var _ny = p.noise(this.noiseTime.y);
+    const _nx = p.noise(this.noiseTime.x);
+    const _ny = p.noise(this.noiseTime.y);
     this.noiseTime.add(rate);
 
-    var _x = p.map(_nx, 0, 1, -bounds.x, bounds.x) + this.group.offset.x;
-    var _y = p.map(_ny, 0, 1, -bounds.y, bounds.y) + this.group.offset.y;
+    const _x = p.map(_nx, 0, 1, -bounds.x, bounds.x) + this.group.offset.x;
+    const _y = p.map(_ny, 0, 1, -bounds.y, bounds.y) + this.group.offset.y;
     this.location.set(_x, _y);
   };
 
@@ -385,7 +447,7 @@ const wordsCanvas = function (p) {
   };
 
   Word.prototype._updateBezier = function () {
-    var size = p.map(
+    const size = p.map(
       getBezierPoint(this.bezierTime),
       0,
       1,
@@ -414,7 +476,7 @@ const wordsCanvas = function (p) {
   };
 
   Word.prototype._enforceBounds = function () {
-    var spread = this.group.spread;
+    const spread = this.group.spread;
     this.location.x = p.constrain(
       this.location.x,
       this.group.offset.x - spread,
@@ -433,14 +495,14 @@ const wordsCanvas = function (p) {
 
   function buildWordCloud() {
     wordCloud.length = 0;
-    emotionGroups.forEach(function (group, index) {
-      var xOffset = index === 0 ? -bounds.x / 3 : bounds.x / 3;
+    emotionGroups.forEach((group, index) => {
+      const xOffset = index === 0 ? -bounds.x / 3 : bounds.x / 3;
       group.offset = p.createVector(xOffset, 0);
       group.color = index === 0 ? p.color(30, 120, 200) : p.color(180, 50, 60);
       group.members = [];
 
-      group.emotions.forEach(function (emotion) {
-        var word = new Word(emotion, group);
+      group.emotions.forEach(emotion => {
+        const word = new Word(emotion, group);
         wordCloud.push(word);
         group.members.push(word);
       });
@@ -448,14 +510,14 @@ const wordsCanvas = function (p) {
   }
 
   function calculateGroupCenters() {
-    emotionGroups.forEach(function (group) {
+    emotionGroups.forEach(group => {
       if (group.members.length === 0) {
         group.center = p.createVector(group.offset.x, group.offset.y);
         return;
       }
 
-      var center = p.createVector(0, 0);
-      group.members.forEach(function (member) {
+      const center = p.createVector(0, 0);
+      group.members.forEach(member => {
         center.add(member.location);
       });
       center.div(group.members.length);
@@ -468,20 +530,20 @@ const wordsCanvas = function (p) {
       return;
     }
 
-    for (var i = 0; i < emotionGroups.length; i++) {
-      var group = emotionGroups[i];
-      var otherGroup = emotionGroups[(i + 1) % emotionGroups.length];
-      var direction = p5.Vector.sub(group.center, otherGroup.center);
+    for (let i = 0; i < emotionGroups.length; i++) {
+      const group = emotionGroups[i];
+      const otherGroup = emotionGroups[(i + 1) % emotionGroups.length];
+      let direction = p5.Vector.sub(group.center, otherGroup.center);
 
       if (direction.magSq() === 0) {
         direction = p.createVector(p.random(-1, 1), p.random(-1, 1));
       }
 
-      var distance = direction.mag();
-      var strength = p.map(distance, 0, bounds.x * 2, 3, 0.4, true);
+      const distance = direction.mag();
+      const strength = p.map(distance, 0, bounds.x * 2, 3, 0.4, true);
       direction.normalize().mult(strength);
 
-      group.members.forEach(function (member) {
+      group.members.forEach(member => {
         member.applyRepulsion(direction);
         member._enforceBounds();
       });
@@ -489,8 +551,8 @@ const wordsCanvas = function (p) {
   }
 
   function resolveWordFont() {
-    var preferred = 'Bodoni MT';
-    var fallbacks = ['Garamond', 'Georgia', 'serif'];
+    const preferred = 'Bodoni MT';
+    const fallbacks = ['Garamond', 'Georgia', 'serif'];
 
     try {
       if (
@@ -498,11 +560,11 @@ const wordsCanvas = function (p) {
         document.fonts &&
         typeof document.fonts.check === 'function'
       ) {
-        if (document.fonts.check('12px "' + preferred + '"')) {
+        if (document.fonts.check(`12px "${preferred}"`)) {
           return preferred;
         }
-        for (var i = 0; i < fallbacks.length; i++) {
-          if (document.fonts.check('12px "' + fallbacks[i] + '"')) {
+        for (let i = 0; i < fallbacks.length; i++) {
+          if (document.fonts.check(`12px "${fallbacks[i]}"`)) {
             return fallbacks[i];
           }
         }
@@ -542,7 +604,7 @@ const wordsCanvas = function (p) {
       p.background(155, 155, 155);
       p.translate(center.x, center.y);
 
-      wordCloud.forEach(function (currentWord) {
+      wordCloud.forEach(currentWord => {
         if (currentWord) {
           currentWord.update();
         }
@@ -551,7 +613,7 @@ const wordsCanvas = function (p) {
       calculateGroupCenters();
       applyGroupRepulsion();
 
-      wordCloud.forEach(function (currentWord) {
+      wordCloud.forEach(currentWord => {
         if (currentWord && currentWord.group && currentWord.location) {
           p.fill(currentWord.group.color);
           p.textSize(currentWord.textSize);
@@ -570,8 +632,8 @@ const wordsCanvas = function (p) {
   p.windowResized = function () {
     p.resizeCanvas(p.windowWidth, p.windowHeight);
     center.set(p.windowWidth / 2, (p.windowHeight - footerHeight) / 2);
-    emotionGroups.forEach(function (group, index) {
-      var xOffset = index === 0 ? -bounds.x / 3 : bounds.x / 3;
+    emotionGroups.forEach((group, index) => {
+      const xOffset = index === 0 ? -bounds.x / 3 : bounds.x / 3;
       group.offset.set(xOffset, 0);
     });
   };
@@ -594,8 +656,8 @@ const visionCanvas = function (p) {
   let img;
 
   function ImageSlice(heightWeight) {
-    var height;
-    var heightOffset;
+    let height;
+    let heightOffset;
 
     if (heightWeight < 0.333) {
       height =
@@ -610,7 +672,7 @@ const visionCanvas = function (p) {
     }
 
     // the graphics needed for the square
-    var sliceWidth = 75;
+    const sliceWidth = 75;
     this.slice = p.createGraphics(sliceWidth, height);
     this.slice.background(0, 0, 0);
     this.slice.fill(0, 0, 0);
@@ -785,7 +847,7 @@ const infoCanvas = function (p) {
   };
 
   Line.prototype.checkEdges = function () {
-    for (var i = 0; i < 2; i++) {
+    for (let i = 0; i < 2; i++) {
       if (this.location[i].x > p.windowWidth) {
         this.location[i].x = p.windowWidth;
         this.velocity.x *= -1;
@@ -867,9 +929,9 @@ const infoCanvas = function (p) {
 // Linear Random Value Generator
 function randomMonteCarlo(max, exponent) {
   while (true) {
-    var r1 = Math.random();
-    var probability = Math.pow(r1, exponent);
-    var r2 = Math.random();
+    const r1 = Math.random();
+    const probability = Math.pow(r1, exponent);
+    const r2 = Math.random();
 
     if (r2 < probability) {
       return r1 * max;
@@ -882,13 +944,13 @@ function removeCanvas() {
 }
 
 function _2DRandomWalk(vector) {
-  var _nx = p.noise(vector.time.x);
-  var _ny = p.noise(vector.time.y);
+  const _nx = p.noise(vector.time.x);
+  const _ny = p.noise(vector.time.y);
   vector.time.x += rate;
   vector.time.y += rate;
 
-  var _x = p.map(_nx, 0, 1, 0, bounds.x);
-  var _y = p.map(_ny, 0, 1, 0, bounds.y);
+  const _x = p.map(_nx, 0, 1, 0, bounds.x);
+  const _y = p.map(_ny, 0, 1, 0, bounds.y);
   vector.location.set(_x, _y);
 }
 
@@ -911,27 +973,27 @@ function getBezierPoint(t) {
     t = 0;
   }
 
-  var easeInCurve = { u0: 0, u1: 0.05, u2: 0.25, u3: 1 };
+  const easeInCurve = { u0: 0, u1: 0.05, u2: 0.25, u3: 1 };
 
-  var curve = easeInCurve;
+  const curve = easeInCurve;
 
   // var A = curve.u0 * (1 - Math.pow(t, 3)) // don't need to do this since u0 = 0
-  var B = 3 * curve.u1 * (1 - Math.pow(t, 2)) * t;
-  var C = 3 * curve.u2 * (1 - t) * Math.pow(t, 2);
-  var D = curve.u3 * Math.pow(t, 3);
+  const B = 3 * curve.u1 * (1 - Math.pow(t, 2)) * t;
+  const C = 3 * curve.u2 * (1 - t) * Math.pow(t, 2);
+  const D = curve.u3 * Math.pow(t, 3);
 
   return B + C + D; // + A
 }
 
 function getRandomColor() {
-  var r = Math.floor(p.randomGaussian(127, 40)) % 255;
-  var g = Math.floor(p.randomGaussian(127, 40)) % 255;
-  var b = Math.floor(p.randomGaussian(127, 40)) % 255;
+  const r = Math.floor(p.randomGaussian(127, 40)) % 255;
+  const g = Math.floor(p.randomGaussian(127, 40)) % 255;
+  const b = Math.floor(p.randomGaussian(127, 40)) % 255;
   return p.color(r, g, b);
 }
 
 function curveInAndOut(x) {
-  var z = 4,
+  const z = 4,
     h = 0.5,
     j = 2,
     k = 1;
