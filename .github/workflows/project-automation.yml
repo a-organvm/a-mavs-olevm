@@ -231,23 +231,33 @@ jobs:
 
               // Remove draft label if present
               try {
-                github.rest.issues.removeLabel({
+                await github.rest.issues.removeLabel({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: pr.number,
                   name: 'draft'
                 });
               } catch (error) {
-                // Label may not exist, ignore
+                if (error.status !== 404) {
+                  throw error;
+                }
+                console.log('Draft label not present, skipping removal');
               }
 
               // Add ready-for-review label
-              github.rest.issues.addLabels({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: pr.number,
-                labels: ['ready-for-review']
-              });
+              try {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: pr.number,
+                  labels: ['ready-for-review']
+                });
+              } catch (error) {
+                if (error.status !== 404) {
+                  throw error;
+                }
+                console.log('ready-for-review label does not exist, skipping');
+              }
             }
 
   # Add merged label to closed PRs
@@ -270,20 +280,30 @@ jobs:
 
             // Remove ready-for-review label
             try {
-              github.rest.issues.removeLabel({
+              await github.rest.issues.removeLabel({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: pr.number,
                 name: 'ready-for-review'
               });
             } catch (error) {
-              // Label may not exist, ignore
+              if (error.status !== 404) {
+                throw error;
+              }
+              console.log('ready-for-review label not present, skipping removal');
             }
 
             // Add merged label
-            github.rest.issues.addLabels({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: pr.number,
-              labels: ['merged']
-            });
+            try {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                labels: ['merged']
+              });
+            } catch (error) {
+              if (error.status !== 404) {
+                throw error;
+              }
+              console.log('merged label does not exist, skipping');
+            }
