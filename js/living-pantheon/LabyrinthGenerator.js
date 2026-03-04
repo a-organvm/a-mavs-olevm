@@ -102,7 +102,7 @@ class LabyrinthGenerator {
     }
 
     if (!this.config.enabled) {
-      console.info('LabyrinthGenerator: Disabled');
+      console.warn('LabyrinthGenerator: Disabled');
       return this;
     }
 
@@ -119,7 +119,7 @@ class LabyrinthGenerator {
       this._createLoopholes();
 
       this.isInitialized = true;
-      console.info(
+      console.warn(
         `LabyrinthGenerator: Initialized with ${this.fragments.length} fragments and ${this.loopholes.size} loopholes`
       );
     } catch (error) {
@@ -170,7 +170,7 @@ class LabyrinthGenerator {
 
         this.fragments.push(...validFragments);
 
-        console.info(
+        console.warn(
           `LabyrinthGenerator: Loaded ${validFragments.length} fragments from ${source}`
         );
       } catch (error) {
@@ -217,7 +217,7 @@ class LabyrinthGenerator {
     ];
 
     this.fragments = [...fallbacks];
-    console.info('LabyrinthGenerator: Using fallback fragments');
+    console.warn('LabyrinthGenerator: Using fallback fragments');
   }
 
   /**

@@ -188,7 +188,7 @@ class SessionManager {
         this._state.timestamp &&
         Date.now() - this._state.timestamp > maxAge
       ) {
-        console.log('SessionManager: Saved state expired, clearing');
+        console.warn('SessionManager: Saved state expired, clearing');
         this.clear();
         return null;
       }
