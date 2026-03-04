@@ -106,11 +106,3 @@ $('#stills-right-diary').on('click', () => {
 
 // Bind lazy-load handler for progressive image loading
 diaryCarousel.bindLazyLoad();
-
-/**
- * Cleanup diary gallery resources
- * Call when navigating away from diary page
- */
-function cleanupDiary() {
-  diaryCarousel.destroy();
-}

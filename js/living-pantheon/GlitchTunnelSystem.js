@@ -140,7 +140,7 @@ class GlitchTunnelSystem {
       await this._fadeOutOverlay();
     } catch (err) {
       // Fail silently - tunnel is decorative
-      console.debug('GlitchTunnelSystem: effect skipped', err.message);
+      console.warn('GlitchTunnelSystem: effect skipped', err.message);
     } finally {
       this._removeOverlay();
       this.isAnimating = false;

@@ -94,11 +94,3 @@ stillsCarousel.bindNavButtons('#stills-left', '#stills-right', 'dtc', 'dn');
 
 // Bind lazy-load handler for progressive image loading
 stillsCarousel.bindLazyLoad();
-
-/**
- * Cleanup stills gallery resources
- * Call when navigating away from stills page
- */
-function cleanupStills() {
-  stillsCarousel.destroy();
-}
