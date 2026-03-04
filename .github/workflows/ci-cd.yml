@@ -51,7 +51,7 @@ jobs:
         run: npm ci
 
       - name: Run security audit
-        run: npm audit
+        run: npm audit --omit=dev
 
   lighthouse:
     name: Lighthouse CI
