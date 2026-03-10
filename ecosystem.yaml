@@ -1,0 +1,8 @@
+schema_version: '1.0'
+repo: a-mavs-olevm
+organ: II
+display_name: "Personal artistic portfolio site (etceter4.com) \u2014 living temple\
+  \ of art, sound, and words"
+delivery:
+- platform: web_app
+  status: not_started
