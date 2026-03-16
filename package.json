@@ -24,7 +24,7 @@
     "@playwright/test": "^1.58.2",
     "browser-sync": "^3.0.3",
     "eslint": "^10.0.0",
-    "html-validate": "^10.7.0",
+    "html-validate": "^10.11.2",
     "husky": "^9.0.0",
     "jsdom": "^24.0.0",
     "lint-staged": "^15.0.0",
