@@ -356,3 +356,11 @@ The Pantheon is a permanent, evolving installation --- a temple that breathes, g
 ---
 
 _Part of the [ORGAN-II: Poiesis](https://github.com/organvm-ii-poiesis) system --- the Art organ of the eight-organ creative-institutional architecture._
+
+<!-- SYSTEM-NAV-START -->
+
+---
+
+<sub>[Portfolio](https://4444j99.github.io/portfolio/) · [System Directory](https://4444j99.github.io/portfolio/directory/) · [ORGAN II · Poiesis](https://organvm-ii-poiesis.github.io/) · Part of the <a href="https://4444j99.github.io/portfolio/directory/">ORGANVM eight-organ system</a></sub>
+
+<!-- SYSTEM-NAV-END -->
