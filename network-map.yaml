@@ -1,0 +1,33 @@
+schema_version: '1.0'
+repo: a-mavs-olevm
+organ: ORGAN-II
+mirrors:
+  technical:
+  - project: eslint/eslint
+    platform: github
+    relevance: 'JS/TS dependency: eslint'
+    engagement:
+    - watch
+    tags:
+    - auto-discovered
+    - js-dep
+  - project: prettier/prettier
+    platform: github
+    relevance: 'JS/TS dependency: prettier'
+    engagement:
+    - watch
+    tags:
+    - auto-discovered
+    - js-dep
+  - project: vitest-dev/vitest
+    platform: github
+    relevance: 'JS/TS dependency: vitest'
+    engagement:
+    - watch
+    tags:
+    - auto-discovered
+    - js-dep
+  parallel: []
+  kinship: []
+ledger: ~/.organvm/network/ledger.jsonl
+last_scanned: '2026-03-20T11:55:26.330093+00:00'
