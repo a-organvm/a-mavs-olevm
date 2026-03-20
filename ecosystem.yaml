@@ -1,8 +1,37 @@
 schema_version: '1.0'
 repo: a-mavs-olevm
 organ: II
-display_name: "Personal artistic portfolio site (etceter4.com) \u2014 living temple\
-  \ of art, sound, and words"
+display_name: "Personal artistic portfolio site (etceter4.com) — living temple of art, sound, and words"
+
 delivery:
 - platform: web_app
+  status: live
+  priority: critical
+  notes: "Deployed at etceter4.netlify.app"
+  next_action: "Connect custom domain etceter4.com"
+
+content:
+- platform: portfolio
+  status: live
+  priority: critical
+  notes: "Living portfolio of art, sound, and literary works"
+  next_action: "Update with latest projects and exhibitions"
+- platform: blog
+  status: planned
+  priority: medium
+  notes: "Artist journal, creative process documentation"
+  next_action: "Add journal section to portfolio site"
+
+marketing:
+- platform: social_organic
   status: not_started
+  priority: medium
+  notes: "Instagram, Twitter/X for art community visibility"
+  next_action: "Activate social presence via kerygma profile"
+
+community:
+- platform: mailing_list
+  status: not_started
+  priority: medium
+  notes: "Collector and patron newsletter"
+  next_action: "Set up mailing list integration on portfolio site"
