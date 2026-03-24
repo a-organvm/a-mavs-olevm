@@ -1,28 +1,22 @@
 <!-- ORGANVM:AUTO:START -->
-
 ## Agent Context (auto-generated — do not edit)
 
 This repo participates in the **ORGAN-II (Art)** swarm.
 
 ### Active Subscriptions
-
 - Event: `governance.updated` → Action: Check compliance with updated governance rules
 - Event: `health-audit.completed` → Action: Review audit findings for this repo
 - Event: `theory.published` → Action: Check for art derivative opportunities
 
 ### Production Responsibilities
-
 - **Produce** `creative-artifact` for ORGAN-IV
 
 ### External Dependencies
-
 - **Consume** `theory-artifact` from `ORGAN-I`
 
 ### Governance Constraints
-
 - Adhere to unidirectional flow: I→II→III
 - Never commit secrets or credentials
 
-_Last synced: 2026-03-20T10:58:26Z_
-
+*Last synced: 2026-03-21T13:20:57Z*
 <!-- ORGANVM:AUTO:END -->
