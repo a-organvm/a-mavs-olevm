@@ -552,34 +552,107 @@
       </section>
 
       <!-- Info -->
-      <section id="info" class="dn vh-100 w-100 pb-6rem bg-dark-red black">
-        <section id="infoContainer" class="fixed vh-100 w-100">
-          <div id="infoOuterContainer" class="flex items-center vh-100 w-100">
-            <div
-              id="infoInnerContainer"
-              class="flex flex-column justify-between center tc ba bg-yellow bw1 b--black pa0 bn"
-            >
-              <div class="tji tji-fix">
-                <a href="mailto:etceter4@etceter4.com" class="f3 f-2_250rem-ns link white-link"
-                  >4NTHONEE J4MES P4D4V4NO</a
-                >
+      <section id="info" class="dn min-vh-100 w-100 pb-6rem bg-dark-red black overflow-y-auto">
+        <section id="infoContainer" class="min-vh-100 w-100 pa3 pa4-ns">
+          <div id="infoOuterContainer" class="flex justify-center items-start min-vh-100 w-100">
+            <article id="infoInnerContainer" class="w-100 mw9 ba bw1 b--black bg-yellow pa3 pa4-ns">
+              <div class="flex flex-column flex-row-ns justify-between items-start mb4">
+                <div class="w-100 w-60-ns pr4-ns mb4 mb0-ns">
+                  <p class="mt0 mb2 f7 fw6 tracked-mega dark-red">OPERATIONS MEMO / APRIL 2026</p>
+                  <h2 class="mt0 mb3 f2 f1-ns lh-title">Stripe Issue + Free Deployment Strategy Diversification</h2>
+                  <p class="mt0 mb3 f4 lh-copy measure-wide">
+                    We already have 12 products consuming shared free capacity across 11 Netlify sites and 5 Render
+                    resources. The response is to fix the Stripe blockage without letting payment remediation control
+                    deployment velocity.
+                  </p>
+                  <p class="mt0 mb0 f5 lh-copy measure-wide">
+                    Immediate rule: classify each launch as static, preview, or stateful before it claims another
+                    shared free-tier slot.
+                  </p>
+                </div>
+
+                <aside class="w-100 w-40-ns ba bw1 b--black-20 bg-white-70 pa3">
+                  <p class="mt0 mb2 f7 fw6 tracked">LIVE CONTACT / FALLBACKS</p>
+                  <p class="mt0 mb3 lh-copy">
+                    Bandcamp and direct email remain the public support path while Stripe is being stabilized.
+                  </p>
+                  <div class="mb2">
+                    <a href="mailto:etceter4@etceter4.com" class="f5 link white-link">4NTHONEE J4MES P4D4V4NO</a>
+                  </div>
+                  <div class="mb2">
+                    <a href="mailto:etceter4@etceter4.com" class="f5 link red-link">D E S I G N E R</a>
+                  </div>
+                  <div class="mb2">
+                    <a href="#akademia" class="f5 link cyan-link">C U R R I C U L U M V I T A E</a>
+                  </div>
+                  <div class="mb2">
+                    <a
+                      href="https://etceter4.bandcamp.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="f5 link dark-red"
+                      >BANDCAMP SUPPORT</a
+                    >
+                  </div>
+                  <div>
+                    <a
+                      href="http://www.et4l.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="f5 link black-link"
+                      >F4THR// [ E T 4 L ]</a
+                    >
+                  </div>
+                </aside>
               </div>
-              <div class="tji tji-fix">
-                <a href="mailto:etceter4@etceter4.com" class="f3 f-2_250rem-ns link red-link">D E S I G N E R</a>
+
+              <div class="flex flex-column flex-row-l flex-wrap nl3-l nr3-l">
+                <section class="w-100 w-50-l pa3-l mb3 mb0-l">
+                  <div class="h-100 ba bw1 b--black-20 bg-white-50 pa3">
+                    <p class="mt0 mb2 f7 fw6 tracked">CURRENT LOAD</p>
+                    <ul class="pl3 mt0 mb0 lh-copy">
+                      <li>11 Netlify sites are already sharing one free hosting pool.</li>
+                      <li>4 Render web services plus 1 Redis instance are already sharing another.</li>
+                      <li>The next deployment should reduce concentration risk instead of extending it.</li>
+                    </ul>
+                  </div>
+                </section>
+
+                <section class="w-100 w-50-l pa3-l mb3 mb0-l">
+                  <div class="h-100 ba bw1 b--black-20 bg-light-red pa3">
+                    <p class="mt0 mb2 f7 fw6 tracked">STRIPE RESPONSE</p>
+                    <ul class="pl3 mt0 mb0 lh-copy">
+                      <li>Keep revenue recovery on a separate track from hosting migration work.</li>
+                      <li>Route public support traffic through Bandcamp and direct contact until Stripe is verified.</li>
+                      <li>Only restore Stripe after the full checkout path is tested end to end.</li>
+                    </ul>
+                  </div>
+                </section>
+
+                <section class="w-100 w-50-l pa3-l mb3 mb0-l">
+                  <div class="h-100 ba bw1 b--black-20 bg-lightest-blue pa3">
+                    <p class="mt0 mb2 f7 fw6 tracked">PLATFORM SPLIT</p>
+                    <ul class="pl3 mt0 mb0 lh-copy">
+                      <li>GitHub Pages or Vercel handle static sites, docs, archives, and preview-first fronts.</li>
+                      <li>Netlify is reserved for sites that still need its existing workflow or edge behavior.</li>
+                      <li>Render is reserved for stateful APIs, workers, and Redis-backed workloads.</li>
+                    </ul>
+                  </div>
+                </section>
+
+                <section class="w-100 w-50-l pa3-l">
+                  <div class="h-100 ba bw1 b--black-20 bg-near-white pa3">
+                    <p class="mt0 mb2 f7 fw6 tracked">ROLLOUT ORDER</p>
+                    <ol class="pl3 mt0 mb0 lh-copy">
+                      <li>Audit every pending product by workload type before launch.</li>
+                      <li>Move the lowest-risk static deployments off the shared Netlify and Render path first.</li>
+                      <li>Track platform, owner, DNS, env vars, and quota exposure in one ledger.</li>
+                      <li>Review vendor mix before each new deployment, not after limits are hit.</li>
+                    </ol>
+                  </div>
+                </section>
               </div>
-              <div class="tji tji-fix">
-                <a href="#akademia" class="f3 f-2_250rem-ns link cyan-link">C U R R I C U L U M V I T A E</a>
-              </div>
-              <div class="tji tji-fix">
-                <a
-                  href="http://www.et4l.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="f3 f-2_250rem-ns link black-link"
-                  >F4THR// [ E T 4 L ]</a
-                >
-              </div>
-            </div>
+            </article>
           </div>
         </section>
       </section>
@@ -715,8 +788,13 @@
           id="subscribe"
           class="dn flex-ns flex-row flex-wrap justify-around items-center min-w-15rem mw6 w-34 h-100 f-1_125rem white"
         >
-          <a class="link white-link" href="https://etceter4.bandcamp.com" target="_blank" rel="noopener noreferrer"
-            >SUPPORT US</a
+          <a
+            class="link white-link"
+            href="https://etceter4.bandcamp.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Support through Bandcamp while Stripe is offline"
+            >BANDCAMP SUPPORT</a
           >
           <p class="ma0 di">//</p>
           <a class="link white-link" href="#discovery">DISCOVERY</a>
